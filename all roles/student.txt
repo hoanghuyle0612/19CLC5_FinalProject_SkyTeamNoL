@@ -1,0 +1,25 @@
+3
+htthao
+123456
+Huynh Thu Thao
+19clc5
+19127551
+13 09 2001
+0
+3
+tttung
+123456
+Tran Thanh Tung
+19clc5
+19127311
+01 01 2001
+1
+3
+lnhhoang
+123456
+Le Nguyen Huy Hoang
+19clc5
+19127146
+02 01 2001
+1
+3

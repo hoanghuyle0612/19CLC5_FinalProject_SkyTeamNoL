@@ -1,0 +1,192 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+struct staff {
+	char username[100];
+	char password[100];
+	char fullname[100];
+	char dob[10];
+	char sex[5];
+};
+struct lecturer {
+	char username[100];
+	char password[100];
+	char fullname[100];
+	char dob[10];
+	char sex[5];
+	
+};
+struct student {
+	char username[100];
+	char password[100];
+	char fullname[100];
+	int id;
+	char dob[10];
+	char sex[5];
+	char classname[10];
+	
+};
+void loadstaff(ifstream& f, staff& a)
+{
+	f >> a.username;
+	f.ignore();
+	f.getline(a.username, 100);
+	f >> a.password;
+	f.ignore();
+	f.getline(a.password, 100);
+	f >> a.fullname;
+	f.ignore();
+	f.getline(a.fullname, 100);
+	f >> a.dob;
+	f.ignore();
+	f.getline(a.dob, 100);
+	f >> a.sex;
+	f.ignore();
+	f.getline(a.sex, 10);
+}
+void loadstaffarray(ifstream& f, staff a[], int&n)
+{
+	f >> n;
+	for (int i = 0;i < n;i++)
+	{
+		loadstaff(f, a[i]);
+	}
+}
+void loadlecturer(ifstream& f, lecturer& b)
+{
+
+	f >> b.username;
+	f.ignore();
+	f.getline(b.username, 100);
+	f >> b.password;
+	f.ignore();
+	f.getline(b.password, 100);
+	f >> b.fullname;
+	f.ignore();
+	f.getline(b.fullname, 100);
+	f >> b.dob;
+	f.ignore();
+	f.getline(b.dob, 100);
+	f >> b.sex;
+	f.ignore();
+	f.getline(b.sex, 10);
+}
+void loadlecturerarray(ifstream& f, lecturer b[],int&n)
+{
+	f >> n;
+	for (int i = 0;i < n;i++)
+	{
+		loadlecturer(f, b[i]);
+	}
+}
+void loadstudent(ifstream& f, student& c)
+{
+	f.ignore();
+	f.getline(c.username, 100);
+	f >> c.username;
+	f.ignore();
+	f.getline(c.password, 100);
+	f >> c.password;
+	f >> c.fullname;
+	f.ignore();
+	f.getline(c.fullname, 100);
+	f >> c.id;
+	f >> c.dob;
+	f.ignore();
+	f.getline(c.dob, 100);
+	f >> c.sex;
+	f.ignore();
+	f.getline(c.sex, 10);
+	f >> c.classname;
+	f.ignore();
+	f.getline(c.classname, 10);
+}
+
+void loadstudentarray(ifstream& f, student c[], int& n)
+{
+	f >> n;
+	for (int i = 0;i < n;i++)
+	{
+		loadstudent(f, c[i]);
+	}
+}
+
+void login()
+{
+	int idx;
+	int check;
+	int n;
+	staff a[100];
+	lecturer b[100];
+	student c[100];
+	char userlogin[100];
+	char passlogin[100];
+	cout << "Username: ";
+	cin >> userlogin;
+	cout << "Password: ";
+	cin >> passlogin;
+	ifstream f;
+	f.open("staff.txt");
+	if (!f.is_open())
+	{
+		cout << "Can not open file" << endl;
+	}
+	else
+	{
+		loadstaffarray(f, a, n);
+		for (int i = 0;i < n;i++)
+		{
+			int resu1 = strcmp(userlogin, a[i].username);
+			int resp1 = strcmp(passlogin, a[i].password);
+			if (resu1 == 0 && resp1 == 0)
+			{
+				idx = i;
+				cout << "Hello staff " << a[i].fullname << "!";
+				check = 1;
+				
+			}
+		
+			else
+			{
+				f.open("lecturer.txt");
+				if (!f.is_open())
+				{
+					cout << "Can not open file" << endl;
+				}
+				else
+				{
+					loadlecturerarray(f, b, n);
+					int resu2 = strcmp(userlogin, b[i].username);
+					int resp2 = strcmp(passlogin, b[i].password);
+					if (resu2 == 0 && resp2 == 0)
+					{
+						cout << "Hello lecturer " << b[i].fullname << "!";
+						check = 2;
+					}
+					else
+					{
+						f.open("student.txt");
+						if (!f.is_open())
+						{
+							cout << "Can not open file" << endl;
+						}
+						else
+						{
+							loadstudentarray(f, c, n);
+							int resu3 = strcmp(userlogin, c[i].username);
+							int resp3 = strcmp(passlogin, c[i].password);
+							if (resu3 == 0 && resp3 == 0)
+							{
+								cout << "Hello student " << c[i].fullname << "!";
+								check = 3;
+							}
+							else cout << "Login failed. Please try again!";
+						}
+					}
+
+				}
+			}
+		}
+	}
+}

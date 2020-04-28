@@ -1,0 +1,19 @@
+3
+dbtien
+123456
+Dinh Ba Tien
+01 02 1980
+1
+2
+nmhuy
+123456
+Nguyen Minh Huy
+02 02 1980
+1
+2
+nhminh
+123456
+Nguyen Hai Minh
+03 02 1982
+1
+2
