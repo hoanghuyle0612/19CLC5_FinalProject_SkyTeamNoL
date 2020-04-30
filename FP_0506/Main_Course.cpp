@@ -9,14 +9,15 @@ int main() {
 	if (!GetCourse(stuHead, n, fName)) return 0;
 	
 	int ans = -1;
-	while (ans != 2) {
+	while (ans != 3) {
 
 		cout << "Select next option" << endl;
 		cout << "0 - View Course's Student list" << endl;
 		cout << "1 - View Course's Attendance list" << endl;
-		cout << "2 - Back" << endl;
+		cout << "2 - Edit a Student's score" << endl;
+		cout << "3 - Back" << endl;
 		cout << "Input: "; cin >> ans;
-		while (ans < 0 || ans > 2) {
+		while (ans < 0 || ans > 3) {
 			cout << "Invalid input" << endl;
 			cout << "Input: "; cin >> ans;
 		}
@@ -24,6 +25,7 @@ int main() {
 		switch (ans) {
 			case 0:
 				ShowCourse(stuHead, n);
+				system("pause");
 			break;
 			case 1:
 				while (ans != 2) {
@@ -51,7 +53,11 @@ int main() {
 				}
 				ans = -1;
 			break;
+			case 2:
+				EditScore(stuHead, n, fName);
+			break;
 		}
+		system("cls");
 
 	}
 

@@ -35,11 +35,11 @@ void ShowAttList(Student* stuHead, int n);
 bool ExportAttList(Student* stuHead, int n, string fName);
 // Export the attendance list to a .csv file
 
-void EditAtt(Student* stuHead, int n, string fName);
+void EditAtt(Student*& stuHead, int n, string fName);
 // Edit an attendance day's status
 
-void SaveAttList(Student* stuHead, int n, string fName);
-// Save the attendance edit to the .txt file
+void SaveEdit(Student* stuHead, int n, string fName);
+// Save the attendance edit to the 
 
 void GetCourse_DelStu(Student *&stuHead, int n);
 // Free heap memory used to store students' data
@@ -47,7 +47,13 @@ void GetCourse_DelStu(Student *&stuHead, int n);
 bool GetCourse(Student *&stuHead, int &n, string fName);
 // View a Course
 
-void ETC();
-// Enter anything to continue
+void ShowScoreBoard(Student* stuHead, int n);
+// Show scoreboard of a course
+
+void ShowScore(Student* stu);
+// Show score of a Student
+
+void EditScore(Student*& stuHead, int n, string fName);
+// Edit score of a Student
 
 #endif

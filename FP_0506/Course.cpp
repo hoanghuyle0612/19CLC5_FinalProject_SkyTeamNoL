@@ -124,11 +124,11 @@ bool ExportAttList(Student* stuHead, int n, string fName) {
 		}
 	}
 	cout << "Export complete" << endl << endl;
-	ETC();
+	system("pause");
 	return true;
 }
 
-void EditAtt(Student* stuHead, int n, string fName) {
+void EditAtt(Student*& stuHead, int n, string fName) {
 
 	int idcur;
 	cout << "Enter ID: "; cin >> idcur;
@@ -142,7 +142,7 @@ void EditAtt(Student* stuHead, int n, string fName) {
 		if (i < n - 1) stucur = stucur->stuNext;
 		else {
 			cout << "Cannot find ID" << endl << endl;
-			ETC();
+			system("pause");
 			return;
 		}
 	}
@@ -164,15 +164,17 @@ void EditAtt(Student* stuHead, int n, string fName) {
 	}
 	if (dcur == nullptr) {
 		cout << "Cannot find date" << endl << endl;
-		ETC();
+		system("pause");
 		return;
 	}
 	if (dcur->pre == -1) dcur->pre = 1;
 	else dcur->pre = -1;
-	SaveAttList(stuHead, n, fName);
+	SaveEdit(stuHead, n, fName);
+	cout << "Edit complete" << endl;
+	system("pause");
 }
 
-void SaveAttList(Student* stuHead, int n, string fName) {
+void SaveEdit(Student* stuHead, int n, string fName) {
 	ofstream fout;
 	fout.open(fName + ".txt");
 	if (!fout.is_open()) {
@@ -266,6 +268,98 @@ void ShowCourse(Student *stuHead, int n) {
 	}
 }
 
+void ShowScoreBoard(Student *stuHead, int n) {
+	Student* stucur = stuHead;
+	for (int i = 0; i < n; i++) {
+		ShowScore(stucur);
+		if (i < n - 1) {
+			stucur = stucur->stuNext;
+			cout << endl;
+		}
+	}
+	cout << endl;
+}
+
+void ShowScore(Student *stu) {
+	cout << "[" << stu->id << "]" << endl;
+	cout << stu->name << endl;
+	cout << "-Scores-" << endl;
+	cout << "Mid-term: " << stu->sc_mid << endl;
+	cout << "Final   : " << stu->sc_fin << endl;
+	cout << "Lab     : " << stu->sc_lab << endl;
+	cout << "Average : " << stu->sc_ave << endl;
+	cout << endl;
+}
+
+void EditScore(Student*& stuHead, int n, string fName) {
+	int ans = -1;
+	while (ans != 3) {
+		ShowScoreBoard(stuHead, n);
+		int idcur;
+		cout << "(Enter 0 to return)" << endl;
+		cout << "Enter ID: "; cin >> idcur;
+		if (idcur == 0) {
+			system("cls");
+			return;
+		}
+		while (idcur < 10000000 || idcur > 99999999) {
+			cout << "Invalid input" << endl;
+			cout << "Input: "; cin >> idcur;
+		}
+		Student* stucur = stuHead;
+		for (int i = 0; i < n; i++) {
+			if (stucur->id == idcur) break;
+			if (i < n - 1) stucur = stucur->stuNext;
+			else {
+				cout << "Cannot find ID" << endl;
+				system("pause");
+				return;
+			}
+		}
+		system("cls");
+		ShowScore(stucur);
+		cout << "Choose which score to edit" << endl;
+		cout << "0 - Midterm" << endl;
+		cout << "1 - Final" << endl;
+		cout << "2 - Lab" << endl;
+		cout << "3 - Back" << endl;
+		cout << "Input: ";
+		cin >> ans;
+		while (ans < 0 || ans > 3) {
+			cout << "Invalid input" << endl;
+			cout << "Input: "; cin >> ans;
+		}
+		float ans_sc;
+		if (ans != 3) {
+			cout << "Input new score: ";
+			cin >> ans_sc;
+			while (ans_sc < 0 || ans_sc > 11) {
+				cout << "Invalid input" << endl;
+				cout << "Input: "; cin >> ans_sc;
+			}
+		}
+		switch (ans) {
+			case 0:
+				stucur->sc_mid = ans_sc;
+				break;
+			case 1:
+				stucur->sc_fin = ans_sc;
+				break;
+			case 2:
+				stucur->sc_lab = ans_sc;
+				break;
+		}
+		stucur->sc_ave = (stucur->sc_mid + 
+			stucur->sc_fin + stucur->sc_lab) / 3;
+		SaveEdit(stuHead, n, fName);
+		if (ans != 3) {
+			cout << "Edit complete" << endl;
+			system("pause");
+		}
+		system("cls");
+	}
+}
+
 void GetCourse_DelStu(Student *&stuHead, int n) {
 	Student* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
@@ -280,10 +374,4 @@ void GetCourse_DelStu(Student *&stuHead, int n) {
 			stucur = stucur->stuNext;
 		delete studel;
 	}
-}
-
-void ETC() {
-	char c;
-	cout << "Enter anything to continue..." << endl;
-	cin >> c;
 }
