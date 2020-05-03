@@ -4,21 +4,21 @@
 
 string GetFileName() {
 
-	const int Class_lim = 8, Course_lim = 6, lim = 100;
+	const int lim = 100;
 
-	char Class[lim]; char Course[lim];
+	char Class[lim], Course[lim];
 	cout << "Enter class: ";
 	cin.getline(Class, lim);
-	while (strlen(Class) + 1 != Class_lim) {
+	/*while (strlen(Class) + 1 != Class_lim) {
 		cout << "Invalid input. Please enter again." << endl;
 		cin.getline(Class, lim);
-	}
+	}*/
 	cout << "Enter course: ";
 	cin.getline(Course, lim);
-	while (strlen(Course) + 1 != Course_lim) {
+	/*while (strlen(Course) + 1 != Course_lim) {
 		cout << "Invalid input. Please enter again." << endl;
 		cin.getline(Course, lim);
-	}
+	}*/
 
 	// Get file link
 
@@ -36,7 +36,7 @@ string GetFileName() {
 
 	string fClass(Class), fCourse(Course), fLink(Link);
 	string fHead("2019-2020-HK2-");
-	string fName(fLink + fHead + fClass + "-" + fCourse + "-Student");
+	string fName(fLink + fHead + fClass + "-" + fCourse + "-");
 
 	return fName;
 }
@@ -274,10 +274,8 @@ void ShowScoreBoard(Student *stuHead, int n) {
 		ShowScore(stucur);
 		if (i < n - 1) {
 			stucur = stucur->stuNext;
-			cout << endl;
 		}
 	}
-	cout << endl;
 }
 
 void ShowScore(Student *stu) {
@@ -286,14 +284,14 @@ void ShowScore(Student *stu) {
 	cout << "-Scores-" << endl;
 	cout << "Mid-term: " << stu->sc_mid << endl;
 	cout << "Final   : " << stu->sc_fin << endl;
-	cout << "Lab     : " << stu->sc_lab << endl;
-	cout << "Average : " << stu->sc_ave << endl;
+	cout << "Bonus   : " << stu->sc_lab << endl;
+	cout << "Total   : " << stu->sc_ave << endl;
 	cout << endl;
 }
 
 void EditScore(Student*& stuHead, int n, string fName) {
 	int ans = -1;
-	while (ans != 3) {
+	while (ans != 4) {
 		ShowScoreBoard(stuHead, n);
 		int idcur;
 		cout << "(Enter 0 to return)" << endl;
@@ -321,16 +319,17 @@ void EditScore(Student*& stuHead, int n, string fName) {
 		cout << "Choose which score to edit" << endl;
 		cout << "0 - Midterm" << endl;
 		cout << "1 - Final" << endl;
-		cout << "2 - Lab" << endl;
-		cout << "3 - Back" << endl;
+		cout << "2 - Bonus" << endl;
+		cout << "3 - Total" << endl;
+		cout << "4 - Back" << endl;
 		cout << "Input: ";
 		cin >> ans;
-		while (ans < 0 || ans > 3) {
+		while (ans < 0 || ans > 4) {
 			cout << "Invalid input" << endl;
 			cout << "Input: "; cin >> ans;
 		}
 		float ans_sc;
-		if (ans != 3) {
+		if (ans != 4) {
 			cout << "Input new score: ";
 			cin >> ans_sc;
 			while (ans_sc < 0 || ans_sc > 11) {
@@ -348,16 +347,78 @@ void EditScore(Student*& stuHead, int n, string fName) {
 			case 2:
 				stucur->sc_lab = ans_sc;
 				break;
+			case 3:
+				stucur->sc_ave = ans_sc;
+				break;
 		}
-		stucur->sc_ave = (stucur->sc_mid + 
-			stucur->sc_fin + stucur->sc_lab) / 3;
-		SaveEdit(stuHead, n, fName);
-		if (ans != 3) {
+		if (ans != 4) {
 			cout << "Edit complete" << endl;
 			system("pause");
 		}
 		system("cls");
 	}
+}
+
+void ImportScoreBoard(Student *&stuHead, int n, string fName) {
+	ifstream fin;
+	fin.open(fName + ".csv");
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+	} else {
+		ofstream fout;
+		fout.open(fName + "-temp.txt");
+		if (!fout.is_open()) {
+			cout << "Import failed." << endl;
+		} else {
+			string temp;
+			getline(fin, temp);
+			while (!fin.eof()) {
+				getline(fin, temp);
+				replace(temp.begin(), temp.end(), ' ', '_');
+				replace(temp.begin(), temp.end(), ',', ' ');
+				fout << temp << endl;
+			}
+			fout.close();
+		}
+		fin.close();
+	}
+
+	fin.open(fName + "-temp.txt");
+	if (!fin.is_open()) {
+		cout << "Import failed." << endl;
+	} else {
+		Student* stucur = stuHead;
+		char b[100];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < 7; j++) {
+				fin >> b;
+				if (j >= 3) {
+					char* b_ = b;
+					float k = atof(b_);
+					switch (j) {
+						case 3:
+							stucur->sc_mid = k;
+							break;
+						case 4:
+							stucur->sc_fin = k;
+							break;
+						case 5:
+							stucur->sc_lab = k;
+							break;
+						case 6:
+							stucur->sc_ave = k;
+							break;
+					}
+				}
+			}
+			if (i < n - 1)
+				stucur = stucur->stuNext;
+		}
+		cout << "Import complete" << endl;
+		system("pause");
+		fin.close();
+	}
+	remove((fName + "-temp.txt").c_str());
 }
 
 void GetCourse_DelStu(Student *&stuHead, int n) {

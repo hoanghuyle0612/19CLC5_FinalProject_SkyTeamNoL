@@ -56,4 +56,7 @@ void ShowScore(Student* stu);
 void EditScore(Student*& stuHead, int n, string fName);
 // Edit score of a Student
 
+void ImportScoreBoard(Student*& stuHead, int n, string fName);
+// Import a Course's Scoreboard
+
 #endif

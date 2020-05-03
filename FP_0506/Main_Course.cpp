@@ -6,7 +6,9 @@ int main() {
 	Student* stuHead;
 	int n = 0;
 	string fName = GetFileName();
-	if (!GetCourse(stuHead, n, fName)) return 0;
+	string fNameStu = fName + "Student";
+	string fNameScB = fName + "Scoreboard";
+	if (!GetCourse(stuHead, n, fNameStu)) return 0;
 	
 	int ans = -1;
 	while (ans != 3) {
@@ -14,7 +16,7 @@ int main() {
 		cout << "Select next option" << endl;
 		cout << "0 - View Course's Student list" << endl;
 		cout << "1 - View Course's Attendance list" << endl;
-		cout << "2 - Edit a Student's score" << endl;
+		cout << "2 - View Course's Scoreboard" << endl;
 		cout << "3 - Back" << endl;
 		cout << "Input: "; cin >> ans;
 		while (ans < 0 || ans > 3) {
@@ -28,6 +30,7 @@ int main() {
 				system("pause");
 			break;
 			case 1:
+				ans = -1;
 				while (ans != 2) {
 					ShowAttList(stuHead, n);
 					cout << "Select next option" << endl;
@@ -43,10 +46,10 @@ int main() {
 
 					switch (ans) {
 						case 0:
-							if (ExportAttList(stuHead, n, fName));
+							if (ExportAttList(stuHead, n, fNameStu));
 						break;
 						case 1:
-							EditAtt(stuHead, n, fName);
+							EditAtt(stuHead, n, fNameStu);
 						break;
 					}
 					system("cls");
@@ -54,7 +57,32 @@ int main() {
 				ans = -1;
 			break;
 			case 2:
-				EditScore(stuHead, n, fName);
+				ans = -1;
+				while (ans != 2) {
+					ShowScoreBoard(stuHead, n);
+					cout << "Select next option" << endl;
+					cout << "0 - Import Scoreboard" << endl;
+					cout << "1 - Edit a Student's Score" << endl;
+					cout << "2 - Back" << endl;
+					cout << "Input: "; cin >> ans;
+
+					while (ans < 0 || ans > 2) {
+						cout << "Invalid input" << endl;
+						cout << "Input: "; cin >> ans;
+					}
+
+					switch (ans) {
+					case 0:
+						ImportScoreBoard(stuHead, n, fNameScB);
+						break;
+					case 1:
+						EditScore(stuHead, n, fNameStu);
+						break;
+					}
+					SaveEdit(stuHead, n, fNameStu);
+					system("cls");
+				}
+				ans = -1;
 			break;
 		}
 		system("cls");
