@@ -4,6 +4,8 @@
 
 string GetFileName() {
 
+	cout << "-Enter Course's file-" << endl;
+
 	const int lim = 100;
 
 	char Class[lim], Course[lim];
@@ -25,7 +27,7 @@ string GetFileName() {
 	char Link[lim];
 	cout << "Enter the file's directory (use '/' instead of '\\')." << endl;
 	cout << "Ex: C:/Users/ADMIN/" << endl;
-	cout << "Input: ";
+	cout << "> ";
 	cin.getline(Link, lim);
 	while (Link[strlen(Link) - 1] != '/') {
 		cout << "Invalid input. Please enter again." << endl;
@@ -123,18 +125,17 @@ bool ExportAttList(Student* stuHead, int n, string fName) {
 			if (i < n - 1) stucur = stucur->stuNext;
 		}
 	}
-	cout << "Export complete" << endl << endl;
-	system("pause");
 	return true;
 }
 
 void EditAtt(Student*& stuHead, int n, string fName) {
+	cout << "-Attendance Edit-" << endl;
 
 	int idcur;
 	cout << "Enter ID: "; cin >> idcur;
 	while (idcur < 10000000 || idcur > 99999999) {
 		cout << "Invalid input" << endl;
-		cout << "Input: "; cin >> idcur;
+		cout << "> "; cin >> idcur;
 	}
 	Student* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
@@ -142,7 +143,6 @@ void EditAtt(Student*& stuHead, int n, string fName) {
 		if (i < n - 1) stucur = stucur->stuNext;
 		else {
 			cout << "Cannot find ID" << endl << endl;
-			system("pause");
 			return;
 		}
 	}
@@ -151,7 +151,7 @@ void EditAtt(Student*& stuHead, int n, string fName) {
 	cout << "Enter date (dd/mm/yyyy): "; cin >> dtemp;
 	while (dtemp[2] != '/' && dtemp[5] != '/') {
 		cout << "Invalid input" << endl;
-		cout << "Input: "; cin >> dtemp;
+		cout << "> "; cin >> dtemp;
 	}
 	ddtemp = ((int)dtemp[0] - 48) * 10 + ((int)dtemp[1] - 48);
 	dmtemp = ((int)dtemp[3] - 48) * 10 + ((int)dtemp[4] - 48);
@@ -164,14 +164,11 @@ void EditAtt(Student*& stuHead, int n, string fName) {
 	}
 	if (dcur == nullptr) {
 		cout << "Cannot find date" << endl << endl;
-		system("pause");
 		return;
 	}
 	if (dcur->pre == -1) dcur->pre = 1;
 	else dcur->pre = -1;
 	SaveEdit(stuHead, n, fName);
-	cout << "Edit complete" << endl;
-	system("pause");
 }
 
 void SaveEdit(Student* stuHead, int n, string fName) {
@@ -290,6 +287,8 @@ void ShowScore(Student *stu) {
 }
 
 void EditScore(Student*& stuHead, int n, string fName) {
+	cout << "-Score Edit-" << endl;
+
 	int ans = -1;
 	while (ans != 4) {
 		ShowScoreBoard(stuHead, n);
@@ -297,20 +296,18 @@ void EditScore(Student*& stuHead, int n, string fName) {
 		cout << "(Enter 0 to return)" << endl;
 		cout << "Enter ID: "; cin >> idcur;
 		if (idcur == 0) {
-			system("cls");
 			return;
 		}
 		while (idcur < 10000000 || idcur > 99999999) {
 			cout << "Invalid input" << endl;
-			cout << "Input: "; cin >> idcur;
+			cout << "> "; cin >> idcur;
 		}
 		Student* stucur = stuHead;
 		for (int i = 0; i < n; i++) {
 			if (stucur->id == idcur) break;
 			if (i < n - 1) stucur = stucur->stuNext;
 			else {
-				cout << "Cannot find ID" << endl;
-				system("pause");
+				cout << "Cannot find ID" << endl << endl;
 				return;
 			}
 		}
@@ -322,11 +319,11 @@ void EditScore(Student*& stuHead, int n, string fName) {
 		cout << "2 - Bonus" << endl;
 		cout << "3 - Total" << endl;
 		cout << "4 - Back" << endl;
-		cout << "Input: ";
+		cout << "> ";
 		cin >> ans;
 		while (ans < 0 || ans > 4) {
 			cout << "Invalid input" << endl;
-			cout << "Input: "; cin >> ans;
+			cout << "> "; cin >> ans;
 		}
 		float ans_sc;
 		if (ans != 4) {
@@ -334,7 +331,7 @@ void EditScore(Student*& stuHead, int n, string fName) {
 			cin >> ans_sc;
 			while (ans_sc < 0 || ans_sc > 11) {
 				cout << "Invalid input" << endl;
-				cout << "Input: "; cin >> ans_sc;
+				cout << "> "; cin >> ans_sc;
 			}
 		}
 		switch (ans) {
@@ -353,22 +350,21 @@ void EditScore(Student*& stuHead, int n, string fName) {
 		}
 		if (ans != 4) {
 			cout << "Edit complete" << endl;
-			system("pause");
 		}
 		system("cls");
 	}
 }
 
-void ImportScoreBoard(Student *&stuHead, int n, string fName) {
+bool ImportScoreBoard(Student *&stuHead, int n, string fName) {
 	ifstream fin;
 	fin.open(fName + ".csv");
 	if (!fin.is_open()) {
-		cout << "Cannot open file." << endl;
+		return false;
 	} else {
 		ofstream fout;
 		fout.open(fName + "-temp.txt");
 		if (!fout.is_open()) {
-			cout << "Import failed." << endl;
+			return false;
 		} else {
 			string temp;
 			getline(fin, temp);
@@ -385,7 +381,7 @@ void ImportScoreBoard(Student *&stuHead, int n, string fName) {
 
 	fin.open(fName + "-temp.txt");
 	if (!fin.is_open()) {
-		cout << "Import failed." << endl;
+		return false;
 	} else {
 		Student* stucur = stuHead;
 		char b[100];
@@ -414,11 +410,12 @@ void ImportScoreBoard(Student *&stuHead, int n, string fName) {
 			if (i < n - 1)
 				stucur = stucur->stuNext;
 		}
-		cout << "Import complete" << endl;
-		system("pause");
+		/*cout << "Import complete" << endl;
+		system("pause");*/
 		fin.close();
 	}
 	remove((fName + "-temp.txt").c_str());
+	return true;
 }
 
 void GetCourse_DelStu(Student *&stuHead, int n) {

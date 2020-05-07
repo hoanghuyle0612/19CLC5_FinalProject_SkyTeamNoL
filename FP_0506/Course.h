@@ -56,7 +56,16 @@ void ShowScore(Student* stu);
 void EditScore(Student*& stuHead, int n, string fName);
 // Edit score of a Student
 
-void ImportScoreBoard(Student*& stuHead, int n, string fName);
+bool ImportScoreBoard(Student*& stuHead, int n, string fName);
 // Import a Course's Scoreboard
+
+bool CheckIn(Student*& stu);
+// Student's check-in function
+
+void RF_AStaff_AttList();
+// Role Function of an Academic Staff
+
+void RF_Lecturer();
+// Role Function of a Lecturer
 
 #endif
