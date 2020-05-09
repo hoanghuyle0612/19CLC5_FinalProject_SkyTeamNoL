@@ -96,13 +96,27 @@
 
 int main() {
 	int ans = 1;
+	string Sem = "2019-2020-HK2";
+
+	char Link[100];
+	cout << "Enter the files' directory (use '/' instead of '\\')." << endl;
+	cout << "Ex: C:/Users/ADMIN/" << endl;
+	cout << "> ";
+	cin.getline(Link, 100);
+	while (Link[strlen(Link) - 1] != '/') {
+		cout << "Invalid input. Please enter again." << endl;
+		cin.getline(Link, 100);
+	}
 
 	switch (ans) {
 		case 0:
-			RF_AStaff_AttList();
+			RF_AStaff_AttList(Sem, Link);
 			break;
 		case 1:
-			RF_Lecturer();
+			RF_Lecturer(Sem, Link);
+			break;
+		case 2:
+			RF_Student(Sem, Link);
 			break;
 	}
 	return 0;

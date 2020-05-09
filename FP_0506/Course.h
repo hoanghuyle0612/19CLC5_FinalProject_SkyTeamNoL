@@ -16,11 +16,18 @@ struct Student {
 	Student* stuNext;
 };
 
-string GetFileName();
+
+
+ //A.STAFF & LECTURER (Course.cpp)
+ //==========================================================
+/////////////////////////////////////////////////////////////
+
+
+string GetFileName(string Sem, char * Link);
 // Get the file name through the file's directory
 // Ex: C:/Users/ADMIN/2019-2020-HK2-19CLC05-CS162-Student.txt
 
-Student* GetStudent(ifstream& fin);
+Student* GetStudentFile(ifstream& fin);
 // Get all information of a student from a Course .txt file
 
 void ShowAttDay(Student* stu);
@@ -41,7 +48,7 @@ void EditAtt(Student*& stuHead, int n, string fName);
 void SaveEdit(Student* stuHead, int n, string fName);
 // Save the attendance edit to the 
 
-void GetCourse_DelStu(Student *&stuHead, int n);
+void GetCourse_DelStu(Student *&stuHead, int &n);
 // Free heap memory used to store students' data
 
 bool GetCourse(Student *&stuHead, int &n, string fName);
@@ -59,13 +66,39 @@ void EditScore(Student*& stuHead, int n, string fName);
 bool ImportScoreBoard(Student*& stuHead, int n, string fName);
 // Import a Course's Scoreboard
 
-bool CheckIn(Student*& stu);
-// Student's check-in function
+void ShowCourseList(string Sem, char* Link);
+// Show Semester's list of Courses
 
-void RF_AStaff_AttList();
+
+
+//STUDENT (Student.cpp)
+//==========================================================
+////////////////////////////////////////////////////////////
+
+
+bool CheckIn(Student*& stu);
+// Student's Check-in function
+
+void CheckInRes(Student* stu);
+// Check if the Student is present or not on the last day
+
+Student* GetStudent(Student* stuHead, int id);
+// Get Student using a provided ID
+
+
+
+//FUNCTION FOR EACH ROLE (RoleFunction.cpp)
+//==========================================================
+////////////////////////////////////////////////////////////
+
+
+void RF_AStaff_AttList(string Sem, char * Link);
 // Role Function of an Academic Staff
 
-void RF_Lecturer();
+void RF_Lecturer(string Sem, char* Link);
 // Role Function of a Lecturer
+
+void RF_Student(string Sem, char* Link);
+// Role Function of a Student
 
 #endif

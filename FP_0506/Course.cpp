@@ -2,13 +2,14 @@
 
 #include "Course.h"
 
-string GetFileName() {
+string GetFileName(string Sem, char * Link) {
 
 	cout << "-Enter Course's file-" << endl;
 
 	const int lim = 100;
 
 	char Class[lim], Course[lim];
+	/*cin.ignore();*/
 	cout << "Enter class: ";
 	cin.getline(Class, lim);
 	/*while (strlen(Class) + 1 != Class_lim) {
@@ -24,26 +25,18 @@ string GetFileName() {
 
 	// Get file link
 
-	char Link[lim];
-	cout << "Enter the file's directory (use '/' instead of '\\')." << endl;
-	cout << "Ex: C:/Users/ADMIN/" << endl;
-	cout << "> ";
-	cin.getline(Link, lim);
-	while (Link[strlen(Link) - 1] != '/') {
-		cout << "Invalid input. Please enter again." << endl;
-		cin.getline(Link, lim);
-	}
+	
 
 	// Search for the file
 
 	string fClass(Class), fCourse(Course), fLink(Link);
-	string fHead("2019-2020-HK2-");
+	string fHead(Sem + "-");
 	string fName(fLink + fHead + fClass + "-" + fCourse + "-");
 
 	return fName;
 }
 
-Student *GetStudent(ifstream &fin) {
+Student *GetStudentFile(ifstream &fin) {
 	Student* stu = new Student;
 	fin >> stu->id;
 	fin.ignore(); // 01
@@ -70,6 +63,8 @@ Student *GetStudent(ifstream &fin) {
 }
 
 void ShowAttDay(Student *stu) {
+	cout << "[" << stu->id << "]" << endl;
+	cout << stu->name << endl;
 	AttDay* dcur = stu->dHead;
 	while (dcur != nullptr) {
 		if (dcur->ad < 10) cout << "0";
@@ -85,8 +80,7 @@ void ShowAttDay(Student *stu) {
 void ShowAttList(Student* stuHead, int n) {
 	Student* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
-		cout << "[" << stucur->id << "]" << endl;
-		cout << stucur->name << endl;
+		
 		AttDay* dcur = stuHead->dHead;
 		ShowAttDay(stucur);
 		if (i < n - 1) stucur = stucur->stuNext;
@@ -221,6 +215,7 @@ void SaveEdit(Student* stuHead, int n, string fName) {
 }
 
 bool GetCourse(Student*& stuHead, int& n, string fName) {
+	if (stuHead != nullptr) GetCourse_DelStu(stuHead, n);
 	ifstream fin;
 	fin.open(fName + ".txt");
 	if (!fin.is_open()) {
@@ -230,11 +225,11 @@ bool GetCourse(Student*& stuHead, int& n, string fName) {
 	else {
 		fin >> n;
 		string temp; getline(fin, temp);
-		Student* stu = GetStudent(fin);
+		Student* stu = GetStudentFile(fin);
 		stuHead = stu;
 		Student* stucur = stu;
 		while (!fin.eof()) {
-			stu = GetStudent(fin);
+			stu = GetStudentFile(fin);
 			stucur->stuNext = stu;
 			stucur = stucur->stuNext;
 		}
@@ -418,7 +413,7 @@ bool ImportScoreBoard(Student *&stuHead, int n, string fName) {
 	return true;
 }
 
-void GetCourse_DelStu(Student *&stuHead, int n) {
+void GetCourse_DelStu(Student *&stuHead, int &n) {
 	Student* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		AttDay* dcur = stucur->dHead;
@@ -431,5 +426,29 @@ void GetCourse_DelStu(Student *&stuHead, int n) {
 		if (i < n - 1)
 			stucur = stucur->stuNext;
 		delete studel;
+	}
+	n = 0;
+}
+
+void ShowCourseList(string Sem, char * Link) {
+	string fName(Link);
+	fName = fName + Sem + ".txt";
+	ifstream fin;
+	fin.open(fName);
+	if (!fin.is_open()) {
+		cout << "Cannot find file" << endl;
+	} else {
+		int n;
+		string Class, Course, CName;
+		fin >> n; fin.ignore();
+		cout << "Total: " << n << endl;
+		while (!fin.eof()) {
+			getline(fin, Class);
+			getline(fin, Course);
+			getline(fin, CName);
+			cout << "[" << Class << " - "
+				<< Course << "] " << CName << endl;
+		}
+		fin.close();
 	}
 }
