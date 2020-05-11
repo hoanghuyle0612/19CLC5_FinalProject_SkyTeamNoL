@@ -197,7 +197,11 @@ void LoadCourses(char* Link,CourseList*& list)
 int CountCourse(CourseList* list) {
 	int cnt = 0;
 	CourseList* cur = list;
-	while (cur != nullptr) cnt++;
+	while (cur != nullptr)
+	{
+		cnt++;
+		cur = cur->pNext;
+	}
 	return cnt;
 }
 
@@ -296,7 +300,9 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 			f << cur->data.EndHour.h << " : " << cur->data.EndHour.m << endl;
 			f << cur->data.Room << endl;
 			f << endl;
+			cur = cur->pNext;
 		}
+		f.close();
 	}
 }
 

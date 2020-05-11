@@ -21,7 +21,6 @@ int main()
 
 	SaveSchedule(list, AcaYear, Semester, Class);
 
-	Save_Course_Stu_List(list, AcaYear, Semester, Class);
 
 	/*CourseList* cur = list;
 	while (cur != nullptr) {
