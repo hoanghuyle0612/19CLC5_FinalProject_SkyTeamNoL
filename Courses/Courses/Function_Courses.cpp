@@ -6,14 +6,23 @@ StudentList* CreateStudentNode(ifstream& f)
 {
 	StudentList* temp;
 	temp = new StudentList;
-	f.getline(temp->data.ID, 8, '\n');
-	f.getline(temp->data.Pwd, 20, '\n');
-	f.getline(temp->data.Name, 30, '\n');
-	f >> temp->data.DoB.Year >> temp->data.DoB.Month >> temp->data.DoB.Day;
+	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+		'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', };
 	f.ignore(100, '\n');
-	f.getline(temp->data.Class, 10, '\n');
+	f.getline(temp->data.ID, 10);
+	f.getline(temp->data.Pwd, 20);
+	f.getline(temp->data.Name, 30);
+	f.getline(temp->data.MSSV, 10);
+	f.getline(temp->data.Class, 10);
+	f >> temp->data.DoB.Year;
+	/*f.ignore(100, ' ');*/
+	f >> temp->data.DoB.Month;
+	/*f.ignore(100, ' ');*/
+	f>>temp->data.DoB.Day;
+	f.ignore(100, '\n');
 	f >> temp->data.Status;
 	f.ignore(100, '\n');
+
 	temp->pNext = nullptr;
 	return temp;
 }
@@ -22,7 +31,11 @@ int StudentCount(StudentList* list)
 {
 	int cnt = 0;
 	StudentList* cur = list;
-	while (cur != nullptr) cnt++;
+	while (cur != nullptr)
+	{
+		cnt++;
+		cur = cur->pNext;
+	}
 	return cnt;
 }
 
@@ -45,12 +58,14 @@ void LoadStudentList(StudentList*& list,char* Class)
 	{
 		if (cur == nullptr)
 		{
-			cur = CreateStudentNode(f);
+			StudentList* p = CreateStudentNode(f);
+			list = p;
+			cur = list;
+
 		}
-		else if (cur != nullptr)
+		else if(cur!=nullptr)
 		{
-			StudentList* temp;
-			temp = CreateStudentNode(f);
+			StudentList* temp = CreateStudentNode(f);
 			cur->pNext = temp;
 			cur = cur->pNext;
 		}
@@ -208,7 +223,7 @@ int CountCourse(CourseList* list) {
 
 void Create_Course_Student(CourseList* list,char* AcaYear, char* Semester,char* Class)   // CREATE COURSE FILE WHICH ALLOWS STUDENT MANAGEMENT
 {
-	StudentList* st_list;
+	StudentList* st_list = nullptr;
 	LoadStudentList(st_list, Class);
 	char Link[256];
 	strcpy(Link, AcaYear);
@@ -227,7 +242,7 @@ void Create_Course_Student(CourseList* list,char* AcaYear, char* Semester,char* 
 		cout << "Cannot create file\n";
 		return;
 	}
-	f << StudentCount(st_list);
+	f << StudentCount(st_list) << endl;
 	StudentList* cur = st_list;
 	while (cur != nullptr)
 	{
@@ -250,6 +265,7 @@ void Create_Course_Student(CourseList* list,char* AcaYear, char* Semester,char* 
 				<< " " << Start_Hour.m << " " << End_Hour.h << " " << End_Hour.m << " " << -1 << endl;
 			tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
 		}
+		cur = cur->pNext;
 	}
 
 

@@ -23,9 +23,10 @@ struct Hour {
 //STUDENT STRUCT
 //===========================================
 struct Student {				
-	char ID[8];
+	char ID[10];
 	char Pwd[20];
 	char Name[30];
+	char MSSV[10];
 	Date DoB;
 	char Class[10];
 	int Status; 
@@ -81,7 +82,9 @@ bool IsLeapYear(int year);
 int DayInMonth(int Month, int Year);
 Date PlusDay(Date init_Date, int plus_day);
 //==============================================
-
+StudentList* CreateStudentNode(ifstream& f);
+void LoadStudentList(StudentList*& list, char* Class);
+int StudentCount(StudentList* list);
 
 int char_to_int(char* s);
 #endif
