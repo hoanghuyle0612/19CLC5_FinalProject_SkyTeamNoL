@@ -36,8 +36,8 @@ string GetFileName(string Sem, char * Link) {
 	return fName;
 }
 
-Student *GetStudentFile(ifstream &fin) {
-	Student* stu = new Student;
+Student_Course *GetStudentFile(ifstream &fin) {
+	Student_Course* stu = new Student_Course;
 	fin >> stu->id;
 	fin.ignore(); // 01
 	getline(fin, stu->pass); // 02
@@ -62,7 +62,7 @@ Student *GetStudentFile(ifstream &fin) {
 	return stu;
 }
 
-void ShowAttDay(Student *stu) {
+void ShowAttDay(Student_Course *stu) {
 	cout << "[" << stu->id << "]" << endl;
 	cout << stu->name << endl;
 	AttDay* dcur = stu->dHead;
@@ -77,8 +77,8 @@ void ShowAttDay(Student *stu) {
 	}
 }
 
-void ShowAttList(Student* stuHead, int n) {
-	Student* stucur = stuHead;
+void ShowAttList(Student_Course* stuHead, int n) {
+	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		
 		AttDay* dcur = stuHead->dHead;
@@ -88,7 +88,7 @@ void ShowAttList(Student* stuHead, int n) {
 	}
 }
 
-bool ExportAttList(Student* stuHead, int n, string fName) {
+bool ExportAttList(Student_Course* stuHead, int n, string fName) {
 	ofstream fout;
 	fout.open(fName + ".csv");
 	if (!fout.is_open()) {
@@ -106,7 +106,7 @@ bool ExportAttList(Student* stuHead, int n, string fName) {
 			fout << dcur->am << "/" << dcur->ay << "\",";
 			dcur = dcur->dNext;
 		} fout << endl;
-		Student* stucur = stuHead;
+		Student_Course* stucur = stuHead;
 		for (int i = 0; i < n; i++) {
 			fout << stucur->id << "," << stucur->name << ",";
 			dcur = stucur->dHead;
@@ -122,7 +122,7 @@ bool ExportAttList(Student* stuHead, int n, string fName) {
 	return true;
 }
 
-void EditAtt(Student*& stuHead, int n, string fName) {
+void EditAtt(Student_Course*& stuHead, int n, string fName) {
 	cout << "-Attendance Edit-" << endl;
 
 	int idcur;
@@ -131,7 +131,7 @@ void EditAtt(Student*& stuHead, int n, string fName) {
 		cout << "Invalid input" << endl;
 		cout << "> "; cin >> idcur;
 	}
-	Student* stucur = stuHead;
+	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		if (stucur->id == idcur) break;
 		if (i < n - 1) stucur = stucur->stuNext;
@@ -165,14 +165,14 @@ void EditAtt(Student*& stuHead, int n, string fName) {
 	SaveEdit(stuHead, n, fName);
 }
 
-void SaveEdit(Student* stuHead, int n, string fName) {
+void SaveEdit(Student_Course* stuHead, int n, string fName) {
 	ofstream fout;
 	fout.open(fName + ".txt");
 	if (!fout.is_open()) {
 		cout << "Cannot open file for saving." << endl;
 	} else {
 		fout << n << endl;
-		Student* stucur = stuHead;
+		Student_Course* stucur = stuHead;
 		for (int i = 0; i < n; i++) {
 			fout << stucur->id << endl;
 			fout << stucur->pass << endl;
@@ -214,7 +214,7 @@ void SaveEdit(Student* stuHead, int n, string fName) {
 	}
 }
 
-bool GetCourse(Student*& stuHead, int& n, string fName) {
+bool GetCourse(Student_Course*& stuHead, int& n, string fName) {
 	if (stuHead != nullptr) GetCourse_DelStu(stuHead, n);
 	ifstream fin;
 	fin.open(fName + ".txt");
@@ -225,9 +225,9 @@ bool GetCourse(Student*& stuHead, int& n, string fName) {
 	else {
 		fin >> n;
 		string temp; getline(fin, temp);
-		Student* stu = GetStudentFile(fin);
+		Student_Course* stu = GetStudentFile(fin);
 		stuHead = stu;
-		Student* stucur = stu;
+		Student_Course* stucur = stu;
 		while (!fin.eof()) {
 			stu = GetStudentFile(fin);
 			stucur->stuNext = stu;
@@ -238,8 +238,8 @@ bool GetCourse(Student*& stuHead, int& n, string fName) {
 	return true;
 };
 
-void ShowCourse(Student *stuHead, int n) {
-	Student* stucur = stuHead;
+void ShowCourse(Student_Course *stuHead, int n) {
+	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		cout << "[" << stucur->id << "]" << endl;
 		cout << stucur->name << endl;
@@ -260,8 +260,8 @@ void ShowCourse(Student *stuHead, int n) {
 	}
 }
 
-void ShowScoreBoard(Student *stuHead, int n) {
-	Student* stucur = stuHead;
+void ShowScoreBoard(Student_Course *stuHead, int n) {
+	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		ShowScore(stucur);
 		if (i < n - 1) {
@@ -270,7 +270,7 @@ void ShowScoreBoard(Student *stuHead, int n) {
 	}
 }
 
-void ShowScore(Student *stu) {
+void ShowScore(Student_Course *stu) {
 	cout << "[" << stu->id << "]" << endl;
 	cout << stu->name << endl;
 	cout << "-Scores-" << endl;
@@ -281,7 +281,7 @@ void ShowScore(Student *stu) {
 	cout << endl;
 }
 
-void EditScore(Student*& stuHead, int n, string fName) {
+void EditScore(Student_Course*& stuHead, int n, string fName) {
 	cout << "-Score Edit-" << endl;
 
 	int ans = -1;
@@ -297,7 +297,7 @@ void EditScore(Student*& stuHead, int n, string fName) {
 			cout << "Invalid input" << endl;
 			cout << "> "; cin >> idcur;
 		}
-		Student* stucur = stuHead;
+		Student_Course* stucur = stuHead;
 		for (int i = 0; i < n; i++) {
 			if (stucur->id == idcur) break;
 			if (i < n - 1) stucur = stucur->stuNext;
@@ -350,7 +350,7 @@ void EditScore(Student*& stuHead, int n, string fName) {
 	}
 }
 
-bool ImportScoreBoard(Student *&stuHead, int n, string fName) {
+bool ImportScoreBoard(Student_Course *&stuHead, int n, string fName) {
 	ifstream fin;
 	fin.open(fName + ".csv");
 	if (!fin.is_open()) {
@@ -378,7 +378,7 @@ bool ImportScoreBoard(Student *&stuHead, int n, string fName) {
 	if (!fin.is_open()) {
 		return false;
 	} else {
-		Student* stucur = stuHead;
+		Student_Course* stucur = stuHead;
 		char b[100];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < 7; j++) {
@@ -413,8 +413,8 @@ bool ImportScoreBoard(Student *&stuHead, int n, string fName) {
 	return true;
 }
 
-void GetCourse_DelStu(Student *&stuHead, int &n) {
-	Student* stucur = stuHead;
+void GetCourse_DelStu(Student_Course *&stuHead, int &n) {
+	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		AttDay* dcur = stucur->dHead;
 		while (dcur != nullptr) {
@@ -422,7 +422,7 @@ void GetCourse_DelStu(Student *&stuHead, int &n) {
 			dcur = dcur->dNext;
 			delete ddel;
 		}
-		Student* studel = stucur;
+		Student_Course* studel = stucur;
 		if (i < n - 1)
 			stucur = stucur->stuNext;
 		delete studel;
@@ -443,11 +443,13 @@ void ShowCourseList(string Sem, char * Link) {
 		fin >> n; fin.ignore();
 		cout << "Total: " << n << endl;
 		while (!fin.eof()) {
+			fin.ignore(2);
 			getline(fin, Class);
 			getline(fin, Course);
 			getline(fin, CName);
 			cout << "[" << Class << " - "
 				<< Course << "] " << CName << endl;
+			fin.ignore(38);
 		}
 		fin.close();
 	}

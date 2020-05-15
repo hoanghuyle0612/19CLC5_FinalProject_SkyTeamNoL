@@ -108,16 +108,9 @@ int main() {
 		cin.getline(Link, 100);
 	}
 
-	switch (ans) {
-		case 0:
-			RF_AStaff_AttList(Sem, Link);
-			break;
-		case 1:
-			RF_Lecturer(Sem, Link);
-			break;
-		case 2:
-			RF_Student(Sem, Link);
-			break;
-	}
+	void (*RF[])(string, char*) =
+		{ RF_AStaff_AttList, RF_Lecturer, RF_Student };
+	RF[ans](Sem, Link);
+	
 	return 0;
 }

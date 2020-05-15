@@ -6,20 +6,20 @@
 
 #include "AttendanceList.h"
 
-struct Student {
+struct Student_Course {
 	int no;
 	int id, by, bm, bd, active;
 	string name, pass, clss;
 	float sc_mid, sc_fin, sc_lab, sc_ave; // score
 	// midterm, final, lab, average
 	AttDay* dHead;
-	Student* stuNext;
+	Student_Course* stuNext;
 };
 
 
 
- //A.STAFF & LECTURER (Course.cpp)
- //==========================================================
+//A.STAFF & LECTURER (Course.cpp)
+//==========================================================
 /////////////////////////////////////////////////////////////
 
 
@@ -27,43 +27,43 @@ string GetFileName(string Sem, char * Link);
 // Get the file name through the file's directory
 // Ex: C:/Users/ADMIN/2019-2020-HK2-19CLC05-CS162-Student.txt
 
-Student* GetStudentFile(ifstream& fin);
+Student_Course* GetStudentFile(ifstream& fin);
 // Get all information of a student from a Course .txt file
 
-void ShowAttDay(Student* stu);
+void ShowAttDay(Student_Course* stu);
 // Get all attendance days of a student
 
-void ShowCourse(Student *stuHead, int n);
+void ShowCourse(Student_Course *stuHead, int n);
 // Print out a Course
 
-void ShowAttList(Student* stuHead, int n);
+void ShowAttList(Student_Course* stuHead, int n);
 // Print out attendance list of a Course
 
-bool ExportAttList(Student* stuHead, int n, string fName);
+bool ExportAttList(Student_Course* stuHead, int n, string fName);
 // Export the attendance list to a .csv file
 
-void EditAtt(Student*& stuHead, int n, string fName);
+void EditAtt(Student_Course*& stuHead, int n, string fName);
 // Edit an attendance day's status
 
-void SaveEdit(Student* stuHead, int n, string fName);
+void SaveEdit(Student_Course* stuHead, int n, string fName);
 // Save the attendance edit to the 
 
-void GetCourse_DelStu(Student *&stuHead, int &n);
+void GetCourse_DelStu(Student_Course *&stuHead, int &n);
 // Free heap memory used to store students' data
 
-bool GetCourse(Student *&stuHead, int &n, string fName);
+bool GetCourse(Student_Course *&stuHead, int &n, string fName);
 // View a Course
 
-void ShowScoreBoard(Student* stuHead, int n);
+void ShowScoreBoard(Student_Course* stuHead, int n);
 // Show scoreboard of a course
 
-void ShowScore(Student* stu);
-// Show score of a Student
+void ShowScore(Student_Course* stu);
+// Show score of a Student_Course
 
-void EditScore(Student*& stuHead, int n, string fName);
-// Edit score of a Student
+void EditScore(Student_Course*& stuHead, int n, string fName);
+// Edit score of a Student_Course
 
-bool ImportScoreBoard(Student*& stuHead, int n, string fName);
+bool ImportScoreBoard(Student_Course*& stuHead, int n, string fName);
 // Import a Course's Scoreboard
 
 void ShowCourseList(string Sem, char* Link);
@@ -76,13 +76,13 @@ void ShowCourseList(string Sem, char* Link);
 ////////////////////////////////////////////////////////////
 
 
-bool CheckIn(Student*& stu);
+bool CheckIn(Student_Course*& stu);
 // Student's Check-in function
 
-void CheckInRes(Student* stu);
+void CheckInRes(Student_Course* stu);
 // Check if the Student is present or not on the last day
 
-Student* GetStudent(Student* stuHead, int id);
+Student_Course* GetStudent(Student_Course* stuHead, int id);
 // Get Student using a provided ID
 
 

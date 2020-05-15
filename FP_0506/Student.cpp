@@ -2,7 +2,7 @@
 
 #include "Course.h"
 
-bool CheckIn(Student *&stu) {
+bool CheckIn(Student_Course *&stu) {
 	AttDay* dcur = stu->dHead;
 	
 	time_t rawtime;
@@ -32,7 +32,7 @@ bool CheckIn(Student *&stu) {
 	return false;
 }
 
-void CheckInRes(Student *stu) {
+void CheckInRes(Student_Course *stu) {
 	AttDay* dcur = stu->dHead;
 
 	time_t rawtime;
@@ -41,50 +41,37 @@ void CheckInRes(Student *stu) {
 
 	time(&rawtime);
 	ti = localtime(&rawtime);
-	if (ti->tm_year >= dcur->ay - 1900 &&
-		ti->tm_mon + 1 >= dcur->am &&
-		ti->tm_mday >= dcur->ad) {
-		if (ti->tm_hour >= dcur->sHr &&
-			ti->tm_hour <= dcur->eHr) {
-			if ((ti->tm_hour == dcur->sHr &&
-				ti->tm_min <= dcur->sMin) ||
-				(ti->tm_hour == dcur->eHr &&
-					ti->tm_min >= dcur->eMin)) {
-				first = true;
-			}
-		}
+	if (ti->tm_year <= dcur->ay - 1900 &&
+		ti->tm_mon + 1 <= dcur->am &&
+		ti->tm_mday <= dcur->ad) {
+			first = true;
 	}
-	if (!false)
+	if (!first)
 	while (true) {
-		if (ti->tm_year >= dcur->dNext->ay - 1900 &&
-			ti->tm_mon + 1 >= dcur->dNext->am &&
-			ti->tm_mday >= dcur->dNext->ad) {
-			if (ti->tm_hour >= dcur->dNext->sHr &&
-				ti->tm_hour <= dcur->dNext->eHr) {
-				if ((ti->tm_hour == dcur->dNext->sHr &&
-					ti->tm_min <= dcur->dNext->sMin) ||
-					(ti->tm_hour == dcur->dNext->eHr &&
-						ti->tm_min >= dcur->dNext->eMin)) {
-					break;
-				}
-			}
+		if (dcur->dNext != nullptr)
+		if (ti->tm_year <= dcur->dNext->ay - 1900 &&
+			ti->tm_mon + 1 <= dcur->dNext->am &&
+			ti->tm_mday <= dcur->dNext->ad) {
+				break;
 		}
-		if (dcur->dNext->dNext != nullptr)
+		if (dcur->dNext != nullptr)
 			dcur = dcur->dNext;
 		else break;
 	}
 	cout << "-Last Attendance Date-" << endl;
-	if (dcur->ad < 10) cout << dcur->ad << "/";
-	if (dcur->am < 10) cout << dcur->am << "/";
+	if (dcur->ad < 10) cout << "0";
+		cout << dcur->ad << "/";
+	if (dcur->am < 10) cout << "0";
+		cout << dcur->am << "/";
 	cout << dcur->ay << " - ";
-	if (dcur->dNext->pre == -1)
+	if (dcur->pre == -1)
 		cout << "Absent";
 	else cout << "Present";
 	cout << endl;
 }
 
-Student* GetStudent(Student *stuHead, int id) {
-	Student* stucur = stuHead;
+Student_Course* GetStudent(Student_Course *stuHead, int id) {
+	Student_Course* stucur = stuHead;
 	while (true) {
 		if (stucur->id == id)
 			return stucur;

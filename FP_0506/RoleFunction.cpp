@@ -4,7 +4,7 @@
 
 void RF_AStaff_AttList(string Sem, char * Link) {
 	int ans = -1;
-	Student* stuHead;
+	Student_Course* stuHead;
 	int n = 0;
 	string fName = GetFileName(Sem, Link);
 	std::system("cls");
@@ -58,7 +58,7 @@ void RF_AStaff_AttList(string Sem, char * Link) {
 
 void RF_Lecturer(string Sem, char * Link) {
 	int ans = -1;
-	Student* stuHead;
+	Student_Course* stuHead;
 	int n = 0;
 	string fName = GetFileName(Sem, Link);
 	string fNameStu = fName + "Student";
@@ -194,11 +194,12 @@ void RF_Student(string Sem, char * Link) {
 		cout << "> "; cin >> ID;
 	}
 	int ans = -1;
-	Student* stu = nullptr;
-	Student* stuHead;
+	Student_Course* stu = nullptr;
+	Student_Course* stuHead;
 	int n = 0;
 	string fName, fNameStu, fNameScB;
 	while (stu == nullptr) {
+		cin.ignore();
 		fName = GetFileName(Sem, Link);
 		fNameStu = fName + "Student";
 		fNameScB = fName + "Scoreboard";
@@ -208,7 +209,6 @@ void RF_Student(string Sem, char * Link) {
 			cout << "You haven't enrolled in this Course" << endl;
 			std::system("pause");
 		}
-		std::system("cls");
 	}
 	while (ans != 0) {
 
@@ -229,13 +229,17 @@ void RF_Student(string Sem, char * Link) {
 		cout << endl;
 
 		if (ans == 1 || stu == nullptr) {
+			cin.ignore();
 			std::system("cls");
 			fName = GetFileName(Sem, Link);
 			fNameStu = fName + "Student";
 			fNameScB = fName + "Scoreboard";
 			if (!GetCourse(stuHead, n, fNameStu)) return;
 			stu = GetStudent(stuHead, ID);
-			cout << "You haven't enrolled in this Course" << endl;
+			if (stu == nullptr) {
+				cout << "You haven't enrolled in this Course" << endl;
+				std::system("pause");
+			}
 		}
 
 		switch (ans) {
@@ -250,7 +254,8 @@ void RF_Student(string Sem, char * Link) {
 				break;
 			case 3:
 				std::system("cls");
-				ShowAttDay(stu);
+				/*ShowAttDay(stu);*/
+				CheckInRes(stu);
 				break;
 			case 5:
 				std::system("cls");
