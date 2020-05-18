@@ -400,6 +400,13 @@ void import(staff a[], int& idx)
 		remove("temp.txt");
 		remove("temp1.txt");
 		remove("temp2.txt");
+		cout << endl;
+		int press;
+		cout << "Enter 1 to back: "; cin >> press;
+		if (press == 1)
+		{
+			staffclass_func(a, idx);
+		}
 	}
 }
 void add_a_new_student(staff a[], int& idx)
@@ -429,9 +436,9 @@ void add_a_new_student(staff a[], int& idx)
 	cout << "Enter full name: ";
 	cin.ignore();
 	cin.getline(fullname, 101);
-	cout << "Enter date of birth: ";
+	cout << "Enter date of birth (dd//mm/yyyy): ";
 	cin.getline(dob, 16);
-	cout << "Gender: "; cin >> gender;
+	cout << "Gender (0 - female or 1 - male): "; cin >> gender;
 	int check = 0;
 	ifstream f1("student.txt");
 	char line2[100];
@@ -549,6 +556,12 @@ void add_a_new_student(staff a[], int& idx)
 		remove("temp.txt");
 		remove("temp2.txt");
 	}
+	int press;
+	cout << "Enter 1 to back: "; cin >> press;
+	if (press == 1)
+	{
+		staffclass_func(a, idx);
+	}
 }
 void edit_existing_student(staff a[], int& idx)
 {
@@ -575,8 +588,8 @@ void edit_existing_student(staff a[], int& idx)
 	cout << "Enter ID: "; cin >> id;
 	cin.ignore();
 	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth: "; cin.getline(dob, 16);
-	cout << "Enter gender: "; cin >> gender;
+	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
+	cout << "Enter gender (0 - female and 1 - male): "; cin >> gender;
 	cout << "You want to edit this student? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
@@ -586,8 +599,8 @@ void edit_existing_student(staff a[], int& idx)
 		int currentgender;
 		cin.ignore();
 		cout << "Edit fullname: "; cin.getline(currentfullname, 100);
-		cout << "Edit date of birth: "; cin.getline(currentdob, 15);
-		cout << "Edit gender: "; cin >> currentgender;
+		cout << "Edit date of birth (dd/mm/yyyy): "; cin.getline(currentdob, 15);
+		cout << "Edit gender (0 - female and 1 - male): "; cin >> currentgender;
 		ifstream f4("student.txt");
 		ofstream f5("temp_student.txt");
 		if (!f4.is_open() || !f5.is_open())
@@ -746,6 +759,12 @@ void edit_existing_student(staff a[], int& idx)
 		{
 			cout << "Successfully" << endl;
 		}
+		int press;
+		cout << "Enter 1 to back: "; cin >> press;
+		if (press == 1)
+		{
+			staffclass_func(a, idx);
+		}
 	}
 	if (choice == 2)
 	{
@@ -777,8 +796,8 @@ void remove_a_student(staff a[], int& idx)
 	cout << "Enter ID: "; cin >> id;
 	cin.ignore();
 	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth: "; cin.getline(dob, 16);
-	cout << "Enter gender: "; cin >> gender;
+	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
+	cout << "Enter gender (0 - female and 1 - male): "; cin >> gender;
 	cout << "You want to remove this student? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
@@ -931,6 +950,12 @@ void remove_a_student(staff a[], int& idx)
 		{
 			cout << "Successfully" << endl;
 		}
+		int press;
+		cout << "Enter 1 to back: "; cin >> press;
+		if (press == 1)
+		{
+			staffclass_func(a, idx);
+		}
 	}
 	if (choice == 2)
 	{
@@ -962,8 +987,8 @@ void change_student_classA_to_B(staff a[], int& idx)
 	cout << "Enter ID: "; cin >> id;
 	cin.ignore();
 	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth: "; cin.getline(dob, 16);
-	cout << "Enter gender: "; cin >> gender;
+	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
+	cout << "Enter gender (0 - female or 1 - male): "; cin >> gender;
 	cout << "You want to chage this student's class? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
@@ -1193,6 +1218,12 @@ void change_student_classA_to_B(staff a[], int& idx)
 		f9.close();
 		remove(future);
 		rename("temp_student.txt", future);
+		int press;
+		cout << "Enter 1 to back: "; cin >> press;
+		if (press == 1)
+		{
+			staffclass_func(a, idx);
+		}
 	}
 	if (choice == 2)
 	{
@@ -1211,6 +1242,12 @@ void list_of_classes(staff a[], int& idx)
 	while (f.getline(line1, 100))
 	{
 		cout << line1 << endl;
+	}
+	int press;
+	cout << "Enter 1 to back: "; cin >> press;
+	if (press == 1)
+	{
+		staffclass_func(a, idx);
 	}
 }
 void list_of_student_in_class(staff a[], int& idx)
@@ -1244,6 +1281,12 @@ void list_of_student_in_class(staff a[], int& idx)
 	}
 	f2.close();
 	remove("temp.txt");
+	int press;
+	cout << "Enter 1 to back: "; cin >> press;
+	if (press == 1)
+	{
+		staffclass_func(a, idx);
+	}
 }
 void academic_lecturer(lecturer b[], int& idx)
 {
@@ -1308,6 +1351,12 @@ void view_profile_staff(staff a[], int& idx)
 	cout << "Date of birth: " << a[idx].dob << endl;
 	cout << "Gender: " << a[idx].gender << endl;
 	cout << "Type: " << a[idx].type << endl;
+	int press;
+	cout << "Enter 1 to back: "; cin >> press;
+	if (press == 1)
+	{
+		staff_menu(a, idx);
+	}
 }
 void changepassword_staff(staff a[], int& idx)
 {
@@ -1371,6 +1420,12 @@ void changepassword_staff(staff a[], int& idx)
 	if (rename("temp_staff.txt", "staff.txt") == 0)
 	{
 		cout << "Successfully" << endl;
+	}
+	int press;
+	cout << "Enter 1 to back: "; cin >> press;
+	if (press == 1)
+	{
+		staffclass_func(a, idx);
 	}
 }
 void changepassword_lecturer(lecturer b[], int idx)
@@ -1576,6 +1631,11 @@ void academic_staff(staff a[], int& idx)
 	case 1:
 	{
 		staffclass_func(a, idx);
+		break;
+	}
+	case 5:
+	{
+		staff_menu(a, idx);
 		break;
 	}
 	}

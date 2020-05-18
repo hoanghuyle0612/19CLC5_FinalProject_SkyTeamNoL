@@ -27,4 +27,29 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="class.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="lecturer.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="staff.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="student.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="student-19apcs1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="student-19clc5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="student-19apcs1.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -129,6 +129,17 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="class.txt" />
+    <Text Include="lecturer.txt" />
+    <Text Include="staff.txt" />
+    <Text Include="student-19apcs1.txt" />
+    <Text Include="student-19clc5.txt" />
+    <Text Include="student.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="student-19apcs1.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
