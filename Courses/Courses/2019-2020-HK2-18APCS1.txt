@@ -1,4 +1,6 @@
-2CS162
+2
+CS162
+Introduction to Programming
 19APCS1
 dbtien
 Dinh Ba Tien
@@ -7,11 +9,12 @@ TS
 2019 6 4
 2020 1 6
 MON
-7 : 30
-11 : 30
+7:30
+11:30
 I32
 
 CM101
+Communication
 19APCS1
 dnvu
 Duong Nguyen Vu
@@ -20,7 +23,6 @@ GS
 2019 6 4
 2020 1 6
 SAT
-13 : 30
-17 : 30
+13:30
+17:30
 I23
-

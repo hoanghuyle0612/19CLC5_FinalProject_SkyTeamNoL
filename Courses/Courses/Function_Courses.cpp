@@ -99,7 +99,7 @@ int char_to_int(char* s)
 }
 
 
-CourseList* CreateCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
+CourseList* LoadCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 {
 
 	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
@@ -110,7 +110,6 @@ CourseList* CreateCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 	if (newCourse->data.No < 0) return nullptr;
 	f.ignore(100, ',');
 	f.get(newCourse->data.ID, 15, ',');
-	
 	f.ignore(100, ',');
 	f.get(newCourse->data.Name, 100, ',');
 	f.ignore(100, ',');
@@ -175,7 +174,7 @@ CourseList* CreateCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 	return newCourse;
 }
 
-void LoadCourses(char* Link,CourseList*& list)
+void LoadCourses_csvfile(char* Link,CourseList*& list)
 {
 	ifstream f;
 	f.open(Link);
@@ -191,7 +190,7 @@ void LoadCourses(char* Link,CourseList*& list)
 
 		if (list == nullptr)
 		{
-			list = CreateCourseNode(f);
+			list = LoadCourseNode(f);
 			cur = list;
 		}
 		while (!f.eof())
@@ -199,7 +198,7 @@ void LoadCourses(char* Link,CourseList*& list)
 			if (cur != nullptr)
 			{
 				
-				CourseList* temp = CreateCourseNode(f);
+				CourseList* temp = LoadCourseNode(f);
 				cur->pNext = temp;
 				cur = cur->pNext;
 			}
@@ -242,10 +241,11 @@ void Create_Course_Student(CourseList* list,char* AcaYear, char* Semester,char* 
 		cout << "Cannot create file\n";
 		return;
 	}
-	f << StudentCount(st_list) << endl;
+	f << StudentCount(st_list);
 	StudentList* cur = st_list;
 	while (cur != nullptr)
 	{
+		f << endl;
 		f << st_list->data.ID << endl;
 		f << st_list->data.Pwd << endl;
 		f << st_list->data.Name << endl;
@@ -265,6 +265,7 @@ void Create_Course_Student(CourseList* list,char* AcaYear, char* Semester,char* 
 				<< " " << Start_Hour.m << " " << End_Hour.h << " " << End_Hour.m << " " << -1 << endl;
 			tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
 		}
+		f << "-";
 		cur = cur->pNext;
 	}
 
@@ -300,10 +301,12 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 	else
 	{
 		int cnt = CountCourse(list);
-		f << cnt;
+		f << cnt << endl;
 		CourseList* cur = list;
 		while (cur != nullptr) {
+			f << endl;
 			f << cur->data.ID << endl;
+			f << cur->data.Name << endl;
 			f << cur->data.Class << endl;
 			f << cur->data.LecturerUser << endl;
 			f << cur->data.LecturerName << endl;
@@ -312,10 +315,9 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 			f << cur->data.StartDate.Year << " " << cur->data.StartDate.Month << " " << cur->data.StartDate.Day << endl;
 			f << cur->data.EndDate.Year << " " << cur->data.EndDate.Month << " " << cur->data.EndDate.Day << endl;
 			f << cur->data.DoW << endl;
-			f << cur->data.StartHour.h << " : " << cur->data.StartHour.m << endl;
-			f << cur->data.EndHour.h << " : " << cur->data.EndHour.m << endl;
+			f << cur->data.StartHour.h << ":" << cur->data.StartHour.m << endl;
+			f << cur->data.EndHour.h << ":" << cur->data.EndHour.m << endl;
 			f << cur->data.Room << endl;
-			f << endl;
 			cur = cur->pNext;
 		}
 		f.close();
@@ -333,7 +335,7 @@ void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and s
 	cout << "Enter Link: "; cin.getline(temp, 256, '\n');
 	Link = new char[strlen(temp) + 1];
 	strcpy_s(Link, strlen(temp) + 1, temp);
-	LoadCourses(Link,list);
+	LoadCourses_csvfile(Link,list);
 	SaveSchedule(list, AcaYear, Semester, Class);
 	Save_Course_Stu_List(list, AcaYear, Semester, Class);
 }
@@ -354,6 +356,169 @@ void CoursesManagement()
 	ImportCourses(AcaYear, Semester);
 	
 }   
+
+CourseList* CreateCourseNode()  // Create Course Node by typing in 
+{
+	CourseList* newCourse;
+	newCourse = new CourseList;
+	char temp[256];
+	cout << "Enter course's ID: ";
+	cin.getline(newCourse->data.ID, 15);
+	cout << "Enter course's name: ";
+	cin.getline(newCourse->data.Name, 100);
+	cout << "Enter class: ";
+	cin.getline(newCourse->data.Class, 10);
+	cout << "Enter Lecturer user: ";
+	cin.getline(newCourse->data.LecturerUser, 15);
+
+	cout << "Enter start date (dd/mm/yyyy): ";
+	cin.getline(temp,256);
+	char* w = strtok(temp, " ");
+	newCourse->data.StartDate.Day = char_to_int(w);
+	w = strtok(NULL, " ");
+	newCourse->data.StartDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.StartDate.Year = char_to_int(w);
+	temp[0] = '\0';
+
+	cout << "Enter end date (dd/mm/yyyy): "; 
+	cin.getline(temp,256);
+	w = strtok(temp, " ");
+	newCourse->data.EndDate.Day = char_to_int(w);
+	w = strtok(NULL, " ");
+	newCourse->data.EndDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.EndDate.Year = char_to_int(w);
+	temp[0] = '\0';
+
+	cout << "Enter Day of week: ";
+	cin.getline(newCourse->data.DoW, 10);
+
+	cout << "Enter start hour (hh:mm): ";
+	cin.getline(temp, 256);
+	w = strtok(temp, " ");
+	newCourse->data.StartHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.StartHour.m = char_to_int(w);
+	temp[0] = '\0';
+
+	cout << "Enter end hour (hh:mm): ";
+	cin.getline (temp, 256);
+	w = strtok(temp, " ");
+	newCourse->data.EndHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.EndHour.m = char_to_int(w);
+
+	cout << "Enter room: ";
+	cin.getline(newCourse->data.Room, 10);
+
+	newCourse->pNext = nullptr;
+	return newCourse;
+} 
+
+CourseList* LoadCourseNode_txtfile(ifstream& f)
+{
+	f.ignore(256, '\n');
+	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+		'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', };
+	CourseList* newCourse;
+	newCourse = new CourseList;
+	f.getline(newCourse->data.ID, 15);
+	f.getline(newCourse->data.Name, 100);
+	f.getline(newCourse->data.Class, 10);
+	f.getline(newCourse->data.LecturerUser, 15);
+	f.getline(newCourse->data.LecturerName, 30);
+	f.getline(newCourse->data.LecturerDegree, 20);
+	f >> newCourse->data.LecturerGender;
+	f.ignore(256, '\n');
+	f.getline(tmp, 20);
+	//cout << "word: " << tmp << endl;
+	char* w = strtok(tmp, " ");
+	//cout << "word: " << w << endl;
+	newCourse->data.StartDate.Year = char_to_int(w);
+	w = strtok(NULL, " ");
+	newCourse->data.StartDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.StartDate.Day = char_to_int(w);
+
+	f.getline(tmp, 20);
+	w = strtok(tmp, " ");
+	newCourse->data.EndDate.Year = char_to_int(w);
+	w = strtok(NULL, " ");
+	newCourse->data.EndDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.EndDate.Day = char_to_int(w);
+
+	f.getline(newCourse->data.DoW, 10);
+
+	f.getline(tmp, 20);
+	w = strtok(tmp, " :");
+	newCourse->data.StartHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.StartHour.m = char_to_int(w);
+
+	f.getline(tmp, 20);
+	w = strtok(tmp, " :");
+	newCourse->data.EndHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	newCourse->data.EndHour.m = char_to_int(w);
+
+	f.get(newCourse->data.Room, '\n');
+
+	newCourse->pNext = nullptr;
+	return newCourse;
+}
+
+void LoadCourses_txtfile(char* Link, CourseList*& list)
+{
+	CourseList* tmp,* cur = list;
+	ifstream f;
+	f.open(Link);
+	if (!f.is_open())
+	{
+		cout << "Cannot open file" << endl;
+		return;
+	}
+	else {
+		int n;
+		f >> n;
+		while (!f.eof())
+		{
+			if (cur == nullptr) cur = LoadCourseNode_txtfile(f);
+			else if (cur != nullptr) {
+				tmp = LoadCourseNode_txtfile(f);
+				cur->pNext = tmp;
+				cur = cur->pNext;
+			}
+		}
+		f.close();
+	}
+}
+
+void AddCourse(char* AcaYear,char* Semester)
+{
+	CourseList* list;
+	char Class[10];
+	cout << "Enter Class: ";
+	cin.getline(Class, 10);
+	char Link[256];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	LoadCourses_txtfile(Link, list);
+	int cnt = CountCourse(list);
+	CourseList* cur = list;
+	while (cur->pNext != nullptr) cur = cur->pNext;
+	CourseList* p = CreateCourseNode();
+	cur->pNext = p;
+	p->data.No = cnt + 1;
+	SaveSchedule(list, AcaYear, Semester, Class);
+	Save_Course_Stu_List(list, AcaYear, Semester, Class);
+
+}
 //=========================================================================================
 
 

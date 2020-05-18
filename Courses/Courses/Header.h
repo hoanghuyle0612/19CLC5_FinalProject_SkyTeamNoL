@@ -66,13 +66,16 @@ struct CourseList {
 //====================================================================================
 void CoursesManagement();
 void CreateAcaYear(char* AcaYear,char* Semester);
-CourseList* CreateCourseNode(ifstream& f);
-void LoadCourses(char* Link, CourseList*& list);
+CourseList* LoadCourseNode(ifstream& f);
+CourseList* CreateCourseNode();
+void LoadCourses_csvfile(char* Link, CourseList*& list);
 int CountCourse(CourseList* list);
 void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class);
 void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char* Class);
 void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char* Class);
 void ImportCourses(char* AcaYear, char* Semester);
+void AddCourse(char* AcaYear, char* Semester);
+void LoadCourses_txtfile(char* Link, CourseList*& list);
 //=====================================================================================
 
 
