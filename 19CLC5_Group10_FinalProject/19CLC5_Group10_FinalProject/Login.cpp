@@ -90,9 +90,10 @@ void login()
 			if (a[i].type == 1 && !strcmp(userlogin, a[i].username) && !strcmp(passlogin, a[i].password))
 			{
 				idx = i;
-				cout << "Login successfully. Hello staff " << a[i].fullname << "!" << endl;
+				/*cout << "Login successfully. Hello staff " << a[i].fullname << "!" << endl;*/
 				f.close();
-				std::system("pause");
+				/*std::system("pause");*/
+				DrawWelcome();
 				cin.ignore();
 				Menu_Staff(a, idx);
 				return;

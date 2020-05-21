@@ -284,3 +284,7 @@ void Menu_Staff(staff a[], int& idx) {
 			break;
 	}
 }
+
+void Menu_Staff_Welcome() {
+	int KeyBoard();
+}

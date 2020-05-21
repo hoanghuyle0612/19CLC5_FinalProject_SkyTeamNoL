@@ -62,3 +62,4 @@ void student_menu(student c[], int& idx);
 
 
 void Menu_Staff(staff a[], int& idx);
+void DrawWelcome();
