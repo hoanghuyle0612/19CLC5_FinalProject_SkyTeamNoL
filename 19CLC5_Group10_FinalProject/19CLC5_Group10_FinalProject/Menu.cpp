@@ -20,6 +20,7 @@ void Menu_Main() {
 		std::system("cls");
 
 		cout << setw(51) << "-MAIN MENU-" << endl;
+		cout << endl;
 
 		{
 			SetColor(color, i[0]);
@@ -60,7 +61,7 @@ void Menu_Main() {
 			cout << setw(width) << " ------------ " << endl;
 			cout << endl;
 			SetColor(color, i[0]);
-			cout << setw(width) << "    LOGIN     ";
+			cout << setw(width) << "     LOGIN    ";
 			SetColor(color, i[1]);
 			cout << setw(width) << "     EXIT     " << endl;
 			SetColor(color, i[0]);
@@ -126,14 +127,15 @@ void Menu_Staff(staff a[], int& idx) {
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
-	int width = 20;
+	int width = 21;
 	int last = 3;
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
 		std::system("cls");
 
-		cout << setw(51) << "-ACADEMIC STAFF-" << endl;
+		cout << setw(53) << "-ACADEMIC STAFF-" << endl;
+		cout << endl;
 
 		{
 			SetColor(color, i[0]);
@@ -189,7 +191,7 @@ void Menu_Staff(staff a[], int& idx) {
 			SetColor(color, i[1]);
 			cout << setw(width) << "|    |  |    |";
 			SetColor(color, i[2]);
-			cout << setw(width) << "|   ******   |";
+			cout << setw(width) << "|            |";
 			SetColor(color, i[3]);
 			cout << setw(width) << "|  |      |  |" << endl;
 			SetColor(color, i[0]);
@@ -266,11 +268,14 @@ void Menu_Staff(staff a[], int& idx) {
 				break;
 			}
 		}*/
-		/*Sleep(125);*/
+		/*Sleep(50);*/
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
 	}
 	
 	switch (ptr) {
+		case 1:
+			view_profile_staff(a, idx);
+			break;
 		case 2:
 			changepassword_staff(a, idx);
 			break;

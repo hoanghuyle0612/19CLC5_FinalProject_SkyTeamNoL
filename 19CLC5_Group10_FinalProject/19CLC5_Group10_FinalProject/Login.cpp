@@ -1358,22 +1358,76 @@ void view_profile_lecturer(lecturer b[], int& idx)
 }
 void view_profile_staff(staff a[], int& idx)
 {
+	int bsize = 40;
 	fstream f;
 	loadstaffarray(f, a, idx);
-	cout << "Full name: " << a[idx].fullname << endl;
-	cout << "Date of birth: ";
+	std::system("cls");
+	cout << "-Profile - Academic Staff-" << endl << endl;
+	/*cout << "[Full name] " << a[idx].fullname << endl;
+	cout << "[DoB] ";
 	for (int i = 0; i < 10; i++) {
 		if (i == 2 || i == 5) cout << "/";
 		else cout << a[idx].dob[i];
 	}
 	cout << endl;
-	cout << "Gender: ";
+	cout << "[Gender] ";
 	if (a[idx].gender == 0) cout << "Female";
 	else cout << "Male";
 	cout << endl;
-	cout << "Type: " << a[idx].type << endl;
+	cout << "[Type] " << a[idx].type << endl;
+	cout << endl;*/
+	/*std::system("pause");
+	Menu_Staff(a, idx);*/
+
+	for (int i = 0; i < 9; i++) {
+		if (i % 2 == 0) {
+			for (int j = 0; j < bsize; j++) {
+				if (j == 0 || j == bsize) {
+					if (i == 0 || i == 8) cout << " ";
+					else cout << "|";
+				}
+				else cout << "-";
+			}
+			if (i != 0 && i != 8) cout << "|";
+		} else {
+			cout << "|";
+			if (i == 1) {
+				cout << " Full Name | " << a[idx].fullname;
+				for (int j = 0;	j < bsize - 14 - strlen(a[idx].fullname); j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else if (i == 3) {
+				cout << " DoB       | ";
+				for (int j = 0; j < strlen(a[idx].dob); j++) {
+					if (j == 2 || j == 5) cout << "/";
+					else cout << a[idx].dob[j];
+				}
+				for (int j = 0; j < bsize - 14 - strlen(a[idx].dob); j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else if (i == 5) {
+				cout << " Gender    | ";
+				char gentemp[2][7] = { "Female", "Male" };
+				cout << gentemp[a[idx].gender];
+				for (int j = 0; j < bsize - 14
+					-strlen(gentemp[a[idx].gender]); j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else {
+				cout << " Type      | " << a[idx].type;
+				for (int j = 0; j < bsize - 15; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+		}
+		cout << endl;
+	}
 	std::system("pause");
-	staff_menu(a, idx);
+	Menu_Staff(a, idx);
 }
 
 void changepassword_staff(staff a[], int& idx)
@@ -1430,6 +1484,7 @@ void changepassword_staff(staff a[], int& idx)
 			{
 				f1.getline(tempo, 100);
 				strcpy(tempo, newpass1);
+				strcpy(a[idx].password, newpass1);
 				f2 << tempo << "\n";
 			}
 		}

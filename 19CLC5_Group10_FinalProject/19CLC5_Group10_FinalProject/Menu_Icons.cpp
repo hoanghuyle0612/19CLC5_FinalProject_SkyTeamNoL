@@ -20,28 +20,28 @@
 
 //void Icon_Login() {
 
-//	cout << setw(25) << " ------------ " << endl; // 1
-//	cout << setw(25) << "|    ----    |" << endl; // 2
-//	cout << setw(25) << "|   |----|   |" << endl; // 3
-//	cout << setw(25) << "|   |    |   |" << endl; // 4
-//	cout << setw(25) << "|    \  /    |" << endl; // 5
-//	cout << setw(25) << "|   /|  |\   |" << endl; // 6
-//	cout << setw(25) << "|  |  \/  |  |" << endl; // 7 
-//	cout << setw(25) << "|  |      |  |" << endl; // 8
+//	cout << setw(25) << " ------------- " << endl; // 1
+//	cout << setw(25) << "|    -----    |" << endl; // 2
+//	cout << setw(25) << "|   |-----|   |" << endl; // 3
+//	cout << setw(25) << "|   |     |   |" << endl; // 4
+//	cout << setw(25) << "|    \   /    |" << endl; // 5
+//	cout << setw(25) << "|   /|   |\   |" << endl; // 6
+//	cout << setw(25) << "|  |  \_/  |  |" << endl; // 7 
+//	cout << setw(25) << "|  |       |  |" << endl; // 8
 //	cout << setw(25) << " ------------ " << endl; // 9
 //	cout << endl;
 //}
 
 //void Icon_Exit() {
 
-//	cout << setw(25) << " ------------ " << endl; // 1
-//	cout << setw(25) << "|   ------   |" << endl; // 2
-//	cout << setw(25) << "|  |      |  |" << endl; // 3
-//	cout << setw(25) << "|         |  |" << endl; // 4
-//	cout << setw(25) << "| ----->  |  |" << endl; // 5
-//	cout << setw(25) << "|         |  |" << endl; // 6 
-//	cout << setw(25) << "|  |      |  |" << endl; // 7
-//	cout << setw(25) << "|   ------   |" << endl; // 8
+//	cout << setw(25) << " ------------- " << endl; // 1
+//	cout << setw(25) << "|   -------   |" << endl; // 2
+//	cout << setw(25) << "|  |       |  |" << endl; // 3
+//	cout << setw(25) << "|          |  |" << endl; // 4
+//	cout << setw(25) << "| ------>  |  |" << endl; // 5
+//	cout << setw(25) << "|          |  |" << endl; // 6 
+//	cout << setw(25) << "|  |       |  |" << endl; // 7
+//	cout << setw(25) << "|   -------   |" << endl; // 8
 //	cout << setw(25) << " ------------ " << endl; // 9
 //	cout << endl;
 //}
