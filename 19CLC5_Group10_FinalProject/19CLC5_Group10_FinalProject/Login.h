@@ -59,3 +59,6 @@ void logout();
 void staff_menu(staff a[], int& idx);
 void lecturer_menu(lecturer b[], int& idx);
 void student_menu(student c[], int& idx);
+
+
+void Menu_Staff(staff a[], int& idx);

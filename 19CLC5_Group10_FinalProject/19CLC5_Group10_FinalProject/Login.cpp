@@ -59,8 +59,11 @@ void loadstudentarray(fstream& f, student c[], int& n)
 		loadstudent(f, c[i]);
 	}
 }
+
 void login()
 {
+	std::system("cls");
+	cout << "-Login-" << endl << endl;
 	int idx;
 	int n;
 	staff a[100];
@@ -68,10 +71,11 @@ void login()
 	student c[100];
 	char userlogin[100];
 	char passlogin[100];
-	cout << "Username: ";
-	cin >> userlogin;
-	cout << "Password: ";
-	cin >> passlogin;
+	/*cin.ignore();*/
+	cout << "[- Username ----------]" << endl;
+	cout << "> "; cin >> userlogin;
+	cout << "[- Password ----------]" << endl;
+	cout << "> "; cin >> passlogin;
 	fstream f;
 	f.open("staff.txt");
 	if (!f.is_open())
@@ -86,11 +90,12 @@ void login()
 			if (a[i].type == 1 && !strcmp(userlogin, a[i].username) && !strcmp(passlogin, a[i].password))
 			{
 				idx = i;
-				cout << "Login successfully. Hello staff " << a[i].fullname << "!";
+				cout << "Login successfully. Hello staff " << a[i].fullname << "!" << endl;
 				f.close();
 				std::system("pause");
-				staff_menu(a, idx);
-				exit(1);
+				cin.ignore();
+				Menu_Staff(a, idx);
+				return;
 			}
 		}
 	}
@@ -136,12 +141,13 @@ void login()
 		}
 	}
 	cout << "Incorrect username or password!" << endl;
+	std::system("pause");
 	login();
 }
 void main_menu()
 {
 	int choice;
-	cout << "-Select next option-" << endl;
+	cout << "-Main menu-" << endl;
 	cout << "1. Login" << endl;
 	cout << "2. Exit" << endl;
 	cout << "> "; cin >> choice;
@@ -166,6 +172,7 @@ void logout()
 {
 	main_menu();
 }
+
 void staffclass_func(staff a[], int& idx)
 {
 	int choice;
@@ -1292,6 +1299,7 @@ void list_of_student_in_class(staff a[], int& idx)
 		staffclass_func(a, idx);
 	}
 }
+
 void academic_lecturer(lecturer b[], int& idx)
 {
 	int choice;
@@ -1327,6 +1335,7 @@ void academic_student(student c[], int& idx)
 		cout << "Unavailable. Try again" << endl; cin >> choice;
 	}
 }
+
 void view_profile_student(student c[], int& idx)
 {
 	fstream f;
@@ -1352,42 +1361,57 @@ void view_profile_staff(staff a[], int& idx)
 	fstream f;
 	loadstaffarray(f, a, idx);
 	cout << "Full name: " << a[idx].fullname << endl;
-	cout << "Date of birth: " << a[idx].dob << endl;
-	cout << "Gender: " << a[idx].gender << endl;
-	cout << "Type: " << a[idx].type << endl;
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staff_menu(a, idx);
+	cout << "Date of birth: ";
+	for (int i = 0; i < 10; i++) {
+		if (i == 2 || i == 5) cout << "/";
+		else cout << a[idx].dob[i];
 	}
+	cout << endl;
+	cout << "Gender: ";
+	if (a[idx].gender == 0) cout << "Female";
+	else cout << "Male";
+	cout << endl;
+	cout << "Type: " << a[idx].type << endl;
+	std::system("pause");
+	staff_menu(a, idx);
 }
+
 void changepassword_staff(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Change password-" << endl << endl;
 	int n;
 	/*char currentusername[100];*/
 	char newpass1[100];
 	char newpass2[100];
 	char currentpass[100];
-	cout << "Enter your current password: ";
-	cin >> currentpass;
+	cout << "[- Current Password -----]" << endl;
+	cout << "> "; cin >> currentpass;
 	while (strcmp(currentpass, a[idx].password))
 	{
 		cout << "Incorrect password." << endl;
-		cout << "Enter your current password: ";
-		cin >> currentpass;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> "; cin >> currentpass;
 	}
-	cout << "Enter new password: ";
-	cin >> newpass1;
-	cout << "Confirm new password: ";
-	cin >> newpass2;
+	cout << "[- New Password ---------]" << endl;
+	cout << "> "; cin >> newpass1;
+	cout << "[- Confirm New Password -]" << endl;
+	cout << "> "; cin >> newpass2;
 	while (strcmp(newpass1, newpass2))
 	{
 		cout << "Passwords don't match." << endl;
-		cout << "Enter new password: ";
-		cin >> newpass1;
-		cout << "Confirm new password: ";
-		cin >> newpass2;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> " << currentpass << endl;
+		cout << "[- New Password ---------]" << endl;
+		cout << "> "; cin >> newpass1;
+		cout << "[- Confirm New Password -]" << endl;
+		cout << "> "; cin >> newpass2;
 	}
 	/*cout << "Enter username to make sure: "; 
 	cin >> currentusername;*/
@@ -1420,15 +1444,15 @@ void changepassword_staff(staff a[], int& idx)
 		}*/
 		if (remove("staff.txt") == 0)
 		{
-			cout << "Processing changing" << endl;
+			cout << "Changing password..." << endl;
 		}
 		if (rename("temp_staff.txt", "staff.txt") == 0)
 		{
-			cout << "Successfully" << endl;
+			cout << "Password changed successfully!" << endl;
 		}
 	}
 	std::system("pause");
-	staff_menu(a, idx);
+	Menu_Staff(a, idx);
 }
 void changepassword_lecturer(lecturer b[], int idx)
 {
@@ -1613,6 +1637,7 @@ void changepassword_student(student c[], int idx)
 		cout << "Successfully" << endl;
 	}
 }
+
 void academic_staff(staff a[], int& idx)
 {
 	int choice;
@@ -1630,18 +1655,19 @@ void academic_staff(staff a[], int& idx)
 	}
 	switch (choice)
 	{
-	case 1:
-	{
-		staffclass_func(a, idx);
-		break;
-	}
-	case 5:
-	{
-		staff_menu(a, idx);
-		break;
-	}
+		case 1:
+		{
+			staffclass_func(a, idx);
+			break;
+		}
+		case 5:
+		{
+			staff_menu(a, idx);
+			break;
+		}
 	}
 }
+
 void staff_menu(staff a[], int& idx)
 {
 	int choice;

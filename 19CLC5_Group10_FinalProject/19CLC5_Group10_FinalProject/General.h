@@ -12,6 +12,11 @@
 #include <chrono>
 #include <ctime>
 #include <string.h>
+#include <Windows.h>
+#include <iomanip>
+#include <conio.h>
 using namespace std;
+
+void login();
 
 #endif
