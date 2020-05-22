@@ -1,12 +1,12 @@
 3
 hatu
-12345
+123
 Hoang Anh Tu
 01 01 1985
 0
 1
 ntmphuc
-02011985
+010101
 Nguyen Thi Minh Phuc
 02 01 1985
 0

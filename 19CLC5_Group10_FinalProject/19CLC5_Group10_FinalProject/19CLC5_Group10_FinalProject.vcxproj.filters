@@ -15,41 +15,46 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h">
+    <ClInclude Include="General.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Course.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttendanceList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="AttendanceList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Course.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="class.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="lecturer.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="staff.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="student.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="student-19apcs1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="student-19clc5.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="student-19apcs1.csv">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClCompile Include="Student.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Course_Staff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Login.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu_Icons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
-// source.cpp
-#include "Header.h"
+// LOGIN FUNCTION
+
+#include "Login.h"
+
 void loadstaff(fstream& f, staff& a)
 {
 	f.ignore();
@@ -57,8 +59,11 @@ void loadstudentarray(fstream& f, student c[], int& n)
 		loadstudent(f, c[i]);
 	}
 }
+
 void login()
 {
+	std::system("cls");
+	cout << "-Login-" << endl << endl;
 	int idx;
 	int n;
 	staff a[100];
@@ -66,10 +71,11 @@ void login()
 	student c[100];
 	char userlogin[100];
 	char passlogin[100];
-	cout << "Username: ";
-	cin >> userlogin;
-	cout << "Password: ";
-	cin >> passlogin;
+	/*cin.ignore();*/
+	cout << "[- Username ----------]" << endl;
+	cout << "> "; cin >> userlogin;
+	cout << "[- Password ----------]" << endl;
+	cout << "> "; cin >> passlogin;
 	fstream f;
 	f.open("staff.txt");
 	if (!f.is_open())
@@ -84,10 +90,13 @@ void login()
 			if (a[i].type == 1 && !strcmp(userlogin, a[i].username) && !strcmp(passlogin, a[i].password))
 			{
 				idx = i;
-				cout << "Login successfully. Hello staff " << a[i].fullname << "!";
+				/*cout << "Login successfully. Hello staff " << a[i].fullname << "!" << endl;*/
 				f.close();
-				staff_menu(a, idx);
-				exit(1);
+				/*std::system("pause");*/
+				DrawWelcome();
+				cin.ignore();
+				Menu_Staff(a, idx);
+				return;
 			}
 		}
 	}
@@ -132,19 +141,21 @@ void login()
 			}
 		}
 	}
-	cout << "Uncorrect username or password!" << endl;
+	cout << "Incorrect username or password!" << endl;
+	std::system("pause");
 	login();
 }
 void main_menu()
 {
 	int choice;
+	cout << "-Main menu-" << endl;
 	cout << "1. Login" << endl;
 	cout << "2. Exit" << endl;
-	cout << "Enter your choice: " << endl;
-	cin >> choice;
+	cout << "> "; cin >> choice;
 	while (choice < 0 || choice > 2)
 	{
-		cout << "Unavailable. Try again" << endl; cin >> choice;
+		cout << "Invalid input. Try again." << endl; 
+		cout << "> "; cin >> choice;
 	}
 	switch (choice)
 	{
@@ -162,6 +173,7 @@ void logout()
 {
 	main_menu();
 }
+
 void staffclass_func(staff a[], int& idx)
 {
 	int choice;
@@ -224,11 +236,14 @@ void staffclass_func(staff a[], int& idx)
 	}
 	}
 }
+
 void import(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Import Class- " << endl << endl;
 	char currentclassname[15];
-	cout << "Which class do you want to import?" << endl;
-	cout << "Class: "; cin >> currentclassname;
+	cout << "[- Enter Class you want to import -]" << endl;
+	cout << "> "; cin >> currentclassname;
 	char line[100];
 	ifstream f("class.txt");
 	ofstream fa("temp.txt");
@@ -239,7 +254,8 @@ void import(staff a[], int& idx)
 	{
 		if (!strcmp(line, currentclassname))
 		{
-			cout << "Class existed" << endl;
+			cout << "Class already exists." << endl;
+			std::system("pause");
 			check = 1;
 		}
 		fa << line << "\n";
@@ -267,7 +283,8 @@ void import(staff a[], int& idx)
 		ft.close();
 		remove("temp.txt");
 		char link[100];
-		cout << "Enter link: "; cin >> link;
+		cout << "[- Enter Class directory ----------]" << endl;
+		cout << "> "; cin >> link;
 		fstream f1(link);
 		ofstream f2("temp.txt");
 		student c[100];
@@ -401,19 +418,18 @@ void import(staff a[], int& idx)
 		remove("temp1.txt");
 		remove("temp2.txt");
 		cout << endl;
-		int press;
-		cout << "Enter 1 to back: "; cin >> press;
-		if (press == 1)
-		{
-			staffclass_func(a, idx);
-		}
+		cout << "Class imported." << endl;
+		std::system("pause");
+		Menu_Staff_Class(a, idx);
 	}
 }
 void add_a_new_student(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Add new Student to a Class-" << endl << endl;
 	char currentclass[100];
 	int choice;
-	cout << "Which class do you want to add?";
+	cout << "-List of available Classes-";
 	cout << endl;
 	ifstream f("class.txt");
 	char line1[100];
@@ -425,20 +441,26 @@ void add_a_new_student(staff a[], int& idx)
 	{
 		cout << line1 << endl;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	cout << endl;
+	cout << "[- Class ----------------------]" << endl;
+	cout << "> "; cin >> currentclass;
 	f.close();
 	int type = 1;
 	int gender;
 	int id;
 	char fullname[100];
 	char dob[15];
-	cout << "Enter ID: "; cin >> id;
-	cout << "Enter full name: ";
+	cout << "[- ID -------------------------]" << endl;
+	cout << "> "; cin >> id;
+	cout << "[- Full name ------------------]" << endl;
 	cin.ignore();
+	cout << "> ";
 	cin.getline(fullname, 101);
-	cout << "Enter date of birth (dd//mm/yyyy): ";
+	cout << "[- Date of Birth (dd/mm/yyyy) -]" << endl;
+	cout << "> ";
 	cin.getline(dob, 16);
-	cout << "Gender (0 - female or 1 - male): "; cin >> gender;
+	cout << "[- Gender (0 - F | 1 - M) -----]" << endl;
+	cout << "> "; cin >> gender;
 	int check = 0;
 	ifstream f1("student.txt");
 	char line2[100];
@@ -446,13 +468,14 @@ void add_a_new_student(staff a[], int& idx)
 	int q;
 	f1 >> q;
 	ofstream f2("temp.txt");
-	itoa(id, line3, 10);
+	_itoa(id, line3, 10);
 	f1.ignore();
 	while (f1.getline(line2, 100))
 	{
 		if (!strcmp(line3, line2))
 		{
-			cout << "This student exists. Cannot add new. Try again. " << endl;
+			cout << "Student already exists." << endl;
+			std::system("pause");
 			check = 1;
 		}
 		f2 << line2 << "\n";
@@ -556,12 +579,9 @@ void add_a_new_student(staff a[], int& idx)
 		remove("temp.txt");
 		remove("temp2.txt");
 	}
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staffclass_func(a, idx);
-	}
+	cout << "New Student added." << endl;
+	std::system("pause");
+	Menu_Staff_Class(a, idx);
 }
 void edit_existing_student(staff a[], int& idx)
 {
@@ -618,7 +638,7 @@ void edit_existing_student(staff a[], int& idx)
 		{
 			f5 << temp << "\n";
 			char linea[100];
-			itoa(id, linea, 10);
+			_itoa(id, linea, 10);
 			if (!strcmp(temp, linea))
 			{
 				count++;
@@ -702,7 +722,7 @@ void edit_existing_student(staff a[], int& idx)
 		{
 			f6 << temp2 << "\n";
 			char linea1[100];
-			itoa(id, linea1, 10);
+			_itoa(id, linea1, 10);
 			if (!strcmp(temp2, linea1))
 			{
 				cou++;
@@ -819,7 +839,7 @@ void remove_a_student(staff a[], int& idx)
 		{
 			f5 << temp << "\n";
 			char linea[100];
-			itoa(id, linea, 10);
+			_itoa(id, linea, 10);
 			if (!strcmp(temp, linea))
 			{
 				count++;
@@ -898,7 +918,7 @@ void remove_a_student(staff a[], int& idx)
 		{
 			f6 << temp2 << "\n";
 			char linea1[100];
-			itoa(id, linea1, 10);
+			_itoa(id, linea1, 10);
 			if (!strcmp(temp2, linea1))
 			{
 				cou++;
@@ -1013,7 +1033,7 @@ void change_student_classA_to_B(staff a[], int& idx)
 		{
 			f5 << temp << "\n";
 			char linea[100];
-			itoa(id, linea, 10);
+			_itoa(id, linea, 10);
 			if (!strcmp(temp, linea))
 			{
 				count++;
@@ -1092,7 +1112,7 @@ void change_student_classA_to_B(staff a[], int& idx)
 		{
 			f6 << temp2 << "\n";
 			char linea1[100];
-			itoa(id, linea1, 10);
+			_itoa(id, linea1, 10);
 			if (!strcmp(temp2, linea1))
 			{
 				cou++;
@@ -1288,6 +1308,7 @@ void list_of_student_in_class(staff a[], int& idx)
 		staffclass_func(a, idx);
 	}
 }
+
 void academic_lecturer(lecturer b[], int& idx)
 {
 	int choice;
@@ -1323,6 +1344,7 @@ void academic_student(student c[], int& idx)
 		cout << "Unavailable. Try again" << endl; cin >> choice;
 	}
 }
+
 void view_profile_student(student c[], int& idx)
 {
 	fstream f;
@@ -1345,88 +1367,166 @@ void view_profile_lecturer(lecturer b[], int& idx)
 }
 void view_profile_staff(staff a[], int& idx)
 {
+	int bsize = strlen(a[idx].fullname) + 20;
 	fstream f;
 	loadstaffarray(f, a, idx);
-	cout << "Full name: " << a[idx].fullname << endl;
-	cout << "Date of birth: " << a[idx].dob << endl;
-	cout << "Gender: " << a[idx].gender << endl;
-	cout << "Type: " << a[idx].type << endl;
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staff_menu(a, idx);
+	std::system("cls");
+	cout << "-Profile - Academic Staff-" << endl << endl;
+	/*cout << "[Full name] " << a[idx].fullname << endl;
+	cout << "[DoB] ";
+	for (int i = 0; i < 10; i++) {
+		if (i == 2 || i == 5) cout << "/";
+		else cout << a[idx].dob[i];
 	}
+	cout << endl;
+	cout << "[Gender] ";
+	if (a[idx].gender == 0) cout << "Female";
+	else cout << "Male";
+	cout << endl;
+	cout << "[Type] " << a[idx].type << endl;
+	cout << endl;*/
+	/*std::system("pause");
+	Menu_Staff(a, idx);*/
+
+	for (int i = 0; i < 9; i++) {
+		if (i % 2 == 0) {
+			for (int j = 0; j < bsize; j++) {
+				if (j == 0 || j == bsize - 1) {
+					if (i == 0 || i == 8) {
+						if (j == 0) cout << "[";
+						else if (j == bsize - 1) cout << "]";
+					}
+					else cout << "|";
+				}
+				else cout << "-";
+			}/*
+			if (i != 0 && i != 8) cout << "|";*/
+		} else {
+			cout << "|";
+			if (i == 1) {
+				cout << " Full Name | " << a[idx].fullname;
+				for (int j = 0;	j < bsize - 14 - strlen(a[idx].fullname) -1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else if (i == 3) {
+				cout << " DoB       | ";
+				for (int j = 0; j < strlen(a[idx].dob); j++) {
+					if (j == 2 || j == 5) cout << "/";
+					else cout << a[idx].dob[j];
+				}
+				for (int j = 0; j < bsize - 14 - strlen(a[idx].dob) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else if (i == 5) {
+				cout << " Gender    | ";
+				char gentemp[2][7] = { "Female", "Male" };
+				cout << gentemp[a[idx].gender];
+				for (int j = 0; j < bsize - 14
+					-strlen(gentemp[a[idx].gender]) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			} else {
+				cout << " Type      | " << a[idx].type;
+				for (int j = 0; j < bsize - 15 - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+	std::system("pause");
+	Menu_Staff(a, idx);
 }
+
 void changepassword_staff(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Change password-" << endl << endl;
 	int n;
-	char currentusername[100];
+	/*char currentusername[100];*/
 	char newpass1[100];
 	char newpass2[100];
 	char currentpass[100];
-	cout << "Enter your current password: ";
-	cin >> currentpass;
+	cout << "[- Current Password -----]" << endl;
+	cout << "> "; cin >> currentpass;
 	while (strcmp(currentpass, a[idx].password))
 	{
-		cout << "Uncorrect password." << endl;
-		cout << "Enter your current password: ";
-		cin >> currentpass;
+		cout << "Incorrect password." << endl;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> "; cin >> currentpass;
 	}
-	cout << "Enter new password: ";
-	cin >> newpass1;
-	cout << "Enter new password again: ";
-	cin >> newpass2;
+	cout << "[- New Password ---------]" << endl;
+	cout << "> "; cin >> newpass1;
+	cout << "[- Confirm New Password -]" << endl;
+	cout << "> "; cin >> newpass2;
 	while (strcmp(newpass1, newpass2))
 	{
-		cout << "Unmatched. Try again." << endl;
-		cout << "Enter new password: ";
-		cin >> newpass1;
-		cout << "Enter new password again: ";
-		cin >> newpass2;
+		cout << "Passwords don't match." << endl;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> " << currentpass << endl;
+		cout << "[- New Password ---------]" << endl;
+		cout << "> "; cin >> newpass1;
+		cout << "[- Confirm New Password -]" << endl;
+		cout << "> "; cin >> newpass2;
 	}
-	cout << "Enter username to make sure: "; cin >> currentusername;
+	/*cout << "Enter username to make sure: "; 
+	cin >> currentusername;*/
 	ifstream f1("staff.txt");
-	ofstream f2("temp_staff.txt");
-	if (!f1.is_open() || !f2.is_open())
+	if (!f1.is_open())
 	{
-		cout << "Error opening files!" << endl;
-	}
-	char temp[100];
-	char tempo[100];
-	while (f1.getline(temp, 100))
-	{
-		f2 << temp << "\n";
-		if (!strcmp(temp, a[idx].username))
-		{
-			f1.getline(tempo, 100);
-			strcpy(tempo, newpass1);
-			f2 << tempo << "\n";
+		cout << "Cannot change password." << endl;
+	} else {
+		ofstream f2("temp_staff.txt");
+		if (!f2.is_open()) {
+			cout << "Cannot change password." << endl; 
+		} else {
+			char temp[100];
+			char tempo[100];
+			while (f1.getline(temp, 100))
+			{
+				f2 << temp << "\n";	
+				if (!strcmp(temp, a[idx].username))
+				{
+					f1.getline(tempo, 100);
+					strcpy(tempo, newpass1);
+					strcpy(a[idx].password, newpass1);
+					f2 << tempo << "\n";
+				}
+			}
+			f2.close();
+			/*fstream newFile("staff.txt");
+			if (!newFile.is_open())
+			{
+				cout << "Cannot open file." << endl;
+			} else {
+				newFile.close();
+			}*/
 		}
+		f1.close();
+		if (remove("staff.txt") == 0)
+		{
+			cout << "Changing password..." << endl;
+		}
+		else cout << "Cannot change password." << endl;
+		if (rename("temp_staff.txt", "staff.txt") == 0)
+		{
+			cout << "Password changed successfully!" << endl;
+		}
+		else cout << "Cannot change password." << endl;
 	}
-	f1.close();
-	f2.close();
-	fstream newFile("staff.txt");
-	if (!newFile)
-	{
-		cout << "File cannot open" << endl;
-		return;
-	}
-	newFile.close();
-	if (remove("staff.txt") == 0)
-	{
-		cout << "Processing changing" << endl;
-	}
-	if (rename("temp_staff.txt", "staff.txt") == 0)
-	{
-		cout << "Successfully" << endl;
-	}
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staffclass_func(a, idx);
-	}
+	std::system("pause");
+	Menu_Staff(a, idx);
 }
 void changepassword_lecturer(lecturer b[], int idx)
 {
@@ -1611,6 +1711,7 @@ void changepassword_student(student c[], int idx)
 		cout << "Successfully" << endl;
 	}
 }
+
 void academic_staff(staff a[], int& idx)
 {
 	int choice;
@@ -1628,55 +1729,57 @@ void academic_staff(staff a[], int& idx)
 	}
 	switch (choice)
 	{
-	case 1:
-	{
-		staffclass_func(a, idx);
-		break;
-	}
-	case 5:
-	{
-		staff_menu(a, idx);
-		break;
-	}
+		case 1:
+		{
+			staffclass_func(a, idx);
+			break;
+		}
+		case 5:
+		{
+			staff_menu(a, idx);
+			break;
+		}
 	}
 }
+
 void staff_menu(staff a[], int& idx)
 {
 	int choice;
 	cout << endl;
-	cout << "Which types you want?" << endl;
+	std::system("cls");
+	cout << "-Select next option-" << endl;
 	cout << "1. Academic" << endl;
 	cout << "2. View profile" << endl;
 	cout << "3. Change password" << endl;
 	cout << "4. Log out" << endl;
-	cout << "Enter your choice: " << endl;
-	cin >> choice;
+	cout << "> "; cin >> choice;
 	while (choice < 0 || choice > 4)
 	{
-		cout << "Unavailable. Try again" << endl; cin >> choice;
+		cout << "Invalid input. Try again." << endl; 
+		cout << "> "; cin >> choice;
 	}
-	switch (choice)
-	{
-	case 1:
-	{
-		academic_staff(a, idx);
-		break;
-	}
-	case 2:
-	{
-		view_profile_staff(a, idx);
-		break;
-	}
-	case 3:
-	{
-		changepassword_staff(a, idx);
-		break;
-	}
-	case 4:
-	{
-		logout();
-		break;
-	}
+	std::system("cls");
+	switch (choice) {
+		case 1:
+		{
+			academic_staff(a, idx);
+			break;
+		}
+		case 2:
+		{
+			view_profile_staff(a, idx);
+			break;
+		}
+		case 3:
+		{
+			changepassword_staff(a, idx);
+			break;
+		}
+		case 4:
+		{
+			logout();
+			break;
+		}
 	}
 }
 void lecturer_menu(lecturer b[], int& idx)

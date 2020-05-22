@@ -1,5 +1,7 @@
-// source.cpp
-#include "Header.h"
+// LOGIN FUNCTION
+
+#include "Login.h"
+
 void loadstaff(fstream& f, staff& a)
 {
 	f.ignore();

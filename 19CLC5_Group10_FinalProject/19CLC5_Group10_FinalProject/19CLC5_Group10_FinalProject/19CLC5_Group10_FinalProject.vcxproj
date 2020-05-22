@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{1D2FFDF4-378F-467B-8676-1DF0D372F577}</ProjectGuid>
-    <RootNamespace>Function12</RootNamespace>
+    <ProjectGuid>{B0A9447E-20F1-4E8D-9116-4E0069DF1445}</ProjectGuid>
+    <RootNamespace>My19CLC5Group10FinalProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,7 +74,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -123,22 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="AttendanceList.h" />
+    <ClInclude Include="Course.h" />
+    <ClInclude Include="General.h" />
+    <ClInclude Include="Login.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="class.txt" />
-    <Text Include="lecturer.txt" />
-    <Text Include="staff.txt" />
-    <Text Include="student-19apcs1.txt" />
-    <Text Include="student-19clc5.txt" />
-    <Text Include="student.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="student-19apcs1.csv" />
+    <ClCompile Include="AttendanceList.cpp" />
+    <ClCompile Include="Course.cpp" />
+    <ClCompile Include="Course_Staff.cpp" />
+    <ClCompile Include="Login.cpp" />
+    <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
