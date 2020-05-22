@@ -1359,7 +1359,7 @@ void view_profile_lecturer(lecturer b[], int& idx)
 }
 void view_profile_staff(staff a[], int& idx)
 {
-	int bsize = 40;
+	int bsize = strlen(a[idx].fullname) + 20;
 	fstream f;
 	loadstaffarray(f, a, idx);
 	std::system("cls");
@@ -1383,18 +1383,21 @@ void view_profile_staff(staff a[], int& idx)
 	for (int i = 0; i < 9; i++) {
 		if (i % 2 == 0) {
 			for (int j = 0; j < bsize; j++) {
-				if (j == 0 || j == bsize) {
-					if (i == 0 || i == 8) cout << " ";
+				if (j == 0 || j == bsize - 1) {
+					if (i == 0 || i == 8) {
+						if (j == 0) cout << "[";
+						else if (j == bsize - 1) cout << "]";
+					}
 					else cout << "|";
 				}
 				else cout << "-";
-			}
-			if (i != 0 && i != 8) cout << "|";
+			}/*
+			if (i != 0 && i != 8) cout << "|";*/
 		} else {
 			cout << "|";
 			if (i == 1) {
 				cout << " Full Name | " << a[idx].fullname;
-				for (int j = 0;	j < bsize - 14 - strlen(a[idx].fullname); j++) {
+				for (int j = 0;	j < bsize - 14 - strlen(a[idx].fullname) -1; j++) {
 					cout << " ";
 				}
 				cout << "|";
@@ -1404,7 +1407,7 @@ void view_profile_staff(staff a[], int& idx)
 					if (j == 2 || j == 5) cout << "/";
 					else cout << a[idx].dob[j];
 				}
-				for (int j = 0; j < bsize - 14 - strlen(a[idx].dob); j++) {
+				for (int j = 0; j < bsize - 14 - strlen(a[idx].dob) - 1; j++) {
 					cout << " ";
 				}
 				cout << "|";
@@ -1413,13 +1416,13 @@ void view_profile_staff(staff a[], int& idx)
 				char gentemp[2][7] = { "Female", "Male" };
 				cout << gentemp[a[idx].gender];
 				for (int j = 0; j < bsize - 14
-					-strlen(gentemp[a[idx].gender]); j++) {
+					-strlen(gentemp[a[idx].gender]) - 1; j++) {
 					cout << " ";
 				}
 				cout << "|";
 			} else {
 				cout << " Type      | " << a[idx].type;
-				for (int j = 0; j < bsize - 15; j++) {
+				for (int j = 0; j < bsize - 15 - 1; j++) {
 					cout << " ";
 				}
 				cout << "|";
@@ -1471,41 +1474,47 @@ void changepassword_staff(staff a[], int& idx)
 	/*cout << "Enter username to make sure: "; 
 	cin >> currentusername;*/
 	ifstream f1("staff.txt");
-	ofstream f2("temp_staff.txt");
-	if (!f1.is_open() || !f2.is_open())
+	if (!f1.is_open())
 	{
 		cout << "Cannot change password." << endl;
 	} else {
-		char temp[100];
-		char tempo[100];
-		while (f1.getline(temp, 100))
-		{
-			f2 << temp << "\n";	
-			if (!strcmp(temp, a[idx].username))
+		ofstream f2("temp_staff.txt");
+		if (!f2.is_open()) {
+			cout << "Cannot change password." << endl; 
+		} else {
+			char temp[100];
+			char tempo[100];
+			while (f1.getline(temp, 100))
 			{
-				f1.getline(tempo, 100);
-				strcpy(tempo, newpass1);
-				strcpy(a[idx].password, newpass1);
-				f2 << tempo << "\n";
+				f2 << temp << "\n";	
+				if (!strcmp(temp, a[idx].username))
+				{
+					f1.getline(tempo, 100);
+					strcpy(tempo, newpass1);
+					strcpy(a[idx].password, newpass1);
+					f2 << tempo << "\n";
+				}
 			}
+			f2.close();
+			/*fstream newFile("staff.txt");
+			if (!newFile.is_open())
+			{
+				cout << "Cannot open file." << endl;
+			} else {
+				newFile.close();
+			}*/
 		}
 		f1.close();
-		f2.close();
-		/*fstream newFile("staff.txt");
-		if (!newFile.is_open())
-		{
-			cout << "Cannot open file." << endl;
-		} else {
-			newFile.close();
-		}*/
 		if (remove("staff.txt") == 0)
 		{
 			cout << "Changing password..." << endl;
 		}
+		else cout << "Cannot change password." << endl;
 		if (rename("temp_staff.txt", "staff.txt") == 0)
 		{
 			cout << "Password changed successfully!" << endl;
 		}
+		else cout << "Cannot change password." << endl;
 	}
 	std::system("pause");
 	Menu_Staff(a, idx);
