@@ -35,4 +35,23 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="2019-2020-HK2-18APCS1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="2019-2020-HK2-18APCS1-CS162-Student.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Semester.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Student-18APCS1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Courses.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -126,12 +126,12 @@ CourseList* LoadCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 
 	f.get(tmp, 20, ',');
 	//cout << "word: " << tmp << endl;
-	char* w = strtok(tmp, "/");
+	char* w = strtok(tmp, " /");
 	//cout << "word: " << w << endl;
 	newCourse->data.StartDate.Day = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " /");
 	newCourse->data.StartDate.Month = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " ");
 	newCourse->data.StartDate.Year = char_to_int(w);
 
 
@@ -144,7 +144,7 @@ CourseList* LoadCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 	newCourse->data.EndDate.Day = char_to_int(w);
 	w = strtok(NULL, "/");
 	newCourse->data.EndDate.Month = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " ");
 	newCourse->data.EndDate.Year = char_to_int(w);
 
 	f.ignore(256, ',');
@@ -277,7 +277,7 @@ void Save_Course_Stu_List(CourseList* list,char* AcaYear,char* Semester,char* Cl
 	CourseList* cur = list;
 	while (cur != nullptr)
 	{
-		Create_Course_Student(list, AcaYear, Semester, Class);
+		Create_Course_Student(cur, AcaYear, Semester, Class);
 		cur = cur->pNext;
 	}
 }
@@ -301,7 +301,7 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 	else
 	{
 		int cnt = CountCourse(list);
-		f << cnt << endl;
+		f << cnt;
 		CourseList* cur = list;
 		while (cur != nullptr) {
 			f << endl;
@@ -373,9 +373,9 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 	cout << "Enter start date (dd/mm/yyyy): ";
 	cin.getline(temp,256);
-	char* w = strtok(temp, " ");
+	char* w = strtok(temp, " /");
 	newCourse->data.StartDate.Day = char_to_int(w);
-	w = strtok(NULL, " ");
+	w = strtok(NULL, " /");
 	newCourse->data.StartDate.Month = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.StartDate.Year = char_to_int(w);
@@ -383,9 +383,9 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 	cout << "Enter end date (dd/mm/yyyy): "; 
 	cin.getline(temp,256);
-	w = strtok(temp, " ");
+	w = strtok(temp, " /");
 	newCourse->data.EndDate.Day = char_to_int(w);
-	w = strtok(NULL, " ");
+	w = strtok(NULL, " /");
 	newCourse->data.EndDate.Month = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.EndDate.Year = char_to_int(w);
@@ -396,7 +396,7 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 	cout << "Enter start hour (hh:mm): ";
 	cin.getline(temp, 256);
-	w = strtok(temp, " ");
+	w = strtok(temp, " :");
 	newCourse->data.StartHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.StartHour.m = char_to_int(w);
@@ -404,7 +404,7 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 	cout << "Enter end hour (hh:mm): ";
 	cin.getline (temp, 256);
-	w = strtok(temp, " ");
+	w = strtok(temp, " :");
 	newCourse->data.EndHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.EndHour.m = char_to_int(w);
@@ -463,7 +463,7 @@ CourseList* LoadCourseNode_txtfile(ifstream& f)
 	w = strtok(NULL, "\n");
 	newCourse->data.EndHour.m = char_to_int(w);
 
-	f.get(newCourse->data.Room, '\n');
+	f.getline(newCourse->data.Room, 10);
 
 	newCourse->pNext = nullptr;
 	return newCourse;
@@ -471,7 +471,8 @@ CourseList* LoadCourseNode_txtfile(ifstream& f)
 
 void LoadCourses_txtfile(char* Link, CourseList*& list)
 {
-	CourseList* tmp,* cur = list;
+	CourseList* tmp = nullptr;
+	CourseList* cur = list;
 	ifstream f;
 	f.open(Link);
 	if (!f.is_open())
@@ -484,11 +485,16 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 		f >> n;
 		while (!f.eof())
 		{
-			if (cur == nullptr) cur = LoadCourseNode_txtfile(f);
-			else if (cur != nullptr) {
+			if (cur == nullptr)
+			{
+				cur = LoadCourseNode_txtfile(f);
+				list = cur;
+			}
+			 else
+			{
 				tmp = LoadCourseNode_txtfile(f);
-				cur->pNext = tmp;
-				cur = cur->pNext;
+					cur->pNext = tmp;
+					cur = cur->pNext;
 			}
 		}
 		f.close();
@@ -497,11 +503,12 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 
 void AddCourse(char* AcaYear,char* Semester)
 {
-	CourseList* list;
+	CourseList* list = nullptr;
+	LecturerList* L_list = nullptr;
 	char Class[10];
 	cout << "Enter Class: ";
 	cin.getline(Class, 10);
-	char Link[256];
+	char Link[256];      
 	strcpy(Link, AcaYear);
 	strcat(Link, "-");
 	strcat(Link, Semester);
@@ -511,12 +518,46 @@ void AddCourse(char* AcaYear,char* Semester)
 	LoadCourses_txtfile(Link, list);
 	int cnt = CountCourse(list);
 	CourseList* cur = list;
-	while (cur->pNext != nullptr) cur = cur->pNext;
 	CourseList* p = CreateCourseNode();
-	cur->pNext = p;
+	while (cur != nullptr) {
+		if (cur->data.ID == p->data.ID)
+		{
+			cout << "Course already exist!!!." << endl;
+			return;
+		}
+		cur = cur->pNext;
+	}
 	p->data.No = cnt + 1;
+	LoadLecturerList(L_list);
+	LecturerList* cur2 = L_list;
+	while (cur2!= nullptr) {
+		if (cur2->data.username == p->data.LecturerUser) break;
+		cur2 = cur2->pNext;
+	}
+	if (cur2 == nullptr)
+	{
+		cout << "Lecturer account does not exist." << endl;
+		return;
+	}
+	strcpy(p->data.LecturerName, cur2->data.fullname);
+	strcpy(p->data.LecturerDegree, cur2->data.degree);
+	p->data.LecturerGender = cur2->data.gender;
+
+	cur = list;
+	if (cur == nullptr) {
+		list = p;
+	}
+	else {
+		while (cur && cur->pNext != nullptr) cur = cur->pNext;
+		if (cur != nullptr) cur->pNext = p;
+	}
+
 	SaveSchedule(list, AcaYear, Semester, Class);
+
 	Save_Course_Stu_List(list, AcaYear, Semester, Class);
+
+	delete_LecturerList(L_list);
+	delete_CourseList(list);
 
 }
 //=========================================================================================
@@ -581,4 +622,89 @@ Date PlusDay(Date init_Date, int plus_day){
 
 	}*/
 
+}
+
+//====================================================================================
+LecturerList* LoadLecturerNode(ifstream& f)
+{
+	LecturerList* b = nullptr;
+	b = new LecturerList;
+	f.ignore(256, '\n');
+	f.getline(b->data.username, 101);
+	if (b->data.username == NULL) return NULL;
+	f.getline(b->data.password, 101);
+	f.getline(b->data.fullname, 101);
+	f.getline(b->data.dob, 101);
+	f.getline(b->data.degree, 20);
+	f >> b->data.gender;
+
+	b->pNext = nullptr;
+	return b;
+}
+void LoadLecturerList(LecturerList*& list)
+{
+	ifstream fin;
+	fin.open("lecturer.txt");
+	if (!fin.is_open())
+	{
+		cout << "Can not open file" << endl;
+		return;
+	}
+	else
+	{
+		LecturerList* cur = list;
+		while (fin.peek()!=EOF)
+		{
+			if (cur == nullptr)
+			{
+				list = LoadLecturerNode(fin);
+				cur = list;
+			}
+			else
+			{
+				LecturerList* p;
+				p = LoadLecturerNode(fin);
+				cur->pNext = p;
+				cur = cur->pNext;
+			}
+		}
+		fin.close();
+	}
+}
+
+
+void delete_LecturerList(LecturerList*& list)
+{
+	if (list == nullptr) return;
+	LecturerList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
+}
+
+void delete_CourseList(CourseList*& list)
+{
+	if (list == nullptr) return;
+	CourseList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
+}
+
+void delete_StudentList(StudentList*& list)
+{
+	if (list == nullptr) return;
+	StudentList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
 }

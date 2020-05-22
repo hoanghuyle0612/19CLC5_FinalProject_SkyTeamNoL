@@ -18,7 +18,19 @@ struct Hour {
 	int m;  //minute
 };
 //================================
+struct lecturer {
+	char username[100];
+	char password[100];
+	char fullname[100];
+	char dob[20];
+	char degree[20];
+	int gender;
 
+};
+struct LecturerList {
+	lecturer data;
+	LecturerList* pNext;
+};
 
 //STUDENT STRUCT
 //===========================================
@@ -76,6 +88,7 @@ void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char*
 void ImportCourses(char* AcaYear, char* Semester);
 void AddCourse(char* AcaYear, char* Semester);
 void LoadCourses_txtfile(char* Link, CourseList*& list);
+void delete_CourseList(CourseList*& list);
 //=====================================================================================
 
 
@@ -88,6 +101,15 @@ Date PlusDay(Date init_Date, int plus_day);
 StudentList* CreateStudentNode(ifstream& f);
 void LoadStudentList(StudentList*& list, char* Class);
 int StudentCount(StudentList* list);
+void delete_StudentList(StudentList*& list);
+
+
+LecturerList* LoadLecturerNode(ifstream& f);
+void LoadLecturerList(LecturerList*& list);
+void delete_LecturerList(LecturerList*& list);
 
 int char_to_int(char* s);
+
+
+
 #endif

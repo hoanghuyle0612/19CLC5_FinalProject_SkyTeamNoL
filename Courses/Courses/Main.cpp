@@ -4,23 +4,11 @@
 int main()
 {
 	char AcaYear[] = "2019-2020", Semester[] = "HK2";
-	CourseList* list;
-	char Class[10];
-	cout << "Enter Class: ";
-	cin.getline(Class, 10);
-	char Link[256];
-	strcpy(Link, AcaYear);
-	strcat(Link, "-");
-	strcat(Link, Semester);
-	strcat(Link, "-");
-	strcat(Link, Class);
-	strcat(Link, ".txt");
-	LoadCourses_txtfile(Link, list);
-	CourseList* cur = list;
-	while (cur != nullptr) {
-		cout << cur->data.ID << endl;
-		cur = cur->pNext;
-	}
+	CourseList* list = NULL;
+	AddCourse(AcaYear, Semester);
+	
+	
+	return 0;
 
 
 
