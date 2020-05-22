@@ -3,7 +3,7 @@
 
 #include "Login.h"
 
-#define ENDLRANGE 8
+#define ENDLRANGE 11
 #define SETWIDTH 55
 
 //void Icon_Sample() {
@@ -89,6 +89,172 @@
 //	cout << setw(25) << 5 "| [] ======= |" << endl; // 5
 //	cout << setw(25) << 4 "|            |" << endl; // 6 
 //	cout << setw(25) << 3 "| [] ======= |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+
+//void Icon_Class() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|  --------  |" << endl; // 3
+//	cout << setw(25) << 4 "| |        | |" << endl; // 4
+//	cout << setw(25) << 5 "| |  ABCD  | |" << endl; // 5
+//	cout << setw(25) << 4 "| |        | |" << endl; // 6 
+//	cout << setw(25) << 3 "|  [======]  |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Course() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     __     |" << endl; // 3
+//	cout << setw(25) << 4 "|    /  \    |" << endl; // 4
+//	cout << setw(25) << 5 "|    \__/    |" << endl; // 5
+//	cout << setw(25) << 4 "|    //\\    |" << endl; // 6
+//	cout << setw(25) << 3 "|   //  \\   |" << endl; // 7 
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Scoreboard() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|  --------  |" << endl; // 3
+//	cout << setw(25) << 4 "| | MID  8 | |" << endl; // 4
+//	cout << setw(25) << 5 "| | FIN  9 | |" << endl; // 5
+//	cout << setw(25) << 4 "| | LAB  7 | |" << endl; // 6 
+//	cout << setw(25) << 3 "|  --------  |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_AttList() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "| ====== [v] |" << endl; // 3
+//	cout << setw(25) << 4 "|            |" << endl; // 4
+//	cout << setw(25) << 5 "| ====== [v] |" << endl; // 5
+//	cout << setw(25) << 4 "|            |" << endl; // 6 
+//	cout << setw(25) << 3 "| ====== [ ] |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Back() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|            |" << endl; // 3
+//	cout << setw(25) << 4 "|            |" << endl; // 4
+//	cout << setw(25) << 5 "|  <=======  |" << endl; // 5
+//	cout << setw(25) << 4 "|            |" << endl; // 6 
+//	cout << setw(25) << 3 "|            |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Import() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     ||     |" << endl; // 3
+//	cout << setw(25) << 4 "|  --_||_--  |" << endl; // 4
+//	cout << setw(25) << 5 "| |  \  /  | |" << endl; // 5
+//	cout << setw(25) << 4 "| |   \/   | |" << endl; // 6 
+//	cout << setw(25) << 3 "|  --------  |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Add() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     __     |" << endl; // 3
+//	cout << setw(25) << 4 "|  __|  |__  |" << endl; // 4
+//	cout << setw(25) << 5 "| |__    __| |" << endl; // 5
+//	cout << setw(25) << 4 "|    |__|    |" << endl; // 6 
+//	cout << setw(25) << 3 "|            |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Remove() {
+
+	//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|            |" << endl; // 3
+//	cout << setw(25) << 4 "|  ________  |" << endl; // 4
+//	cout << setw(25) << 5 "| |________| |" << endl; // 5
+//	cout << setw(25) << 4 "|            |" << endl; // 6 
+//	cout << setw(25) << 3 "|            |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Edit() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|  __        |" << endl; // 2
+//	cout << setw(25) << 3 "|  \_\       |" << endl; // 3
+//	cout << setw(25) << 4 "|   \ \      |" << endl; // 4
+//	cout << setw(25) << 5 "|    \ \     |" << endl; // 5
+//	cout << setw(25) << 4 "|     \ \    |" << endl; // 6 
+//	cout << setw(25) << 3 "|      \_\   |" << endl; // 7
+//	cout << setw(25) << 2 "|       \|   |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_ChangeClass() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|            |" << endl; // 3
+//	cout << setw(25) << 4 "|            |" << endl; // 4
+//	cout << setw(25) << 5 "|  A ---> B  |" << endl; // 5
+//	cout << setw(25) << 4 "|            |" << endl; // 6 
+//	cout << setw(25) << 3 "|            |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_ViewClass() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "| 19CLC      |" << endl; // 3
+//	cout << setw(25) << 4 "| ---------- |" << endl; // 4
+//	cout << setw(25) << 5 "| ---------- |" << endl; // 5
+//	cout << setw(25) << 4 "| ---------- |" << endl; // 6 
+//	cout << setw(25) << 3 "| ---------- |" << endl; // 7
 //	cout << setw(25) << 2 "|            |" << endl; // 8
 //	cout << setw(25) << 1 " ------------ " << endl; // 9
 //                          123456654321
@@ -268,7 +434,7 @@ void DrawWelcome() {
 	for (int i = 0; i < 20; i++) {
 		std::system("cls");
 		draw[i]();
-		Sleep(70);
+		Sleep(50);
 	}
 	Sleep(2000);
 }

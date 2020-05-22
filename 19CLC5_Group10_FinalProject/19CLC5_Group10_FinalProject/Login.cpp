@@ -236,11 +236,14 @@ void staffclass_func(staff a[], int& idx)
 	}
 	}
 }
+
 void import(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Import Class- " << endl << endl;
 	char currentclassname[15];
-	cout << "Which class do you want to import?" << endl;
-	cout << "Class: "; cin >> currentclassname;
+	cout << "[- Enter Class you want to import -]" << endl;
+	cout << "> "; cin >> currentclassname;
 	char line[100];
 	ifstream f("class.txt");
 	ofstream fa("temp.txt");
@@ -251,7 +254,8 @@ void import(staff a[], int& idx)
 	{
 		if (!strcmp(line, currentclassname))
 		{
-			cout << "Class existed" << endl;
+			cout << "Class already exists." << endl;
+			std::system("pause");
 			check = 1;
 		}
 		fa << line << "\n";
@@ -279,7 +283,8 @@ void import(staff a[], int& idx)
 		ft.close();
 		remove("temp.txt");
 		char link[100];
-		cout << "Enter link: "; cin >> link;
+		cout << "[- Enter Class directory ----------]" << endl;
+		cout << "> "; cin >> link;
 		fstream f1(link);
 		ofstream f2("temp.txt");
 		student c[100];
@@ -413,19 +418,18 @@ void import(staff a[], int& idx)
 		remove("temp1.txt");
 		remove("temp2.txt");
 		cout << endl;
-		int press;
-		cout << "Enter 1 to back: "; cin >> press;
-		if (press == 1)
-		{
-			staffclass_func(a, idx);
-		}
+		cout << "Class imported." << endl;
+		std::system("pause");
+		Menu_Staff_Class(a, idx);
 	}
 }
 void add_a_new_student(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Add new Student to a Class-" << endl << endl;
 	char currentclass[100];
 	int choice;
-	cout << "Which class do you want to add?";
+	cout << "-List of available Classes-";
 	cout << endl;
 	ifstream f("class.txt");
 	char line1[100];
@@ -437,20 +441,26 @@ void add_a_new_student(staff a[], int& idx)
 	{
 		cout << line1 << endl;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	cout << endl;
+	cout << "[- Class ----------------------]" << endl;
+	cout << "> "; cin >> currentclass;
 	f.close();
 	int type = 1;
 	int gender;
 	int id;
 	char fullname[100];
 	char dob[15];
-	cout << "Enter ID: "; cin >> id;
-	cout << "Enter full name: ";
+	cout << "[- ID -------------------------]" << endl;
+	cout << "> "; cin >> id;
+	cout << "[- Full name ------------------]" << endl;
 	cin.ignore();
+	cout << "> ";
 	cin.getline(fullname, 101);
-	cout << "Enter date of birth (dd//mm/yyyy): ";
+	cout << "[- Date of Birth (dd/mm/yyyy) -]" << endl;
+	cout << "> ";
 	cin.getline(dob, 16);
-	cout << "Gender (0 - female or 1 - male): "; cin >> gender;
+	cout << "[- Gender (0 - F | 1 - M) -----]" << endl;
+	cout << "> "; cin >> gender;
 	int check = 0;
 	ifstream f1("student.txt");
 	char line2[100];
@@ -464,7 +474,8 @@ void add_a_new_student(staff a[], int& idx)
 	{
 		if (!strcmp(line3, line2))
 		{
-			cout << "This student exists. Cannot add new. Try again. " << endl;
+			cout << "Student already exists." << endl;
+			std::system("pause");
 			check = 1;
 		}
 		f2 << line2 << "\n";
@@ -568,12 +579,9 @@ void add_a_new_student(staff a[], int& idx)
 		remove("temp.txt");
 		remove("temp2.txt");
 	}
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staffclass_func(a, idx);
-	}
+	cout << "New Student added." << endl;
+	std::system("pause");
+	Menu_Staff_Class(a, idx);
 }
 void edit_existing_student(staff a[], int& idx)
 {
@@ -1430,6 +1438,7 @@ void view_profile_staff(staff a[], int& idx)
 		}
 		cout << endl;
 	}
+	cout << endl;
 	std::system("pause");
 	Menu_Staff(a, idx);
 }
