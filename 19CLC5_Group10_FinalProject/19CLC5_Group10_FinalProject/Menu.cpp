@@ -684,8 +684,14 @@ void Menu_Staff_Class(staff a[], int& idx) {
 	case 1:
 		add_a_new_student(a, idx);
 		break;
-	/*case 2:
+	case 2:
 		edit_existing_student(a, idx);
-		break;*/
+		break;
+	case 3:
+		remove_a_student(a, idx);
+		break;
+	case 4:
+		change_student_classA_to_B(a, idx);
+		break;
 	}
 }

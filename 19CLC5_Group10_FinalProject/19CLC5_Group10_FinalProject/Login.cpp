@@ -172,7 +172,7 @@ void main_menu()
 void logout()
 {
 	main_menu();
-}
+}	
 
 void staffclass_func(staff a[], int& idx)
 {
@@ -242,8 +242,8 @@ void import(staff a[], int& idx)
 	std::system("cls");
 	cout << "-Import Class- " << endl << endl;
 	char currentclassname[15];
-	cout << "[- Enter Class you want to import -]" << endl;
-	cout << "> "; cin >> currentclassname;
+	cout << "[- Enter Class you want to import -] "; 
+	cout << endl << "> "; cin >> currentclassname;
 	char line[100];
 	ifstream f("class.txt");
 	ofstream fa("temp.txt");
@@ -283,8 +283,8 @@ void import(staff a[], int& idx)
 		ft.close();
 		remove("temp.txt");
 		char link[100];
-		cout << "[- Enter Class directory ----------]" << endl;
-		cout << "> "; cin >> link;
+		cout << "[- Enter Class directory ----------] ";
+		cout << endl << "> ";  cin >> link;
 		fstream f1(link);
 		ofstream f2("temp.txt");
 		student c[100];
@@ -442,25 +442,25 @@ void add_a_new_student(staff a[], int& idx)
 		cout << line1 << endl;
 	}
 	cout << endl;
-	cout << "[- Class ----------------------]" << endl;
-	cout << "> "; cin >> currentclass;
+	cout << "[- Class ----------------------] ";
+	cout << endl << "> ";  cin >> currentclass;
 	f.close();
 	int type = 1;
 	int gender;
 	int id;
 	char fullname[100];
 	char dob[15];
-	cout << "[- ID -------------------------]" << endl;
-	cout << "> "; cin >> id;
-	cout << "[- Full name ------------------]" << endl;
+	cout << "[- ID -------------------------] ";
+	cout << endl << "> ";  cin >> id;
 	cin.ignore();
-	cout << "> ";
+	cout << "[- Full name ------------------] ";
+	cout << endl << "> ";
 	cin.getline(fullname, 101);
-	cout << "[- Date of Birth (dd/mm/yyyy) -]" << endl;
-	cout << "> ";
+	cout << "[- Date of Birth (dd/mm/yyyy) -] ";
+	cout << endl << "> ";
 	cin.getline(dob, 16);
-	cout << "[- Gender (0 - F | 1 - M) -----]" << endl;
-	cout << "> "; cin >> gender;
+	cout << "[- Gender (0 - F | 1 - M) -----] ";
+	cout << endl << "> ";  cin >> gender;
 	int check = 0;
 	ifstream f1("student.txt");
 	char line2[100];
@@ -579,6 +579,7 @@ void add_a_new_student(staff a[], int& idx)
 		remove("temp.txt");
 		remove("temp2.txt");
 	}
+	cout << endl;
 	cout << "New Student added." << endl;
 	std::system("pause");
 	Menu_Staff_Class(a, idx);
@@ -604,22 +605,22 @@ void edit_existing_student(staff a[], int& idx)
 	}
 	cout << endl;
 	cout << "-Current-" << endl;
-	cout << "[- Class ----------------------]" << endl; 
-	cout << "> "; cin >> currentclass;
+	cout << "[- Class ----------------------] ";
+	cout << endl << "> ";  cin >> currentclass;
 	f.close();
 	int id;
 	char fullname[100];
 	char dob[15];
 	int gender;
-	cout << "[- ID -------------------------]" << endl; 
-	cout << "> "; cin >> id;
+	cout << "[- ID -------------------------] ";
+	cout << endl << "> ";  cin >> id;
 	cin.ignore();
-	cout << "[- Full name ------------------]" << endl; 
-	cout << "> "; cin.getline(fullname, 101);
-	cout << "[- Date of Birth (dd/mm/yyyy) -]" << endl; 
-	cout << "> "; cin.getline(dob, 16);
-	cout << "[- Gender (0 - F | 1 - M) -----]" << endl; 
-	cout << "> "; cin >> gender;
+	cout << "[- Full name ------------------] ";
+	cout << endl << "> ";  cin.getline(fullname, 101);
+	cout << "[- Date of Birth (dd/mm/yyyy) -] ";
+	cout << endl << "> ";  cin.getline(dob, 16);
+	cout << "[- Gender (0 - F | 1 - M) -----] ";
+	cout << endl << "> ";  cin >> gender;
 	/*cout << "You want to edit this student? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
@@ -631,11 +632,11 @@ void edit_existing_student(staff a[], int& idx)
 	cout << endl;
 	cout << "-Edit-" << endl;
 	cout << "[- Full name ------------------]";
-	cout << "> "; cin.getline(currentfullname, 100);
-	cout << "[- Date of Birth (dd/mm/yyyy) -]"; 
-	cout << "> "; cin.getline(currentdob, 15);
+	cout << endl << "> "; cin.getline(currentfullname, 100);
+	cout << "[- Date of Birth (dd/mm/yyyy) -]";
+	cout << endl << "> "; cin.getline(currentdob, 15);
 	cout << "[- Gender (0 - F | 1 - M) -----]";
-	cout << "> "; cin >> currentgender;
+	cout << endl << "> "; cin >> currentgender;
 	ifstream f4("student.txt");
 	ofstream f5("temp_student.txt");
 	if (!f4.is_open() || !f5.is_open())
@@ -804,9 +805,11 @@ void edit_existing_student(staff a[], int& idx)
 }
 void remove_a_student(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Remove a Student-" << endl << endl;
 	char currentclass[100];
 	int choice;
-	cout << "Which class?";
+	cout << "-List of available Classes-";
 	cout << endl;
 	ifstream f("class.txt");
 	char line1[100];
@@ -818,21 +821,30 @@ void remove_a_student(staff a[], int& idx)
 	{
 		cout << line1 << endl;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	cout << "[- Class ----------------------]";
+	cout << endl << "> "; cin >> currentclass;
 	f.close();
 	int id;
 	char fullname[100];
 	char dob[15];
 	int gender;
-	cout << "Enter ID: "; cin >> id;
+	cout << "[- ID -------------------------] ";
+	cout << endl << "> ";
+	cin >> id;
 	cin.ignore();
-	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
-	cout << "Enter gender (0 - female and 1 - male): "; cin >> gender;
-	cout << "You want to remove this student? Yes(1) or no(2)?" << endl;
-	cout << "Enter your choice: "; cin >> choice;
-	if (choice == 1)
-	{
+	cout << "[- Full name ------------------] ";
+	cout << endl << "> ";
+	cin.getline(fullname, 101);
+	cout << "[- Date of Birth (dd/mm/yyyy) -] ";
+	cout << endl << "> ";
+	cin.getline(dob, 16);
+	cout << "[- Gender (0 - F | 1 - M) -----] ";
+	cout << endl << "> ";
+	cin >> gender;
+	/*cout << "You want to remove this student? Yes(1) or no(2)?" << endl;
+	cout << "Enter your choice: "; cin >> choice;*/
+	/*if (choice == 1)
+	{*/
 		ifstream f4("student.txt");
 		ofstream f5("temp_student.txt");
 		if (!f4.is_open() || !f5.is_open())
@@ -975,29 +987,23 @@ void remove_a_student(staff a[], int& idx)
 		newFile1.close();
 		if (remove(temp1) == 0)
 		{
-			cout << "Processing changing" << endl;
+			cout << "Removing Student..." << endl;
 		}
 		if (rename("temp_student.txt", temp1) == 0)
 		{
-			cout << "Successfully" << endl;
+			cout << "Student removed." << endl;
 		}
-		int press;
-		cout << "Enter 1 to back: "; cin >> press;
-		if (press == 1)
-		{
-			staffclass_func(a, idx);
-		}
-	}
-	if (choice == 2)
-	{
-		staffclass_func(a, idx);
-	}
+		std::system("pause");
+	/*}*/
+	Menu_Staff_Class(a, idx);
 }
 void change_student_classA_to_B(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Change a Student's Class-" << endl << endl;
 	char currentclass[100];
 	int choice;
-	cout << "Which class?";
+	cout << "-List of available Classes-";
 	cout << endl;
 	ifstream f("class.txt");
 	char line1[100];
@@ -1009,29 +1015,33 @@ void change_student_classA_to_B(staff a[], int& idx)
 	{
 		cout << line1 << endl;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	cout << "[- Class ----------------------]";
+	cout << endl << "> ";  cin >> currentclass;
 	f.close();
 	int id;
 	char fullname[100];
 	char dob[15];
 	int gender;
-	cout << "Enter ID: "; cin >> id;
+	cout << "[- ID -------------------------]";
+	cout << endl << "> ";  cin >> id;
 	cin.ignore();
-	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
-	cout << "Enter gender (0 - female or 1 - male): "; cin >> gender;
-	cout << "You want to chage this student's class? Yes(1) or no(2)?" << endl;
-	cout << "Enter your choice: "; cin >> choice;
-	if (choice == 1)
-	{
+	cout << "[- Full name ------------------] ";
+	cout << endl << "> ";  cin.getline(fullname, 101);
+	cout << "[- Date of Birth (dd/mm/yyyy) -] ";
+	cout << endl << "> ";  cin.getline(dob, 16);
+	cout << "[- Gender (0 - F | 1 - M) -----] ";
+	cout << endl << "> ";  cin >> gender;
+	/*if (choice == 1)
+	{*/
 		char futureclass[15];
 		cin.ignore();
-		cout << "Enter future class: "; cin.getline(futureclass, 15);
+		cout << "[- New Class ------------------]";
+		cout << endl << "> "; cin.getline(futureclass, 15);
 		ifstream f4("student.txt");
 		ofstream f5("temp_student.txt");
 		if (!f4.is_open() || !f5.is_open())
 		{
-			cout << "Error opening files!" << endl;
+			cout << "Cannot change Class." << endl;
 		}
 		char temp[100];
 		char tempo[100];
@@ -1083,17 +1093,17 @@ void change_student_classA_to_B(staff a[], int& idx)
 		fstream newFile("student.txt");
 		if (!newFile)
 		{
-			cout << "File cannot open" << endl;
+			cout << "Cannot change Class." << endl;
 			return;
 		}
 		newFile.close();
 		if (remove("student.txt") == 0)
 		{
-			cout << "Processing changing" << endl;
+			/*cout << "Changing Class..." << endl;*/
 		}
 		if (rename("temp_student.txt", "student.txt") == 0)
 		{
-			cout << "Successfully" << endl;
+			/*cout << "Successfully" << endl;*/
 		}
 		char temp1[100];
 		ofstream fi("temp.txt");
@@ -1109,7 +1119,7 @@ void change_student_classA_to_B(staff a[], int& idx)
 		ofstream f6("temp_student.txt");
 		if (!f7.is_open() || !f6.is_open())
 		{
-			cout << "Error opening files!" << endl;
+			cout << "Cannot change Class." << endl;
 		}
 		char temp2[100];
 		char tempo1[100];
@@ -1168,11 +1178,11 @@ void change_student_classA_to_B(staff a[], int& idx)
 		newFile1.close();
 		if (remove(temp1) == 0)
 		{
-			cout << "Processing changing" << endl;
+			/*cout << "Processing changing" << endl;*/
 		}
 		if (rename("temp_student.txt", temp1) == 0)
 		{
-			cout << "Successfully" << endl;
+			/*cout << "Successfully" << endl;*/
 		}
 		char future[100]; ofstream fi1("temp.txt");	fi1 << "student-";	fi1 << futureclass;	fi1 << ".txt";	fi1.close();
 		ifstream fo1("temp.txt");	fo1 >> future;	fo1.close();	remove("temp.txt");
@@ -1249,17 +1259,15 @@ void change_student_classA_to_B(staff a[], int& idx)
 		f9.close();
 		remove(future);
 		rename("temp_student.txt", future);
-		int press;
-		cout << "Enter 1 to back: "; cin >> press;
-		if (press == 1)
+		cout << endl;
+		cout << "Changed Student's Class successfully!" << endl;
+		std::system("pause");
+		/*if (press == 1)
 		{
 			staffclass_func(a, idx);
-		}
-	}
-	if (choice == 2)
-	{
-		staffclass_func(a, idx);
-	}
+		}*/
+	/*}*/
+	Menu_Staff_Class(a, idx);
 }
 void list_of_classes(staff a[], int& idx)
 {
