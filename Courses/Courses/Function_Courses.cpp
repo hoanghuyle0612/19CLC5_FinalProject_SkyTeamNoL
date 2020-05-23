@@ -297,7 +297,7 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 	if (!f.is_open()) {
 		cout << "Cannot create file.\n";
 		return;
-	}
+	} 
 	else
 	{
 		int cnt = CountCourse(list);
@@ -317,7 +317,7 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 			f << cur->data.DoW << endl;
 			f << cur->data.StartHour.h << ":" << cur->data.StartHour.m << endl;
 			f << cur->data.EndHour.h << ":" << cur->data.EndHour.m << endl;
-			f << cur->data.Room << endl;
+			f << cur->data.Room;
 			cur = cur->pNext;
 		}
 		f.close();
@@ -418,7 +418,6 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 CourseList* LoadCourseNode_txtfile(ifstream& f)
 {
-	f.ignore(256, '\n');
 	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 		'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', };
 	CourseList* newCourse;
@@ -483,6 +482,7 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 	else {
 		int n;
 		f >> n;
+		f.ignore(256, '\n');
 		while (!f.eof())
 		{
 			if (cur == nullptr)
@@ -520,9 +520,9 @@ void AddCourse(char* AcaYear,char* Semester)
 	CourseList* cur = list;
 	CourseList* p = CreateCourseNode();
 	while (cur != nullptr) {
-		if (cur->data.ID == p->data.ID)
+		if (strcmp(cur->data.ID, p->data.ID))
 		{
-			cout << "Course already exist!!!." << endl;
+			cout << "\n\t >>>  Course already exist!!!. <<<" << endl;
 			return;
 		}
 		cur = cur->pNext;
@@ -531,7 +531,7 @@ void AddCourse(char* AcaYear,char* Semester)
 	LoadLecturerList(L_list);
 	LecturerList* cur2 = L_list;
 	while (cur2!= nullptr) {
-		if (cur2->data.username == p->data.LecturerUser) break;
+		if (strcmp(cur2->data.username, p->data.LecturerUser))break;
 		cur2 = cur2->pNext;
 	}
 	if (cur2 == nullptr)
@@ -653,7 +653,7 @@ void LoadLecturerList(LecturerList*& list)
 	else
 	{
 		LecturerList* cur = list;
-		while (fin.peek()!=EOF)
+		while (!fin.eof())
 		{
 			if (cur == nullptr)
 			{
