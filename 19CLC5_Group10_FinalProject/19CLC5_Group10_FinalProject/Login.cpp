@@ -93,7 +93,7 @@ void login()
 				/*cout << "Login successfully. Hello staff " << a[i].fullname << "!" << endl;*/
 				f.close();
 				/*std::system("pause");*/
-				DrawWelcome();
+				Draw_WelCome(a[i].fullname, a[i].gender);
 				cin.ignore();
 				Menu_Staff(a, idx);
 				return;
@@ -585,9 +585,11 @@ void add_a_new_student(staff a[], int& idx)
 }
 void edit_existing_student(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-Edit an existing Student-" << endl << endl;
 	char currentclass[100];
 	int choice;
-	cout << "Which class?";
+	cout << "-List of available Classes-";
 	cout << endl;
 	ifstream f("class.txt");
 	char line1[100];
@@ -595,201 +597,210 @@ void edit_existing_student(staff a[], int& idx)
 	f >> n;
 	char line22[100];
 	f.getline(line22, 100);
+	cout << endl;
 	while (f.getline(line1, 100))
 	{
 		cout << line1 << endl;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	cout << endl;
+	cout << "-Current-" << endl;
+	cout << "[- Class ----------------------]" << endl; 
+	cout << "> "; cin >> currentclass;
 	f.close();
 	int id;
 	char fullname[100];
 	char dob[15];
 	int gender;
-	cout << "Enter ID: "; cin >> id;
+	cout << "[- ID -------------------------]" << endl; 
+	cout << "> "; cin >> id;
 	cin.ignore();
-	cout << "Enter full name: "; cin.getline(fullname, 101);
-	cout << "Enter date of birth (dd/mm/yyyy): "; cin.getline(dob, 16);
-	cout << "Enter gender (0 - female and 1 - male): "; cin >> gender;
-	cout << "You want to edit this student? Yes(1) or no(2)?" << endl;
+	cout << "[- Full name ------------------]" << endl; 
+	cout << "> "; cin.getline(fullname, 101);
+	cout << "[- Date of Birth (dd/mm/yyyy) -]" << endl; 
+	cout << "> "; cin.getline(dob, 16);
+	cout << "[- Gender (0 - F | 1 - M) -----]" << endl; 
+	cout << "> "; cin >> gender;
+	/*cout << "You want to edit this student? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
+	{*/
+	char currentfullname[100];
+	char currentdob[15];
+	int currentgender;
+	cin.ignore();
+	cout << endl;
+	cout << "-Edit-" << endl;
+	cout << "[- Full name ------------------]";
+	cout << "> "; cin.getline(currentfullname, 100);
+	cout << "[- Date of Birth (dd/mm/yyyy) -]"; 
+	cout << "> "; cin.getline(currentdob, 15);
+	cout << "[- Gender (0 - F | 1 - M) -----]";
+	cout << "> "; cin >> currentgender;
+	ifstream f4("student.txt");
+	ofstream f5("temp_student.txt");
+	if (!f4.is_open() || !f5.is_open())
 	{
-		char currentfullname[100];
-		char currentdob[15];
-		int currentgender;
-		cin.ignore();
-		cout << "Edit fullname: "; cin.getline(currentfullname, 100);
-		cout << "Edit date of birth (dd/mm/yyyy): "; cin.getline(currentdob, 15);
-		cout << "Edit gender (0 - female and 1 - male): "; cin >> currentgender;
-		ifstream f4("student.txt");
-		ofstream f5("temp_student.txt");
-		if (!f4.is_open() || !f5.is_open())
+		cout << "Error opening files!" << endl;
+	}
+	char temp[100];
+	char tempo[100];
+	int s;
+	int count = 0;
+	f4 >> s;
+	f5 << s << "\n";
+	f4.ignore();
+	while (f4.getline(temp, 100))
+	{
+		f5 << temp << "\n";
+		char linea[100];
+		_itoa(id, linea, 10);
+		if (!strcmp(temp, linea))
 		{
-			cout << "Error opening files!" << endl;
-		}
-		char temp[100];
-		char tempo[100];
-		int s;
-		int count = 0;
-		f4 >> s;
-		f5 << s << "\n";
-		f4.ignore();
-		while (f4.getline(temp, 100))
-		{
-			f5 << temp << "\n";
-			char linea[100];
-			_itoa(id, linea, 10);
-			if (!strcmp(temp, linea))
+			count++;
+			f4.getline(tempo, 100);
+			strcpy(tempo, currentdob);
+			int x = strlen(tempo);
+			for (int i = 0;i < x;i++)
 			{
-				count++;
-				f4.getline(tempo, 100);
-				strcpy(tempo, currentdob);
-				int x = strlen(tempo);
-				for (int i = 0;i < x;i++)
+				if (tempo[i] == ' ')
 				{
-					if (tempo[i] == ' ')
+					int j = 0;
+					for (int j = i;j < x;j++)
 					{
-						int j = 0;
-						for (int j = i;j < x;j++)
-						{
-							tempo[j] = tempo[j + 1];
-						}
-						x--;
+						tempo[j] = tempo[j + 1];
 					}
+					x--;
 				}
-				if (count == 1)
+			}
+			if (count == 1)
+			{
+				f5 << tempo << "\n";
+				char line3[100];
+				f4.getline(line3, 100);
+				strcpy(line3, currentfullname);
+				f5 << line3 << "\n";
+				f5 << id << "\n";
+				f5 << currentclass << "\n";
+				f5 << currentdob << "\n";
+				f5 << currentgender << "\n";
+				f5 << 1 << "\n";
+				f4.ignore();
+				for (int i = 0;i < 5;i++)
 				{
-					f5 << tempo << "\n";
-					char line3[100];
-					f4.getline(line3, 100);
-					strcpy(line3, currentfullname);
-					f5 << line3 << "\n";
-					f5 << id << "\n";
-					f5 << currentclass << "\n";
-					f5 << currentdob << "\n";
-					f5 << currentgender << "\n";
-					f5 << 1 << "\n";
-					f4.ignore();
-					for (int i = 0;i < 5;i++)
-					{
-						char lind[100];
-						f4.getline(lind, 100);
-					}
+					char lind[100];
+					f4.getline(lind, 100);
 				}
 			}
 		}
-		f4.close();
-		f5.close();
-		fstream newFile("student.txt");
-		if (!newFile)
+	}
+	f4.close();
+	f5.close();
+	fstream newFile("student.txt");
+	if (!newFile)
+	{
+		cout << "Cannot edit Student." << endl;
+		return;
+	}
+	newFile.close();
+	if (remove("student.txt") == 0)
+	{
+		cout << "Editing..." << endl;
+	}
+	if (rename("temp_student.txt", "student.txt") == 0)
+	{
+		cout << "Student edited successfully!" << endl;
+	}
+	char temp1[100];
+	ofstream fi("temp.txt");
+	fi << "student-";
+	fi << currentclass;
+	fi << ".txt";
+	fi.close();
+	ifstream fo("temp.txt");
+	fo >> temp1;
+	fo.close();
+	remove("temp.txt");
+	ifstream f7(temp1);
+	ofstream f6("temp_student.txt");
+	if (!f7.is_open() || !f6.is_open())
+	{
+		cout << "Cannot open file." << endl;
+	}
+	char temp2[100];
+	char tempo1[100];
+	int e;
+	int cou = 0;
+	f7 >> e;
+	f6 << e << "\n";
+	f7.ignore();
+	while (f7.getline(temp2, 100))
+	{
+		f6 << temp2 << "\n";
+		char linea1[100];
+		_itoa(id, linea1, 10);
+		if (!strcmp(temp2, linea1))
 		{
-			cout << "File cannot open" << endl;
-			return;
-		}
-		newFile.close();
-		if (remove("student.txt") == 0)
-		{
-			cout << "Processing changing" << endl;
-		}
-		if (rename("temp_student.txt", "student.txt") == 0)
-		{
-			cout << "Successfully" << endl;
-		}
-		char temp1[100];
-		ofstream fi("temp.txt");
-		fi << "student-";
-		fi << currentclass;
-		fi << ".txt";
-		fi.close();
-		ifstream fo("temp.txt");
-		fo >> temp1;
-		fo.close();
-		remove("temp.txt");
-		ifstream f7(temp1);
-		ofstream f6("temp_student.txt");
-		if (!f7.is_open() || !f6.is_open())
-		{
-			cout << "Error opening files!" << endl;
-		}
-		char temp2[100];
-		char tempo1[100];
-		int e;
-		int cou = 0;
-		f7 >> e;
-		f6 << e << "\n";
-		f7.ignore();
-		while (f7.getline(temp2, 100))
-		{
-			f6 << temp2 << "\n";
-			char linea1[100];
-			_itoa(id, linea1, 10);
-			if (!strcmp(temp2, linea1))
+			cou++;
+			f7.getline(tempo1, 100);
+			strcpy(tempo1, currentdob);
+			int p = strlen(tempo1);
+			for (int i = 0;i < p;i++)
 			{
-				cou++;
-				f7.getline(tempo1, 100);
-				strcpy(tempo1, currentdob);
-				int p = strlen(tempo1);
-				for (int i = 0;i < p;i++)
+				if (tempo1[i] == ' ')
 				{
-					if (tempo1[i] == ' ')
+					int j = 0;
+					for (int j = i;j < p;j++)
 					{
-						int j = 0;
-						for (int j = i;j < p;j++)
-						{
-							tempo1[j] = tempo1[j + 1];
-						}
-						p--;
+						tempo1[j] = tempo1[j + 1];
 					}
+					p--;
 				}
-				if (cou == 1)
+			}
+			if (cou == 1)
+			{
+				f6 << tempo1 << "\n";
+				char line31[100];
+				f7.getline(line31, 100);
+				strcpy(line31, currentfullname);
+				f6 << line31 << "\n";
+				f6 << id << "\n";
+				f6 << currentclass << "\n";
+				f6 << currentdob << "\n";
+				f6 << currentgender << "\n";
+				f6 << 1 << "\n";
+				f7.ignore();
+				for (int i = 0;i < 5;i++)
 				{
-					f6 << tempo1 << "\n";
-					char line31[100];
-					f7.getline(line31, 100);
-					strcpy(line31, currentfullname);
-					f6 << line31 << "\n";
-					f6 << id << "\n";
-					f6 << currentclass << "\n";
-					f6 << currentdob << "\n";
-					f6 << currentgender << "\n";
-					f6 << 1 << "\n";
-					f7.ignore();
-					for (int i = 0;i < 5;i++)
-					{
-						char lind1[100];
-						f7.getline(lind1, 100);
-					}
+					char lind1[100];
+					f7.getline(lind1, 100);
 				}
 			}
 		}
-		f7.close();
-		f6.close();
-		fstream newFile1(temp1);
-		if (!newFile1)
-		{
-			cout << "File cannot open" << endl;
-			return;
-		}
-		newFile1.close();
-		if (remove(temp1) == 0)
-		{
-			cout << "Processing changing" << endl;
-		}
-		if (rename("temp_student.txt", temp1) == 0)
-		{
-			cout << "Successfully" << endl;
-		}
-		int press;
-		cout << "Enter 1 to back: "; cin >> press;
-		if (press == 1)
-		{
-			staffclass_func(a, idx);
-		}
 	}
-	if (choice == 2)
+	f7.close();
+	f6.close();
+	fstream newFile1(temp1);
+	if (!newFile1)
 	{
-		staffclass_func(a, idx);
+		cout << "Cannot open file." << endl;
+		return;
 	}
+	newFile1.close();
+	if (remove(temp1) == 0)
+	{
+		cout << "Editing..." << endl;
+	}
+	if (rename("temp_student.txt", temp1) == 0)
+	{
+		cout << "Student edited succesfully!" << endl;
+	}
+	std::system("pause");
+	Menu_Staff_Class(a, idx);
+	/*}*/
+	/*if (choice == 2)
+	{
+		Menu_Staff_Class(a, idx);
+	}*/
 }
 void remove_a_student(staff a[], int& idx)
 {
