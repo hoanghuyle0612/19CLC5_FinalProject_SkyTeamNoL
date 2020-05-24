@@ -64,6 +64,21 @@ struct StudentList {
 	StudentList* pNext;
 };
 
+struct lecturer {
+	char username[100];
+	char password[100];
+	char fullname[100];
+	char dob[20];
+	char degree[20];
+	int gender;
+
+};
+
+struct LecturerList {
+	lecturer data;
+	LecturerList* pNext;
+};
+
 // COURSE FUNCTIONS
 //====================================================================================
 void CoursesManagement();

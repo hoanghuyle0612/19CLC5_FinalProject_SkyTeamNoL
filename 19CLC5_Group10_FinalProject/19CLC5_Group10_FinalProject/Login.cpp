@@ -435,12 +435,32 @@ void add_a_new_student(staff a[], int& idx)
 	char line1[100];
 	int n;
 	f >> n;
-	char line222[100];
-	f.getline(line222, 100);
+	char line22[100];
+	f.getline(line22, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
 	cout << endl;
 	cout << "[- Class ----------------------] ";
 	cout << endl << "> ";  cin >> currentclass;
@@ -596,13 +616,32 @@ void edit_existing_student(staff a[], int& idx)
 	char line1[100];
 	int n;
 	f >> n;
-	char line22[100];
-	f.getline(line22, 100);
-	cout << endl;
+	char line2[100];
+	f.getline(line2, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
 	cout << endl;
 	cout << "-Current-" << endl;
 	cout << "[- Class ----------------------] ";
@@ -705,11 +744,11 @@ void edit_existing_student(staff a[], int& idx)
 	newFile.close();
 	if (remove("student.txt") == 0)
 	{
-		cout << "Editing..." << endl;
+		/*cout << "Editing..." << endl;*/
 	}
 	if (rename("temp_student.txt", "student.txt") == 0)
 	{
-		cout << "Student edited successfully!" << endl;
+		/*cout << "Student edited successfully!" << endl;*/
 	}
 	char temp1[100];
 	ofstream fi("temp.txt");
@@ -817,10 +856,30 @@ void remove_a_student(staff a[], int& idx)
 	f >> n;
 	char line2[100];
 	f.getline(line2, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
 	cout << "[- Class ----------------------]";
 	cout << endl << "> "; cin >> currentclass;
 	f.close();
@@ -1011,10 +1070,30 @@ void change_student_classA_to_B(staff a[], int& idx)
 	f >> n;
 	char line2[100];
 	f.getline(line2, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
 	cout << "[- Class ----------------------]";
 	cout << endl << "> ";  cin >> currentclass;
 	f.close();
@@ -1271,38 +1350,80 @@ void change_student_classA_to_B(staff a[], int& idx)
 }
 void list_of_classes(staff a[], int& idx)
 {
-	cout << "List of classes: " << endl;
+	std::system("cls");
+	cout << "-List of Classes-" << endl << endl;
 	ifstream f("class.txt");
 	char line1[100];
 	int n;
 	f >> n;
 	char line2[100];
 	f.getline(line2, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staffclass_func(a, idx);
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
 	}
+	cout << endl << endl;
+	std::system("pause");
+	Menu_Staff_Class(a, idx);
 }
 void list_of_student_in_class(staff a[], int& idx)
 {
+	std::system("cls");
+	cout << "-View list of Student of a Class-" << endl << endl;
 	char currentclass[100];
-	cout << "Which class?";
-	cout << endl;
+	cout << "-List of available Classes-";
+	cout << endl << endl;
 	ifstream f("class.txt");
 	char line1[100];
 	int n;
 	f >> n;
+	char line2[100];
+	f.getline(line2, 100);
+	int cnt = 0;
 	while (f.getline(line1, 100))
 	{
-		cout << line1 << endl;
+		for (int i = 0; i < 11; i++) {
+			if (i == 0 || i == 10) {
+				if (cnt == 0 && i == 0) cout << "[";
+				else if (cnt == 0 && i == 10) cout << "]";
+				else cout << "|";
+			}
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "| " << line1;
+		for (int i = 0; i < 10 - strlen(line1) - 2; i++)
+			cout << " ";
+		cout << "|" << endl;
+		cnt++;
 	}
-	cout << "Enter class: "; cin >> currentclass;
+	for (int i = 0; i < 11; i++) {
+		if (i == 0) cout << "[";
+		else if (i == 10) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
+	cout << "[- Class ------]" << endl;
+	cout << "> "; cin >> currentclass;
 	char temp[100];
 	ofstream fi("temp.txt");
 	fi << "student-";
@@ -1313,19 +1434,83 @@ void list_of_student_in_class(staff a[], int& idx)
 	fo >> temp;
 	fo.close();
 	ifstream f2(temp);
+	cout << endl;
 	char line[100];
+	int no_line = 0;
+	cnt = 0;
+	int board_width = 72;
+	int no_stu = 0; f2 >> no_stu;
+
+	std::system("cls");
+	cout << "\t" << currentclass << "\t\t|\t   " << "Total: " << no_stu <<  endl;
+	for (int i = 0; i < board_width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == board_width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl;
+	cout << "|    ID    |           NAME            |     DoB    | Gender | Active  |" ;
+	cout << endl;
 	while (f2.getline(line, 100))
 	{
-		cout << line << endl;
+		switch (no_line) {
+			/*case 0:
+				cout << "Total: " << line;
+				cout << endl << endl;
+				break;*/
+			case 1:
+				for (int i = 0; i < board_width; i++) {
+					if (i == 0 || i == board_width - 1) {
+						if (cnt == 0 && i == 0) cout << "[";
+						else if (cnt == 0 && i == board_width - 1) {
+							cout << "]";
+						}
+						else cout << "|";
+					}
+					else cout << "-";
+				}
+				cout << endl;
+				cout << "| " << line << " | ";
+				break;
+			case 3:
+				cout << line;
+				for (int i = 0; i < 25 - strlen(line); i++) {
+					cout << " ";
+				}
+				cout << " | ";
+				break;
+			case 6:
+				cout << line << " | ";
+				break;
+			case 7:
+				if (line[0] == '0')
+					cout << "Female";
+				else cout << "Male  ";
+				cout << " | ";
+				break;
+			case 8:
+				if (line[0] == '0')
+					cout << "       ";
+				else cout << "   v   ";
+				cout << " |";
+				cout << endl;
+				break;
+		}
+		if (no_line == 8) no_line = 1;
+		else no_line++;
+		cnt++;
 	}
+	for (int i = 0; i < board_width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == board_width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl;
 	f2.close();
 	remove("temp.txt");
-	int press;
-	cout << "Enter 1 to back: "; cin >> press;
-	if (press == 1)
-	{
-		staffclass_func(a, idx);
-	}
+	cout << endl;
+	std::system("pause");
+	Menu_Staff_Class(a, idx);
 }
 
 void academic_lecturer(lecturer b[], int& idx)

@@ -425,7 +425,12 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 			else ptr++;
 			i[ptr] = 1;
 		}
-		else KeyPressed = KeyPressed;
+		else if (KeyPressed == 72 || KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr >= 4) ptr -= 4;
+			else ptr = 4;
+			i[ptr] = 1;
+		} else KeyPressed = KeyPressed;
 
 		/*while (true) {
 			if (GetAsyncKeyState(VK_LEFT) != 0) {
@@ -670,6 +675,12 @@ void Menu_Staff_Class(staff a[], int& idx) {
 			else ptr++;
 			i[ptr] = 1;
 		}
+		else if (KeyPressed == 72 || KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr >= 4) ptr -= 4;
+			else ptr += 4;
+			i[ptr] = 1;
+		}
 		else KeyPressed = KeyPressed;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
 	}
@@ -692,6 +703,12 @@ void Menu_Staff_Class(staff a[], int& idx) {
 		break;
 	case 4:
 		change_student_classA_to_B(a, idx);
+		break;
+	case 5:
+		list_of_classes(a, idx);
+		break;
+	case 6:
+		list_of_student_in_class(a, idx);
 		break;
 	}
 }

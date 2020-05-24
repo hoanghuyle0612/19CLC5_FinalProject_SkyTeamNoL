@@ -584,3 +584,89 @@ Date PlusDay(Date init_Date, int plus_day) {
 	}*/
 
 }
+
+
+
+LecturerList* LoadLecturerNode(ifstream& f)
+{
+	LecturerList* b = nullptr;
+	b = new LecturerList;
+	f.ignore(256, '\n');
+	f.getline(b->data.username, 101);
+	if (b->data.username == NULL) return NULL;
+	f.getline(b->data.password, 101);
+	f.getline(b->data.fullname, 101);
+	f.getline(b->data.dob, 101);
+	f.getline(b->data.degree, 20);
+	f >> b->data.gender;
+
+	b->pNext = nullptr;
+	return b;
+}
+
+void LoadLecturerList(LecturerList*& list)
+{
+	ifstream fin;
+	fin.open("lecturer.txt");
+	if (!fin.is_open())
+	{
+		cout << "Can not open file" << endl;
+		return;
+	}
+	else
+	{
+		LecturerList* cur = list;
+		while (!fin.eof())
+		{
+			if (cur == nullptr)
+			{
+				list = LoadLecturerNode(fin);
+				cur = list;
+			}
+			else
+			{
+				LecturerList* p;
+				p = LoadLecturerNode(fin);
+				cur->pNext = p;
+				cur = cur->pNext;
+			}
+		}
+		fin.close();
+	}
+}
+
+void delete_LecturerList(LecturerList*& list)
+{
+	if (list == nullptr) return;
+	LecturerList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
+}
+
+void delete_CourseList(CourseList*& list)
+{
+	if (list == nullptr) return;
+	CourseList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
+}
+
+void delete_StudentList(StudentList*& list)
+{
+	if (list == nullptr) return;
+	StudentList* cur = list;
+	while (list != nullptr)
+	{
+		list = list->pNext;
+		delete cur;
+		cur = list;
+	}
+}
