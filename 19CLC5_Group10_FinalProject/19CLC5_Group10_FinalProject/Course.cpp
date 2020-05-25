@@ -71,12 +71,29 @@ Student_Course* GetStudentFile(ifstream& fin, int n) {
 		dcur->dNext = d;
 		dcur = dcur->dNext;
 	} // 11 --> 19
+
 	string temp; getline(fin, temp);
 	return stu;
 }
 
-void ShowAttDay(Student_Course* stu) {
-	cout << "[" << stu->id << "]" << endl;
+void ShowAttDay(Student_Course* stu, int ADNo) {
+	int width = 1 + 10 + 1 + (5 + 1) * ADNo;
+	for (int i = 0; i < width; i++) {
+		if (i == 0 || i == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "| " << stu->id;
+	cout << " |  ";
+	AttDay* dcur = stu->dHead;
+	for (int i = 0; i < ADNo; i++) {
+		if (dcur->pre == 1) cout << "v";
+		else cout << " ";
+		cout << "  |";
+		if (i < ADNo - 1) cout << "  ";
+		dcur = dcur->dNext;
+	} cout << endl;
+
+	/*cout << "[" << stu->id << "]" << endl;
 	cout << stu->name << endl;
 	AttDay* dcur = stu->dHead;
 	while (dcur != nullptr) {
@@ -87,18 +104,40 @@ void ShowAttDay(Student_Course* stu) {
 		if (dcur->pre == 1) cout << "v";
 		cout << endl;
 		dcur = dcur->dNext;
-	}
+	}*/
 }
 
-void ShowAttList(Student_Course* stuHead, int n) {
+void ShowAttList(Student_Course* stuHead, int n, int ADNo) {
 	Student_Course* stucur = stuHead;
+
+	int width = 1 + 10 + 1 + (5 + 1) *ADNo;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+
+	cout << "|    ID    |";
+	AttDay* dcur = stucur->dHead;
+	for (int i = 0; i < ADNo; i++) {
+		if (dcur->ad < 10) cout << "0";
+		cout << dcur->ad << "/";
+		if (dcur->am < 10) cout << "0";
+		cout << dcur->am << "|";
+		dcur = dcur->dNext;
+	} cout << endl;
+
 	for (int i = 0; i < n; i++) {
 
-		AttDay* dcur = stuHead->dHead;
-		ShowAttDay(stucur);
+		ShowAttDay(stucur, ADNo);
 		if (i < n - 1) stucur = stucur->stuNext;
-		cout << endl;
 	}
+
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
 }
 
 bool ExportAttList(Student_Course* stuHead, int n, string fName) {
@@ -633,6 +672,30 @@ void Advance_ExportScoreBoard(string YearSem) {
 	if (ExportScoreBoard(stuHead, n, fNameScr))
 		cout << "Export complete." << endl;
 	else cout << "Cannot export Scoreboard." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Advance_ShowAttList(string YearSem) {
+	std::system("cls");
+	cout << "-View Attendance List of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot view Attendance List." << endl;
+		std::system("pause");
+		return;
+	}
+	std::system("cls");
+	cout << fName.substr(14, fName.length() - 14 - 1) << endl << endl;
+
+	ifstream fin; fin.open(fNameStu + ".txt");
+	int AttDayNo = CourseAttDay(fin) - 10;
+	fin.close();
+	ShowAttList(stuHead, n, AttDayNo);
+	cout << endl;
 	system("pause");
 	GetCourse_DelStu(stuHead, n);
 }

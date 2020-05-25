@@ -819,16 +819,16 @@ void Draw_WelCome(char name[], int gender) {
 	if (gender == 0)
 		for (int i = 0; i < strlen(preFemale); i++) {
 			cout << preFemale[i];
-			Sleep(60);
+			Sleep(30);
 		}
 	else 
 		for (int i = 0; i < strlen(preMale); i++) {
 			cout << preMale[i];
-			Sleep(60);
+			Sleep(30);
 		}
 	for (int i = 0; i < strlen(name); i++) {
 		cout << name[i];
-		Sleep(60);
+		Sleep(30);
 	}
 	cout << endl;
 	Sleep(2000);

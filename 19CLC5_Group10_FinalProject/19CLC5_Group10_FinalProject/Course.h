@@ -121,13 +121,13 @@ string GetFileName(string Sem, char* Link);
 Student_Course* GetStudentFile(ifstream& fin, int n);
 // Get all information of a student from a Course .txt file
 
-void ShowAttDay(Student_Course* stu);
+void ShowAttDay(Student_Course* stu, int ADNo);
 // Get all attendance days of a student
 
 void ShowCourse(Student_Course* stuHead, int n);
 // Print out a Course
 
-void ShowAttList(Student_Course* stuHead, int n);
+void ShowAttList(Student_Course* stuHead, int n, int ADNo);
 // Print out attendance list of a Course
 
 bool ExportAttList(Student_Course* stuHead, int n, string fName);
@@ -183,5 +183,7 @@ Student_Course* GetStudent(Student_Course* stuHead, int id);
 void Advance_ShowScoreBoard(string YearSem);
 
 void Advance_ExportScoreBoard(string YearSem);
+
+void Advance_ShowAttList(string YearSem);
 
 #endif

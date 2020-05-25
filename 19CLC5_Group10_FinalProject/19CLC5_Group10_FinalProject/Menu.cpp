@@ -9,6 +9,7 @@ void Menu_Staff_Class(staff a[], int& idx);
 void Menu_Staff_Course(staff a[], int& idx);
 void Menu_Staff_Course_Course(staff a[], int& idx);
 void Menu_Staff_Scoreboard(staff a[], int& idx, string YearSem);
+void Menu_Staff_AttList(staff a[], int& idx, string YearSem);
 
 void SetColor(int color[], int i) {
 	if (i == 1)
@@ -427,13 +428,15 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 
 		if (KeyPressed == 75) {
 			i[ptr] = 0;
-			if (ptr == 0) ptr = last;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
 			else ptr--;
 			i[ptr] = 1;
 		}
 		else if (KeyPressed == 77) {
 			i[ptr] = 0;
-			if (ptr == last) ptr = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
 			else ptr++;
 			i[ptr] = 1;
 		}
@@ -486,6 +489,9 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 			break;
 		case 2:
 			Menu_Staff_Scoreboard(a, idx, YearSem_str);
+			break;
+		case 3:
+			Menu_Staff_AttList(a, idx, YearSem_str);
 			break;
 		case 4:
 			Menu_Staff(a, idx);
@@ -683,13 +689,15 @@ void Menu_Staff_Class(staff a[], int& idx) {
 
 		if (KeyPressed == 75) {
 			i[ptr] = 0;
-			if (ptr == 0) ptr = last;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
 			else ptr--;
 			i[ptr] = 1;
 		}
 		else if (KeyPressed == 77) {
 			i[ptr] = 0;
-			if (ptr == last) ptr = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
 			else ptr++;
 			i[ptr] = 1;
 		}
@@ -852,13 +860,15 @@ void Menu_Staff_Course(staff a[], int& idx) {
 
 		if (KeyPressed == 75) {
 			i[ptr] = 0;
-			if (ptr == 0) ptr = last;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
 			else ptr--;
 			i[ptr] = 1;
 		}
 		else if (KeyPressed == 77) {
 			i[ptr] = 0;
-			if (ptr == last) ptr = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
 			else ptr++;
 			i[ptr] = 1;
 		}
@@ -1033,13 +1043,15 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 
 		if (KeyPressed == 75) {
 			i[ptr] = 0;
-			if (ptr == 0) ptr = last;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
 			else ptr--;
 			i[ptr] = 1;
 		}
 		else if (KeyPressed == 77) {
 			i[ptr] = 0;
-			if (ptr == last) ptr = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
 			else ptr++;
 			i[ptr] = 1;
 		}
@@ -1186,6 +1198,116 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 		case 2:
 			Menu_Staff_Advance(a, idx);
 			break;
+	}
+	if (ptr != 2) Menu_Staff_Scoreboard(a, idx, YearSem);
+
+}
+
+void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
+	int color[] = { 15, 12 };
+	int i[] = { 1, 0, 0 };
+	int ptr = 0;
+	int width = 26;
+	int last = 2;
+	int KeyPressed = 0;
+
+	while (KeyPressed != 13) {
+		std::system("cls");
+
+		cout << setw(58) << "-ACADEMIC STAFF - ATTENDANCE LIST-" << endl;
+		cout << endl;
+
+		{
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ " << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "|     /\\     |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  --/  \\--  |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |   ||   | |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|  <=======  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |   ||   | |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  --------  |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " VIEW ATTLIST ";
+			SetColor(color, i[1]);
+			cout << setw(width) << "EXPORT ATTLIST";
+			SetColor(color, i[2]);
+			cout << setw(width) << "     BACK     " << endl;
+			SetColor(color, i[0]);
+		}
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == last) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	switch (ptr) {
+	case 0:
+		Advance_ShowAttList(YearSem);
+		break;
+	case 2:
+		Menu_Staff_Advance(a, idx);
+		break;
 	}
 	if (ptr != 2) Menu_Staff_Scoreboard(a, idx, YearSem);
 
