@@ -186,6 +186,21 @@
 //	cout << endl;
 //}
 
+//void Icon_EditScore() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|   MID  8   |" << endl; // 3
+//	cout << setw(25) << 4 "|     ||     |" << endl; // 4
+//	cout << setw(25) << 5 "|    \||/    |" << endl; // 5
+//	cout << setw(25) << 4 "|     \/     |" << endl; // 6 
+//	cout << setw(25) << 3 "|   MID 10   |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
 //void Icon_AttList() {
 
 //	cout << setw(25) << 1 " ------------ " << endl; // 1
@@ -195,6 +210,21 @@
 //	cout << setw(25) << 5 "| ====== [v] |" << endl; // 5
 //	cout << setw(25) << 4 "|            |" << endl; // 6 
 //	cout << setw(25) << 3 "| ====== [ ] |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Checkin() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|  _      _  |" << endl; // 2
+//	cout << setw(25) << 3 "| |        | |" << endl; // 3
+//	cout << setw(25) << 4 "| |      / | |" << endl; // 4
+//	cout << setw(25) << 5 "| |  \  /  | |" << endl; // 5
+//	cout << setw(25) << 4 "| |   \/   | |" << endl; // 6 
+//	cout << setw(25) << 3 "| |_      _| |" << endl; // 7
 //	cout << setw(25) << 2 "|            |" << endl; // 8
 //	cout << setw(25) << 1 " ------------ " << endl; // 9
 //                          123456654321
