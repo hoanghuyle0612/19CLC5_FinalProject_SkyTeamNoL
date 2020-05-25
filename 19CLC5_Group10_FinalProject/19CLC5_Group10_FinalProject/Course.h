@@ -188,4 +188,6 @@ void Advance_ShowAttList(string YearSem);
 
 void Advance_ExportAttList(string YearSem);
 
+void Lecturer_ShowCourse(string YearSem);
+
 #endif

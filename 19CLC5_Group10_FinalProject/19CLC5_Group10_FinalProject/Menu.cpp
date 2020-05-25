@@ -1461,6 +1461,12 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	int width = 21;
 	int last = 7;
 	int KeyPressed = 0;
+	
+	char AcaYear[] = "2019-2020";
+	char Semester[] = "HK2";
+	char YearSem[] = "2019-2020-HK2";
+	char Link[] = "";
+	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
 		std::system("cls");
@@ -1667,6 +1673,12 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	}
 
 	switch (ptr) {
+	case 0:
+		ShowCourseList(YearSem_str, Link);
+		break;
+	case 1:
+		Lecturer_ShowCourse(YearSem_str);
+		break;
 	case 7:
 		Menu_Lecturer(b, idx);
 		break;

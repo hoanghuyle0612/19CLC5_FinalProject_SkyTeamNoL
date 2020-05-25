@@ -304,29 +304,59 @@ bool GetCourse(Student_Course*& stuHead, int& n, string fName) {
 };
 
 void ShowCourse(Student_Course* stuHead, int n) {
+	int width = 1 + 10 + 1 + 30 + 1 + 12 + 1 + 12 + 1 + 8 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+	cout << "|    ID    |             Name             |   Class    |    DoB     | Active |" << endl;
+
 	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
-		cout << "[" << stucur->id << "]" << endl;
+		for (int i = 0; i < width; i++) {
+			if (i == 0 || i == width - 1) cout << "|";
+			else cout << "-";
+		} cout << endl;
+		cout << "| " << stucur->id << " | ";
+		cout << stucur->name;
+		for (int i = 0; i < 29 - stucur->name.length(); i++) cout << " ";
+		cout << "| " << stucur->clss;
+		for (int i = 0; i < 11 - stucur->clss.length(); i++) cout << " ";
+		cout << "| ";
+		if (stucur->bd < 10) cout << "0";
+		cout << stucur->bd << "/";
+		if (stucur->bm < 10) cout << "0";
+		cout << stucur->bm << "/" << stucur->by << " | ";
+		cout << "  ";
+		if (stucur->active == 1) cout << "v";
+		else cout << " ";
+		cout << "    |";
+		cout << endl;
+		if (i < n - 1) stucur = stucur->stuNext;
+
+
+
+		/*cout << "[" << stucur->id << "]" << endl;
 		cout << stucur->name << endl;
 		if (stucur->bd < 10) cout << "0";
 		cout << stucur->bd << "/";
 		if (stucur->bm < 10) cout << "0";
 		cout << stucur->bm << "/" << stucur->by << endl;
 		cout << stucur->clss << endl;
-		/*cout << "-Scores-" << endl;
-		cout << "Mid-term: " << stucur->sc_mid << endl;
-		cout << "Final   : " << stucur->sc_fin << endl;
-		cout << "Lab     : " << stucur->sc_lab << endl;
-		cout << "Average : " << stucur->sc_ave << endl;
-		cout << "-Attendance-" << endl;
-		ShowAttDay(stucur);*/
 		if (i < n - 1) stucur = stucur->stuNext;
-		cout << endl;
+		cout << endl;*/
 	}
+
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
 }
 
 void ShowScoreBoard(Student_Course* stuHead, int n) {
-	cout << endl;
+	
 	int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
 	for (int i = 0; i < width; i++) {
 		if (i == 0) cout << "[";
@@ -649,7 +679,8 @@ void Advance_ShowScoreBoard(string YearSem) {
 		return;
 	}
 	std::system("cls");
-	cout << fName.substr(14, fName.length() - 14 - 1) << endl;
+	cout << fName.substr(14, fName.length() - 14 - 1)
+		<< "\t Scoreboard" << endl << endl;
 	ShowScoreBoard(stuHead, n);
 	cout << endl;
 	system("pause");
@@ -689,7 +720,8 @@ void Advance_ShowAttList(string YearSem) {
 		return;
 	}
 	std::system("cls");
-	cout << fName.substr(14, fName.length() - 14 - 1) << endl << endl;
+	cout << fName.substr(14, fName.length() - 14 - 1)
+		<< "\t Attendance List" << endl << endl;
 
 	ifstream fin; fin.open(fNameStu + ".txt");
 	int AttDayNo = CourseAttDay(fin) - 10;
@@ -717,6 +749,28 @@ void Advance_ExportAttList(string YearSem) {
 	if (ExportAttList(stuHead, n, fNameAL))
 		cout << "Export complete." << endl;
 	else cout << "Cannot export Attendance List." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Lecturer_ShowCourse(string YearSem) {
+	std::system("cls");
+	cout << "-View Student List of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameAL = fName + "AttList";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot view Student List." << endl;
+		std::system("pause");
+		return;
+	}
+	std::system("cls");
+	cout << fName.substr(14, fName.length() - 14 - 1)
+		<< "\t Student List" << endl << endl;
+	ShowCourse(stuHead, n);
+	cout << endl;
 	system("pause");
 	GetCourse_DelStu(stuHead, n);
 }

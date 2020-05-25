@@ -99,10 +99,11 @@ void login()
 				return;
 			}
 		}
+		f.close();
 	}
 	fstream f1;
 	f1.open("lecturer.txt");
-	if (!f.is_open())
+	if (!f1.is_open())
 	{
 		cout << "Cannot login." << endl;
 	}
@@ -120,10 +121,11 @@ void login()
 				return;
 			}
 		}
+		f1.close();
 	}
 	fstream f3;
 	f3.open("student.txt");
-	if (!f.is_open())
+	if (!f3.is_open())
 	{
 		cout << "Can not open file" << endl;
 	}
