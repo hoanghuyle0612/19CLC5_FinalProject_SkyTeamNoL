@@ -1214,7 +1214,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 	while (KeyPressed != 13) {
 		std::system("cls");
 
-		cout << setw(58) << "-ACADEMIC STAFF - ATTENDANCE LIST-" << endl;
+		cout << setw(59) << "-ACADEMIC STAFF - ATTENDANCE LIST-" << endl;
 		cout << endl;
 
 		{
@@ -1305,10 +1305,13 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 	case 0:
 		Advance_ShowAttList(YearSem);
 		break;
+	case 1:
+		Advance_ExportAttList(YearSem);
+		break;
 	case 2:
 		Menu_Staff_Advance(a, idx);
 		break;
 	}
-	if (ptr != 2) Menu_Staff_Scoreboard(a, idx, YearSem);
+	if (ptr != 2) Menu_Staff_AttList(a, idx, YearSem);
 
 }

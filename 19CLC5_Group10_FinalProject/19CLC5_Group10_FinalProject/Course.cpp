@@ -699,3 +699,24 @@ void Advance_ShowAttList(string YearSem) {
 	system("pause");
 	GetCourse_DelStu(stuHead, n);
 }
+
+void Advance_ExportAttList(string YearSem) {
+	std::system("cls");
+	cout << "-View Attendance List of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameAL = fName + "AttList";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot export Attendance List." << endl;
+		std::system("pause");
+		return;
+	}
+
+	if (ExportAttList(stuHead, n, fNameAL))
+		cout << "Export complete." << endl;
+	else cout << "Cannot export Attendance List." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}

@@ -186,4 +186,6 @@ void Advance_ExportScoreBoard(string YearSem);
 
 void Advance_ShowAttList(string YearSem);
 
+void Advance_ExportAttList(string YearSem);
+
 #endif
