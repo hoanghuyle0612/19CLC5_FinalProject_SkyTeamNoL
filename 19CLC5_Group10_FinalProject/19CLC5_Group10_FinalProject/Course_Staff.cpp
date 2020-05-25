@@ -6,6 +6,8 @@
 //======================================================================
 StudentList* CreateStudentNode(ifstream& f)
 {
+	
+
 	StudentList* temp;
 	temp = new StudentList;
 	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
@@ -16,16 +18,27 @@ StudentList* CreateStudentNode(ifstream& f)
 	f.getline(temp->data.Name, 30);
 	f.getline(temp->data.MSSV, 10);
 	f.getline(temp->data.Class, 10);
-	f >> temp->data.DoB.Year;
-	/*f.ignore(100, ' ');*/
-	f >> temp->data.DoB.Month;
-	/*f.ignore(100, ' ');*/
-	f >> temp->data.DoB.Day;
-	f.ignore(100, '\n');
-	f >> temp->data.Status;
-	f.ignore(100, '\n');
+	f.getline(tmp, 21);
+	/*char* w = strtok(tmp, " /");
+	temp->data.DoB.Month = char_to_int(w);
+	w = strtok(tmp, " /");
+	temp->data.DoB.Day = char_to_int(w);
+	w = strtok(tmp, " \n");
+	temp->data.Status = char_to_int(w);*/
+	char * w = strtok(tmp, " /");
+	for (int i = 0; w != NULL; i++) {
+		if (i == 1) temp->data.DoB.Month = char_to_int(w);
+		else if (i == 0) temp->data.DoB.Day = char_to_int(w);
+		else temp->data.DoB.Year = char_to_int(w);
+		w = strtok(NULL, " /");
+	}
+	f >> temp->data.Gender >> temp->data.Status;
+	/*f.ignore(100, '\n');*/
+
 
 	temp->pNext = nullptr;
+
+	
 	return temp;
 }
 
@@ -35,7 +48,7 @@ int StudentCount(StudentList* list)
 	StudentList* cur = list;
 	while (cur != nullptr)
 	{
-		cnt++;
+		if (cur->data.Status == 1) cnt++;
 		cur = cur->pNext;
 	}
 	return cnt;
@@ -54,8 +67,19 @@ void LoadStudentList(StudentList*& list, char* Class)
 		cout << "Cannot open file.\n";
 		return;
 	}
-	int n;
-	f >> n;
+	int n; char ntemp[50];
+	n = 0;
+	for (int i = 0; !f.eof(); i++) {
+		f.getline(ntemp, 50);
+		if (i > 0 && i % 8 == 0) n++;
+	}
+	f.close();
+	f.open(Link);
+	if (!f.is_open())
+	{
+		cout << "Cannot open file.\n";
+		return;
+	}
 	for (int i = 0; i < n; i++)
 	{
 		if (cur == nullptr)
@@ -70,6 +94,7 @@ void LoadStudentList(StudentList*& list, char* Class)
 			StudentList* temp = CreateStudentNode(f);
 			cur->pNext = temp;
 			cur = cur->pNext;
+
 		}
 	}
 	f.close();
@@ -128,12 +153,12 @@ CourseList* LoadCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 
 	f.get(tmp, 20, ',');
 	//cout << "word: " << tmp << endl;
-	char* w = strtok(tmp, "/");
+	char* w = strtok(tmp, " /");
 	//cout << "word: " << w << endl;
 	newCourse->data.StartDate.Day = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " /");
 	newCourse->data.StartDate.Month = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " ");
 	newCourse->data.StartDate.Year = char_to_int(w);
 
 
@@ -146,7 +171,7 @@ CourseList* LoadCourseNode(ifstream& f)   //CREATE A NODE OF COURSE
 	newCourse->data.EndDate.Day = char_to_int(w);
 	w = strtok(NULL, "/");
 	newCourse->data.EndDate.Month = char_to_int(w);
-	w = strtok(NULL, "/");
+	w = strtok(NULL, " ");
 	newCourse->data.EndDate.Year = char_to_int(w);
 
 	f.ignore(256, ',');
@@ -182,7 +207,7 @@ void LoadCourses_csvfile(char* Link, CourseList*& list)
 	f.open(Link);
 	if (!f.is_open())
 	{
-		cout << "Find cannot found.\n";
+		cout << "Cannot open file.\n";
 		return;
 	}
 	else {
@@ -199,7 +224,6 @@ void LoadCourses_csvfile(char* Link, CourseList*& list)
 		{
 			if (cur != nullptr)
 			{
-
 				CourseList* temp = LoadCourseNode(f);
 				cur->pNext = temp;
 				cur = cur->pNext;
@@ -248,12 +272,16 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 	while (cur != nullptr)
 	{
 		f << endl;
-		f << st_list->data.ID << endl;
-		f << st_list->data.Pwd << endl;
-		f << st_list->data.Name << endl;
-		f << st_list->data.DoB.Year << " " << st_list->data.DoB.Month << " " << st_list->data.DoB.Day << endl;
-		f << st_list->data.Class << endl;
-		f << st_list->data.Status << endl;
+		f << cur->data.ID << endl;
+		f << cur->data.Pwd << endl;
+		f << cur->data.Name << endl;
+		f << cur->data.DoB.Year << " ";
+		if (cur->data.DoB.Month < 10) f << "0";
+		f << cur->data.DoB.Month << " ";
+		if (cur->data.DoB.Day < 10) f << "0";
+		f << cur->data.DoB.Day << endl;
+		f << cur->data.Class << endl;
+		f << cur->data.Status << endl;
 		f << -1 << endl;    //midterm
 		f << -1 << endl;	//final
 		f << -1 << endl;	//bonus
@@ -263,8 +291,19 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 		Hour End_Hour = list->data.EndHour;
 		for (int i = 0; i < 10; i++)
 		{
-			f << tmp_day.Year << " " << tmp_day.Month << " " << tmp_day.Day << " " << Start_Hour.h
-				<< " " << Start_Hour.m << " " << End_Hour.h << " " << End_Hour.m << " " << -1 << endl;
+			f << tmp_day.Year << " ";
+			if (tmp_day.Month < 10) f << "0";
+			f << tmp_day.Month << " ";
+			if (tmp_day.Day < 10) f << "0";
+			f << tmp_day.Day << " ";
+			if (Start_Hour.h < 10) f << "0";
+			f << Start_Hour.h << " ";
+			if (Start_Hour.m < 10) f << "0";
+			f << Start_Hour.m << " ";
+			if (End_Hour.h < 10) f << "0";
+			f << End_Hour.h << " ";
+			if (End_Hour.m < 10) f << "0";
+			f << End_Hour.m << " " << -1 << endl;
 			tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
 		}
 		f << "-";
@@ -279,7 +318,7 @@ void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char*
 	CourseList* cur = list;
 	while (cur != nullptr)
 	{
-		Create_Course_Student(list, AcaYear, Semester, Class);
+		Create_Course_Student(cur, AcaYear, Semester, Class);
 		cur = cur->pNext;
 	}
 }
@@ -317,8 +356,8 @@ void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class)
 			f << cur->data.StartDate.Year << " " << cur->data.StartDate.Month << " " << cur->data.StartDate.Day << endl;
 			f << cur->data.EndDate.Year << " " << cur->data.EndDate.Month << " " << cur->data.EndDate.Day << endl;
 			f << cur->data.DoW << endl;
-			f << cur->data.StartHour.h << ":" << cur->data.StartHour.m << endl;
-			f << cur->data.EndHour.h << ":" << cur->data.EndHour.m << endl;
+			f << cur->data.StartHour.h << " " << cur->data.StartHour.m << endl;
+			f << cur->data.EndHour.h << " " << cur->data.EndHour.m << endl;
 			f << cur->data.Room << endl;
 			cur = cur->pNext;
 		}
@@ -328,18 +367,28 @@ void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class)
 
 void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and save schedule
 {
-	CourseList* list;
+	std::system("cls");
+	cout << "-Import Courses from a .csv file-" << endl << endl;
+	/*cin.ignore();*/
+	CourseList* list = nullptr;
 	char temp[256], * Class, * Link;
-	cout << "Enter class: "; cin.getline(temp, 256, '\n');
+	cout << "[- Class -----]"; cout << endl << "> ";
+	cin.getline(temp, 256, '\n');
 	Class = new char[strlen(temp) + 1];
 	strcpy_s(Class, strlen(temp) + 1, temp);
 	temp[0] = 0;
-	cout << "Enter Link: "; cin.getline(temp, 256, '\n');
+	cout << "[- Link ------]"; cout << endl << "> ";
+	cin.getline(temp, 256, '\n');
 	Link = new char[strlen(temp) + 1];
 	strcpy_s(Link, strlen(temp) + 1, temp);
 	LoadCourses_csvfile(Link, list);
 	SaveSchedule(list, AcaYear, Semester, Class);
 	Save_Course_Stu_List(list, AcaYear, Semester, Class);
+
+	delete[]Link; delete[]Class;
+
+	cout << "Courses imported." << endl;
+	std::system("pause");
 }
 
 void CoursesManagement()
@@ -478,7 +527,7 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 	f.open(Link);
 	if (!f.is_open())
 	{
-		cout << "Cannot open file" << endl;
+		cout << "Cannot open file." << endl;
 		return;
 	}
 	else {
@@ -499,9 +548,12 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 
 void AddCourse(char* AcaYear, char* Semester)
 {
+	std::system("cls");
+	cout << "-Add Course-" << endl << endl;
+
 	CourseList* list;
 	char Class[10];
-	cout << "Enter Class: ";
+	cout << "[- Class -----]"; cout << endl << "> ";
 	cin.getline(Class, 10);
 	char Link[256];
 	strcpy(Link, AcaYear);
@@ -610,7 +662,8 @@ void LoadLecturerList(LecturerList*& list)
 	fin.open("lecturer.txt");
 	if (!fin.is_open())
 	{
-		cout << "Can not open file" << endl;
+		cout << "Cannot open file." << endl;
+		std::system("pause");
 		return;
 	}
 	else

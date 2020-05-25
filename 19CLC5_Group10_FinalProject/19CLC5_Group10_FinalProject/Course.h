@@ -56,7 +56,7 @@ struct Student {
 	char MSSV[10];
 	Date DoB;
 	char Class[10];
-	int Status;
+	int Status, Gender;
 };
 
 struct StudentList {
@@ -64,18 +64,17 @@ struct StudentList {
 	StudentList* pNext;
 };
 
-struct lecturer {
+struct Lecturer {
 	char username[100];
 	char password[100];
 	char fullname[100];
 	char dob[20];
 	char degree[20];
 	int gender;
-
 };
 
 struct LecturerList {
-	lecturer data;
+	Lecturer data;
 	LecturerList* pNext;
 };
 

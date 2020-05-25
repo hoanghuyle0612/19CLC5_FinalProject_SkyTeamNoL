@@ -6,7 +6,7 @@
 
 int vk_cnt = 0;
 
-int main() {
+	int main() {
 	Menu_Main();
 
 	return 0;

@@ -1,5 +1,8 @@
 // LOGIN HEADER
 
+#ifndef _LOGIN_H_
+#define _LOGIN_H_
+
 #include "General.h"
 
 struct staff {
@@ -64,3 +67,5 @@ void student_menu(student c[], int& idx);
 void Menu_Staff(staff a[], int& idx);
 void Menu_Staff_Class(staff a[], int& idx);
 void Draw_WelCome(char name[], int gender);
+
+#endif

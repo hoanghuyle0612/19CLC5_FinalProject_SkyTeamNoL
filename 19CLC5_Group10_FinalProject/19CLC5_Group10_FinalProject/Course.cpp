@@ -435,27 +435,57 @@ void GetCourse_DelStu(Student_Course*& stuHead, int& n) {
 }
 
 void ShowCourseList(string Sem, char* Link) {
+	std::system("cls");
+	cout << "-List of Courses-" << endl << endl;
 	string fName(Link);
 	fName = fName + Sem + ".txt";
 	ifstream fin;
 	fin.open(fName);
 	if (!fin.is_open()) {
-		cout << "Cannot find file" << endl;
+		cout << "Cannot open file." << endl;
 	}
 	else {
 		int n;
 		string Class, Course, CName;
 		fin >> n; fin.ignore();
 		cout << "Total: " << n << endl;
+
+		int width = 1 + 11 + 1 + 16 + 1 + 32 + 1;
+		for (int i = 0; i < width; i++) {
+			if (i == 0) cout << "[";
+			else if (i == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+		cout << "|   Class   |      Code      |              Name              |" << endl;
+
 		while (!fin.eof()) {
-			fin.ignore(2);
 			getline(fin, Class);
 			getline(fin, Course);
 			getline(fin, CName);
-			cout << "[" << Class << " - "
-				<< Course << "] " << CName << endl;
-			fin.ignore(38);
+			for (int i = 0; i < width; i++) {
+				if (i == 0 || i == width - 1) cout << "|";
+				else cout << "-";
+			} cout << endl;
+
+			cout << "| " << Class;
+			for (int i = 0; i < 9 - Class.length(); i++) cout << " ";
+			cout << " | " << Course;
+			for (int i = 0; i < 14 - Course.length(); i++) cout << " ";
+			cout << " | " << CName;
+			for (int i = 0; i < 31 - CName.length(); i++) cout << " ";
+			cout << "|" << endl;
+			/*cout << "[" << Class << " - "
+				<< Course << "] " << CName << endl;*/
+			/*fin.ignore();*/
 		}
+
+		for (int i = 0; i < width; i++) {
+			if (i == 0) cout << "[";
+			else if (i == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
 		fin.close();
 	}
+	cout << endl;
+	std::system("pause");
 }

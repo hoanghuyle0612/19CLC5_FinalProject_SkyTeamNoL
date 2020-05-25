@@ -24,13 +24,13 @@
 //void Icon_Login() {
 
 //	cout << setw(25) << " ------------- " << endl; // 1
-//	cout << setw(25) << "|    -----    |" << endl; // 2
-//	cout << setw(25) << "|   |-----|   |" << endl; // 3
-//	cout << setw(25) << "|   |     |   |" << endl; // 4
-//	cout << setw(25) << "|    \   /    |" << endl; // 5
-//	cout << setw(25) << "|   /|   |\   |" << endl; // 6
-//	cout << setw(25) << "|  |  \_/  |  |" << endl; // 7 
-//	cout << setw(25) << "|  |       |  |" << endl; // 8
+//	cout << setw(25) << "|    ----    |" << endl; // 2
+//	cout << setw(25) << "|   |----|   |" << endl; // 3
+//	cout << setw(25) << "|   |    |   |" << endl; // 4
+//	cout << setw(25) << "|    \  /    |" << endl; // 5
+//	cout << setw(25) << "|   /|  |\   |" << endl; // 6
+//	cout << setw(25) << "|  |  \/  |  |" << endl; // 7 
+//	cout << setw(25) << "|  |      |  |" << endl; // 8
 //	cout << setw(25) << " ------------ " << endl; // 9
 //	cout << endl;
 //}
@@ -116,6 +116,51 @@
 //	cout << setw(25) << 1 " ------------ " << endl; // 1
 //	cout << setw(25) << 2 "|            |" << endl; // 2
 //	cout << setw(25) << 3 "|     __     |" << endl; // 3
+//	cout << setw(25) << 4 "|    /  \    |" << endl; // 4
+//	cout << setw(25) << 5 "|    \__/    |" << endl; // 5
+//	cout << setw(25) << 4 "|    //\\    |" << endl; // 6
+//	cout << setw(25) << 3 "|   //  \\   |" << endl; // 7 
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Course_Add() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     __ (+) |" << endl; // 3
+//	cout << setw(25) << 4 "|    /  \    |" << endl; // 4
+//	cout << setw(25) << 5 "|    \__/    |" << endl; // 5
+//	cout << setw(25) << 4 "|    //\\    |" << endl; // 6
+//	cout << setw(25) << 3 "|   //  \\   |" << endl; // 7 
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Course_Remove() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     __ (-) |" << endl; // 3
+//	cout << setw(25) << 4 "|    /  \    |" << endl; // 4
+//	cout << setw(25) << 5 "|    \__/    |" << endl; // 5
+//	cout << setw(25) << 4 "|    //\\    |" << endl; // 6
+//	cout << setw(25) << 3 "|   //  \\   |" << endl; // 7 
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
+//void Icon_Course_Edit() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     __ (E) |" << endl; // 3
 //	cout << setw(25) << 4 "|    /  \    |" << endl; // 4
 //	cout << setw(25) << 5 "|    \__/    |" << endl; // 5
 //	cout << setw(25) << 4 "|    //\\    |" << endl; // 6
@@ -261,15 +306,37 @@
 //	cout << endl;
 //}
 
+//void Icon_AcaYear() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|  ________  |" << endl; // 2
+//	cout << setw(25) << 3 "| |        | |" << endl; // 3
+//	cout << setw(25) << 4 "| | [====] | |" << endl; // 4
+//	cout << setw(25) << 5 "| |  2018  | |" << endl; // 5
+//	cout << setw(25) << 4 "| |  2020  | |" << endl; // 6 
+//	cout << setw(25) << 3 "| |________| |" << endl; // 7
+//	cout << setw(25) << 2 "|  ========  |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//} 
+
+//void Icon_MoreOptions() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "| []  []  [] |" << endl; // 3
+//	cout << setw(25) << 4 "|            |" << endl; // 4
+//	cout << setw(25) << 5 "| []  []  [] |" << endl; // 5
+//	cout << setw(25) << 4 "|            |" << endl; // 6 
+//	cout << setw(25) << 3 "| []  []  [] |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//} 
+
 // HCMUS LOGO
-
-//cout << setw(SETWIDTH) << 1 "     /|      |                   " << endl;
-//cout << setw(SETWIDTH) << 2 "    / |      |                   " << endl;
-//cout << setw(SETWIDTH) << 3 "   /  |      |                   " << endl;
-//cout << setw(SETWIDTH) << 4 "  |==_|_     |                   " << endl;
-//cout << setw(SETWIDTH) << 5 "   \____\    |                   " << endl;
-							// 1234567654321
-
 
 //cout << setw(SETWIDTH) << 1 "              /|       | << endl;
 //cout << setw(SETWIDTH) << 2 "             / |       | << endl;
@@ -751,9 +818,6 @@ void Draw_WelCome(char name[], int gender) {
 	cout << endl;
 	Sleep(2000);
 }
-
-// Welcome but more advanced
-
 
 
 // Welcome
