@@ -118,7 +118,7 @@ string GetFileName(string Sem, char* Link);
 // Get the file name through the file's directory
 // Ex: C:/Users/ADMIN/2019-2020-HK2-19CLC05-CS162-Student.txt
 
-Student_Course* GetStudentFile(ifstream& fin);
+Student_Course* GetStudentFile(ifstream& fin, int n);
 // Get all information of a student from a Course .txt file
 
 void ShowAttDay(Student_Course* stu);
@@ -175,5 +175,13 @@ void CheckInRes(Student_Course* stu);
 
 Student_Course* GetStudent(Student_Course* stuHead, int id);
 // Get Student using a provided ID
+
+
+// MENU FUNCTIONS
+//==========================================
+
+void Advance_ShowScoreBoard(string YearSem);
+
+void Advance_ExportScoreBoard(string YearSem);
 
 #endif

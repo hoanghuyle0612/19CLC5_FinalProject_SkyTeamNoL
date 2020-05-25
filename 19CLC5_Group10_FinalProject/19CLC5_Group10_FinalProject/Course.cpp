@@ -4,20 +4,20 @@
 
 string GetFileName(string Sem, char* Link) {
 
-	cout << "-Enter Course's file-" << endl;
+	cout << "-Enter Course's file-" << endl << endl;
 
 	const int lim = 100;
 
 	char Class[lim], Course[lim];
 	/*cin.ignore();*/
-	cout << "Enter class: ";
-	cin.getline(Class, lim);
+	cout << "[- Class -----]" << endl;
+	cout << "> "; cin.getline(Class, lim);
 	/*while (strlen(Class) + 1 != Class_lim) {
 		cout << "Invalid input. Please enter again." << endl;
 		cin.getline(Class, lim);
 	}*/
-	cout << "Enter course: ";
-	cin.getline(Course, lim);
+	cout << "[- Course ----]" << endl;
+	cout << "> "; cin.getline(Course, lim);
 	/*while (strlen(Course) + 1 != Course_lim) {
 		cout << "Invalid input. Please enter again." << endl;
 		cin.getline(Course, lim);
@@ -36,7 +36,20 @@ string GetFileName(string Sem, char* Link) {
 	return fName;
 }
 
-Student_Course* GetStudentFile(ifstream& fin) {
+int CourseAttDay(ifstream &fin) {
+	char temp[30]; int cnt = -1, line = 0;
+	while (true) {
+		fin.getline(temp, 30);
+		if (line < 11 || temp[0] != '-') {
+			cnt++;
+			line++;
+		}
+		else return cnt;
+	}
+	
+}
+
+Student_Course* GetStudentFile(ifstream& fin, int n) {
 	Student_Course* stu = new Student_Course;
 	fin >> stu->id;
 	fin.ignore(); // 01
@@ -53,7 +66,7 @@ Student_Course* GetStudentFile(ifstream& fin) {
 	AttDay* d = CreateDay(fin);
 	stu->dHead = d; // 11
 	AttDay* dcur = d;
-	for (int i = 1; i < TOTALDAY; i++) {
+	for (int i = 1; i < n; i++) {
 		d = CreateDay(fin);
 		dcur->dNext = d;
 		dcur = dcur->dNext;
@@ -219,18 +232,30 @@ bool GetCourse(Student_Course*& stuHead, int& n, string fName) {
 	if (stuHead != nullptr) GetCourse_DelStu(stuHead, n);
 	ifstream fin;
 	fin.open(fName + ".txt");
+	int AttDayNo = 0;
+	if (fin.is_open()) {
+		AttDayNo = CourseAttDay(fin) - 10;
+		fin.close();
+	} else {
+		return false;
+	}
+	fin.open(fName + ".txt");
 	if (!fin.is_open()) {
-		cout << "Cannot open file." << endl;
+		/*cout << "Cannot open file." << endl;*/
 		return false;
 	}
 	else {
 		fin >> n;
 		string temp; getline(fin, temp);
-		Student_Course* stu = GetStudentFile(fin);
+		Student_Course* stu = GetStudentFile(fin, AttDayNo);
+		while (stu->active == 0)
+			stu = GetStudentFile(fin, AttDayNo);
 		stuHead = stu;
 		Student_Course* stucur = stu;
 		while (!fin.eof()) {
-			stu = GetStudentFile(fin);
+			stu = GetStudentFile(fin, AttDayNo);
+			while (stu->active == 0)
+				stu = GetStudentFile(fin, AttDayNo);
 			stucur->stuNext = stu;
 			stucur = stucur->stuNext;
 		}
@@ -262,6 +287,15 @@ void ShowCourse(Student_Course* stuHead, int n) {
 }
 
 void ShowScoreBoard(Student_Course* stuHead, int n) {
+	cout << endl;
+	int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+	cout << "|    ID    |             Name             |   Mid   |  Final  |  Bonus  | Average |" << endl;
+
 	Student_Course* stucur = stuHead;
 	for (int i = 0; i < n; i++) {
 		ShowScore(stucur);
@@ -269,17 +303,68 @@ void ShowScoreBoard(Student_Course* stuHead, int n) {
 			stucur = stucur->stuNext;
 		}
 	}
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+}
+
+int ScoreLength(float sc) {
+	int length = 0;
+	float sc_floor = floor(sc);
+	float sc_redun = sc - sc_floor;
+	while (sc_redun - floor(sc_redun) > 0) {
+		sc_redun *= 10;
+	}
+	int sc_floor_int = static_cast<int> (sc_floor);
+	int sc_redun_int = static_cast<int> (sc_redun);
+	if (sc_redun_int > 0) {
+		length++;
+		string sc_redun_str = to_string(sc_redun_int);
+		length += sc_redun_str.length();
+	}
+	string sc_floor_str = to_string(sc_floor_int);
+	length += sc_floor_str.length();
+	return length;
 }
 
 void ShowScore(Student_Course* stu) {
-	cout << "[" << stu->id << "]" << endl;
+	int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0 || i == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "| " << stu->id << " | ";
+	cout << stu->name;
+	for (int i = 0; i < 29 - stu->name.length(); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_mid;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_fin;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_lab;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_ave;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
+		cout << " ";
+	} cout << "|" << endl;
+
+	/*cout << "[" << stu->id << "]" << endl;
 	cout << stu->name << endl;
 	cout << "-Scores-" << endl;
 	cout << "Mid-term: " << stu->sc_mid << endl;
 	cout << "Final   : " << stu->sc_fin << endl;
 	cout << "Bonus   : " << stu->sc_lab << endl;
 	cout << "Total   : " << stu->sc_ave << endl;
-	cout << endl;
+	cout << endl;*/
 }
 
 void EditScore(Student_Course*& stuHead, int n, string fName) {
@@ -488,4 +573,66 @@ void ShowCourseList(string Sem, char* Link) {
 	}
 	cout << endl;
 	std::system("pause");
+}
+
+bool ExportScoreBoard(Student_Course*& stuHead, int n, string fName) {
+	ofstream fout;
+	fout.open(fName + ".csv");
+	if (!fout.is_open()) {
+		return false;
+	} else {
+		fout << "No,ID,Full Name,Mid-term,Final,Bonus,Total" << endl;
+		Student_Course* cur = stuHead;
+		for (int i = 0; i < n; i++) {
+			fout << i + 1 << ",";
+			fout << cur->id << ",";
+			fout << cur->name << ",";
+			fout << cur->sc_mid << "," << cur->sc_fin << ","
+				<< cur->sc_lab << "," << cur->sc_ave << endl;
+			cur = cur->stuNext;
+		}
+	}
+	return true;
+}
+
+
+
+void Advance_ShowScoreBoard(string YearSem) {
+	std::system("cls");
+	cout << "-Search & View Scoreboard of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	Student_Course *stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot view Scoreboard." << endl;
+		std::system("pause");
+		return;
+	}
+	std::system("cls");
+	cout << fName.substr(14, fName.length() - 14 - 1) << endl;
+	ShowScoreBoard(stuHead, n);
+	cout << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Advance_ExportScoreBoard(string YearSem) {
+	std::system("cls");
+	cout << "-Export Scoreboard of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameScr = fName + "Scoreboard";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot export Scoreboard." << endl;
+		std::system("pause");
+		return;
+	}
+	if (ExportScoreBoard(stuHead, n, fNameScr))
+		cout << "Export complete." << endl;
+	else cout << "Cannot export Scoreboard." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
 }

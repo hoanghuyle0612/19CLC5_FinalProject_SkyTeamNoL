@@ -231,6 +231,21 @@
 //	cout << endl;
 //}
 
+//void Icon_Export() {
+
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 2 "|            |" << endl; // 2
+//	cout << setw(25) << 3 "|     /\     |" << endl; // 3
+//	cout << setw(25) << 4 "|  --/||\--  |" << endl; // 4
+//	cout << setw(25) << 5 "| |   ||   | |" << endl; // 5
+//	cout << setw(25) << 4 "| |   ||   | |" << endl; // 6 
+//	cout << setw(25) << 3 "|  --------  |" << endl; // 7
+//	cout << setw(25) << 2 "|            |" << endl; // 8
+//	cout << setw(25) << 1 " ------------ " << endl; // 9
+//                          123456654321
+//	cout << endl;
+//}
+
 //void Icon_Add() {
 
 //	cout << setw(25) << 1 " ------------ " << endl; // 1
@@ -790,10 +805,10 @@ void Draw_WelCome(char name[], int gender) {
 		Welcome_24, Welcome_25 };
 	for (int i = 0; i < 25; i++) {
 		std::system("cls");
-		if (i == 0) Sleep(50);
+		if (i == 0) Sleep(40);
 		for (int j = 0; j < ENDLRANGE; j++) cout << endl;
 		draw[i]();
-		Sleep(50);
+		Sleep(40);
 	}
 	if (gender == 1)
 		cout << endl << setw(42 - strlen(name) / 2);
