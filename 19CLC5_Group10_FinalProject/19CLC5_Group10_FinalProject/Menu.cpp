@@ -1318,6 +1318,84 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 }
 
 
+
+void Menu_EditScore(Student_Course*& stu, int n) {
+
+	int color[] = { 15, 12 };
+	int i[] = { 1, 0, 0, 0, 0 };
+	int ptr = 0;
+	int last = 4;
+	int KeyPressed = 0;
+
+	while (KeyPressed != 13) {
+
+		std::system("cls");
+
+		cout << "-Edit Grade-" << endl << endl;
+
+		int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+		for (int i = 0; i < width; i++) {
+			if (i == 0) cout << "[";
+			else if (i == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+		cout << "|    ID    |             Name             |   Mid   |  Final  |  Bonus  | Average |" << endl;
+
+		ShowScoreSolo(stu); cout << endl;
+
+		for (int j = 0; j < last + 1; j++) {
+			SetColor(color, i[j]);
+			if (i[j] == 1) cout << "> "; else cout << "  ";
+			switch (j) {
+			case 0: cout << "Mid-term"; break;
+			case 1: cout << "Final"; break;
+			case 2: cout << "Bonus"; break;
+			case 3: cout << "Total"; break;
+			case 4: cout << "Back"; break;
+			}
+			cout << endl;
+		}
+		cout << endl;
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 72) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr == last) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	if (ptr == 4) return;
+	float sc_ans;
+	cout << "[- New Score -]" << endl;
+	cout << "> "; cin >> sc_ans;
+	while (sc_ans < 0) {
+		cout << "Invalid input." << endl;
+		cout << "> "; cin >> sc_ans;
+	}
+	switch (ptr) {
+	case 0: stu->sc_mid = sc_ans; break;
+	case 1: stu->sc_fin = sc_ans; break;
+	case 2: stu->sc_lab = sc_ans; break;
+	case 3: stu->sc_ave = sc_ans; break;
+	}
+
+	cout << endl;
+	cout << "Edit complete." << endl;
+	system("pause");
+}
+
 void Menu_Lecturer(lecturer b[], int& idx) {
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0 };
@@ -1677,7 +1755,22 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 		ShowCourseList(YearSem_str, Link);
 		break;
 	case 1:
-		Lecturer_ShowCourse(YearSem_str);
+		Advance_ShowCourse(YearSem_str);
+		break;
+	case 2:
+		Advance_ShowAttList(YearSem_str);
+		break;
+	case 3:
+		Advance_EditAtt(YearSem_str);
+		break;
+	case 4:
+		Advance_ImportScoreBoard(YearSem_str);
+		break;
+	case 5: 
+		Advance_EditScore(YearSem);
+		break;
+	case 6:
+		Advance_ShowScoreBoard(YearSem_str);
 		break;
 	case 7:
 		Menu_Lecturer(b, idx);
