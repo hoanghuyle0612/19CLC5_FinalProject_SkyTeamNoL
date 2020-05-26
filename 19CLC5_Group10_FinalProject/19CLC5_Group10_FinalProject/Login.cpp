@@ -41,6 +41,7 @@ void loadlecturer(fstream& f, lecturer& b)
 	f.getline(b.fullname, 101);
 	f.getline(b.dob, 101);
 	f >> b.gender;
+	f >> b.degree;
 	f >> b.type;
 }
 void loadlecturerarray(fstream& f, lecturer b[], int& n)
@@ -128,7 +129,7 @@ void login()
 			{
 				idx = i;
 				f1.close();
-				Draw_WelCome(b[i].fullname, b[i].gender);
+				Draw_WelCome_Lec(b[i].fullname, b[i].degree);
 				cin.ignore();
 				Menu_Lecturer(b, idx);
 				return;
@@ -314,7 +315,7 @@ void import(staff a[], int& idx)
 			int x = strlen(line3);
 			for (int i = 0;i < x;i++)
 			{
-				if (line3[i] == ';')
+				if (line3[i] == ',')
 				{
 					line3[i] = '\n';
 				}
@@ -538,7 +539,7 @@ void add_a_new_student(staff a[], int& idx)
 		int k = strlen(line5);
 		for (int i = 0;i < k;i++)
 		{
-			if (line5[i] == ' ')
+			/*if (line5[i] == ' ')
 			{
 				int j = 0;
 				for (int j = i;j < k;j++)
@@ -546,13 +547,26 @@ void add_a_new_student(staff a[], int& idx)
 					line5[j] = line5[j + 1];
 				}
 				k--;
+			}*/
+			if (line5[i] == '/') {
+				for (int j = i; j < k; j++) {
+					line5[j] = line5[j + 1];
+				}
+				line5[k - 1] = ' ';
 			}
 		}
-		f3 << line5 << "\n";
+		char line5t[9] = { "        " };
+		strncpy(line5t, line5, 8);
+		f3 << line5t << "\n";
 		f3 << fullname << "\n";
 		f3 << id << "\n";
 		f3 << currentclass << "\n";
-		f3 << dob << "\n";
+		strcpy(line5, dob);
+		k = strlen(line5);
+		for (int i = 0; i < k; i++) {
+			if (line5[i] == '/') line5[i] = ' ';
+		}
+		f3 << line5 << "\n";
 		f3 << gender << "\n";
 		f3 << type << "\n";
 		f4.close();
@@ -593,21 +607,34 @@ void add_a_new_student(staff a[], int& idx)
 		int x = strlen(line8);
 		for (int i = 0;i < x;i++)
 		{
-			if (line8[i] == ' ')
+			/*if (line5[i] == ' ')
 			{
 				int j = 0;
-				for (int j = i;j < x;j++)
+				for (int j = i;j < k;j++)
 				{
+					line5[j] = line5[j + 1];
+				}
+				k--;
+			}*/
+			if (line8[i] == '/') {
+				for (int j = i; j < x; j++) {
 					line8[j] = line8[j + 1];
 				}
-				x--;
+				line8[x - 1] = ' ';
 			}
 		}
-		f7 << line8 << "\n";
+		char line8t[9] = { "        " };
+		strncpy(line8t, line8, 8);
+		f7 << line8t << "\n";
 		f7 << fullname << "\n";
 		f7 << id << "\n";
 		f7 << currentclass << "\n";
-		f7 << dob << "\n";
+		strcpy(line8, dob);
+		k = strlen(line8);
+		for (int i = 0; i < k; i++) {
+			if (line8[i] == '/') line8[i] = ' ';
+		}
+		f7 << line8 << "\n";
 		f7 << gender << "\n";
 		f7 << type << "\n";
 		f7.close();
@@ -718,26 +745,30 @@ void edit_existing_student(staff a[], int& idx)
 			int x = strlen(tempo);
 			for (int i = 0;i < x;i++)
 			{
-				if (tempo[i] == ' ')
-				{
-					int j = 0;
-					for (int j = i;j < x;j++)
-					{
+				if (tempo[i] == '/') {
+					for (int j = i; j < x; j++) {
 						tempo[j] = tempo[j + 1];
 					}
-					x--;
+					tempo[x - 1] = ' ';
 				}
 			}
 			if (count == 1)
 			{
-				f5 << tempo << "\n";
+				char tempot[9] = { "        " };
+				strncpy(tempot, tempo, 8);
+				f5 << tempot << "\n";
 				char line3[100];
 				f4.getline(line3, 100);
 				strcpy(line3, currentfullname);
 				f5 << line3 << "\n";
 				f5 << id << "\n";
 				f5 << currentclass << "\n";
-				f5 << currentdob << "\n";
+				strcpy(tempo, currentdob);
+				x = strlen(tempo);
+				for (int i = 0; i < x; i++) {
+					if (tempo[i] == '/') tempo[i] = ' ';
+				}
+				f5 << tempo << "\n";
 				f5 << currentgender << "\n";
 				f5 << 1 << "\n";
 				f4.ignore();
@@ -798,30 +829,34 @@ void edit_existing_student(staff a[], int& idx)
 		{
 			cou++;
 			f7.getline(tempo1, 100);
-			strcpy(tempo1, currentdob);
-			int p = strlen(tempo1);
-			for (int i = 0;i < p;i++)
+			strcpy(tempo, currentdob);
+			int x = strlen(tempo);
+			for (int i = 0;i < x;i++)
 			{
-				if (tempo1[i] == ' ')
-				{
-					int j = 0;
-					for (int j = i;j < p;j++)
-					{
-						tempo1[j] = tempo1[j + 1];
+				if (tempo[i] == '/') {
+					for (int j = i; j < x; j++) {
+						tempo[j] = tempo[j + 1];
 					}
-					p--;
+					tempo[x - 1] = ' ';
 				}
 			}
 			if (cou == 1)
 			{
-				f6 << tempo1 << "\n";
+				char tempot[9] = { "        " };
+				strncpy(tempot, tempo, 8);
+				f6 << tempot << "\n";
 				char line31[100];
 				f7.getline(line31, 100);
 				strcpy(line31, currentfullname);
 				f6 << line31 << "\n";
 				f6 << id << "\n";
 				f6 << currentclass << "\n";
-				f6 << currentdob << "\n";
+				strcpy(tempo, currentdob);
+				x = strlen(tempo);
+				for (int i = 0; i < x; i++) {
+					if (tempo[i] == '/') tempo[i] = ' ';
+				}
+				f6 << tempo << "\n";
 				f6 << currentgender << "\n";
 				f6 << 1 << "\n";
 				f7.ignore();
@@ -1584,11 +1619,11 @@ void view_profile_lecturer(lecturer b[], int& idx)
 	std::system("cls");
 	cout << "-Profile - Lecturer-" << endl << endl;
 
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 11; i++) {
 		if (i % 2 == 0) {
 			for (int j = 0; j < bsize; j++) {
 				if (j == 0 || j == bsize - 1) {
-					if (i == 0 || i == 8) {
+					if (i == 0 || i == 10) {
 						if (j == 0) cout << "[";
 						else if (j == bsize - 1) cout << "]";
 					}
@@ -1627,8 +1662,20 @@ void view_profile_lecturer(lecturer b[], int& idx)
 				}
 				cout << "|";
 			}
+			else if (i == 7) {
+				cout << " Degree    | ";
+				char dgrtemp[2][11] = { "Doctor", "Professor" };
+				cout << dgrtemp[b[idx].degree];
+				for (int j = 0; j < bsize - 14
+					- strlen(dgrtemp[b[idx].degree]) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
 			else {
-				cout << " Type      | " << b[idx].type;
+				cout << " Active    | ";
+				if (b[idx].type == 0) cout << " ";
+				else cout << "v";
 				for (int j = 0; j < bsize - 15 - 1; j++) {
 					cout << " ";
 				}
@@ -1709,7 +1756,9 @@ void view_profile_staff(staff a[], int& idx)
 				cout << "|";
 			}
 			else {
-				cout << " Type      | " << a[idx].type;
+				cout << " Active    | ";
+				if (a[idx].type == 0) cout << "_";
+				else cout << "v";
 				for (int j = 0; j < bsize - 15 - 1; j++) {
 					cout << " ";
 				}

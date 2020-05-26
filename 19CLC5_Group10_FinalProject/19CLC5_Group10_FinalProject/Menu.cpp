@@ -2,6 +2,8 @@
 
 #include "Login.h"
 #include "Course.h"
+#define ONCOL 12
+#define OFFCOL 15
 
 void staffclass_func(staff a[], int& idx);
 void Menu_Staff_Advance(staff a[], int& idx);
@@ -21,7 +23,7 @@ void SetColor(int color[], int i) {
 void Menu_Main() {
 	std::system("cls");
 
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0 };
 	int ptr = 0;
 	int width = 35;
@@ -30,7 +32,7 @@ void Menu_Main() {
 
 	while (KeyPressed != 13) {
 		cls();
-
+		
 		cout << setw(51) << "-MAIN MENU-" << endl;
 		cout << endl;
 
@@ -140,7 +142,7 @@ void Menu_Main() {
 
 void Menu_Staff(staff a[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -310,7 +312,7 @@ void Menu_Staff(staff a[], int& idx) {
 
 void Menu_Staff_Advance(staff a[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -507,7 +509,7 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 
 void Menu_Staff_Class(staff a[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -748,7 +750,7 @@ void Menu_Staff_Class(staff a[], int& idx) {
 
 void Menu_Staff_Course(staff a[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -902,7 +904,7 @@ void Menu_Staff_Course(staff a[], int& idx) {
 
 void Menu_Staff_Course_Course(staff a[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -1101,7 +1103,7 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 
 void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
 	int width = 26;
@@ -1215,7 +1217,7 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 
 void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
 	int width = 26;
@@ -1332,7 +1334,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 void Menu_EditScore(Student_Course*& stu, int n) {
 	std::system("cls");
 
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
 	int last = 4;
@@ -1409,7 +1411,7 @@ void Menu_EditScore(Student_Course*& stu, int n) {
 
 void Menu_Lecturer(lecturer b[], int& idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -1546,7 +1548,7 @@ void Menu_Lecturer(lecturer b[], int& idx) {
 
 void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	std::system("cls");
-	int color[] = { 15, 12 };
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;

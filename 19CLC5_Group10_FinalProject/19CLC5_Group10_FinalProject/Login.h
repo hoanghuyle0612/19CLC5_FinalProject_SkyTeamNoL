@@ -21,6 +21,7 @@ struct lecturer {
 	char dob[20];
 	int gender;
 	int type;
+	int degree;
 };
 
 struct student {
@@ -67,6 +68,7 @@ void student_menu(student c[], int& idx);
 void Menu_Staff(staff a[], int& idx);
 void Menu_Staff_Class(staff a[], int& idx);
 void Draw_WelCome(char name[], int gender);
+void Draw_WelCome_Lec(char name[], int degree);
 void Menu_Lecturer(lecturer b[], int& idx);
 
 #endif
