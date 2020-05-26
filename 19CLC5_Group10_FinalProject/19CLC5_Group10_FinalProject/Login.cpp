@@ -2,6 +2,19 @@
 
 #include "Login.h"
 
+void cls()
+{
+	HANDLE hOut;
+	COORD Position;
+
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	Position.X = 0;
+	Position.Y = 0;
+	SetConsoleCursorPosition(hOut, Position);
+}
+// void cls() belongs to this handsome man: olredixsis
+
 void loadstaff(fstream& f, staff& a)
 {
 	f.ignore();

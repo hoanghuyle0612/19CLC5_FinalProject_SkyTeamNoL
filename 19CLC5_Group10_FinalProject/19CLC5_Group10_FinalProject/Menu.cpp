@@ -19,6 +19,8 @@ void SetColor(int color[], int i) {
 }
 
 void Menu_Main() {
+	std::system("cls");
+
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0 };
 	int ptr = 0;
@@ -27,7 +29,7 @@ void Menu_Main() {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(51) << "-MAIN MENU-" << endl;
 		cout << endl;
@@ -131,11 +133,13 @@ void Menu_Main() {
 		login();
 	} else {
 		std::system("cls");
+		cls();
 	}
 
 }
 
 void Menu_Staff(staff a[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
@@ -144,7 +148,7 @@ void Menu_Staff(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(53) << "-ACADEMIC STAFF-" << endl;
 		cout << endl;
@@ -305,6 +309,7 @@ void Menu_Staff(staff a[], int& idx) {
 //}
 
 void Menu_Staff_Advance(staff a[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
@@ -319,7 +324,7 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(53) << "-ACADEMIC STAFF-" << endl;
 		cout << endl;
@@ -501,6 +506,7 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 }
 
 void Menu_Staff_Class(staff a[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
@@ -509,7 +515,7 @@ void Menu_Staff_Class(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - CLASS-" << endl;
 		cout << endl;
@@ -741,6 +747,7 @@ void Menu_Staff_Class(staff a[], int& idx) {
 }
 
 void Menu_Staff_Course(staff a[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
@@ -749,7 +756,7 @@ void Menu_Staff_Course(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - COURSE-" << endl;
 		cout << endl;
@@ -894,6 +901,7 @@ void Menu_Staff_Course(staff a[], int& idx) {
 }
 
 void Menu_Staff_Course_Course(staff a[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0, 0 };
 	int ptr = 0;
@@ -902,7 +910,7 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - COURSE-" << endl;
 		cout << endl;
@@ -1092,6 +1100,7 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 }
 
 void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
@@ -1100,7 +1109,7 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(58) << "-ACADEMIC STAFF - SCOREBOARD-" << endl;
 		cout << endl;
@@ -1205,6 +1214,7 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 }
 
 void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
@@ -1213,7 +1223,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(59) << "-ACADEMIC STAFF - ATTENDANCE LIST-" << endl;
 		cout << endl;
@@ -1320,6 +1330,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 
 
 void Menu_EditScore(Student_Course*& stu, int n) {
+	std::system("cls");
 
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0 };
@@ -1329,7 +1340,7 @@ void Menu_EditScore(Student_Course*& stu, int n) {
 
 	while (KeyPressed != 13) {
 
-		std::system("cls");
+		cls();
 
 		cout << "-Edit Grade-" << endl << endl;
 
@@ -1397,6 +1408,7 @@ void Menu_EditScore(Student_Course*& stu, int n) {
 }
 
 void Menu_Lecturer(lecturer b[], int& idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
@@ -1405,7 +1417,7 @@ void Menu_Lecturer(lecturer b[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(50) << "-LECTURER-" << endl;
 		cout << endl;
@@ -1533,6 +1545,7 @@ void Menu_Lecturer(lecturer b[], int& idx) {
 }
 
 void Menu_Lecturer_Advance(lecturer b[], int &idx) {
+	std::system("cls");
 	int color[] = { 15, 12 };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
@@ -1547,7 +1560,7 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(50) << "-LECTURER-" << endl;
 		cout << endl;
