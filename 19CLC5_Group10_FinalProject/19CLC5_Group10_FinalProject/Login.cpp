@@ -1212,26 +1212,29 @@ void change_student_classA_to_B(staff a[], int& idx)
 			f4.getline(tempo, 100);
 			strcpy(tempo, dob);
 			int x = strlen(tempo);
-			for (int i = 0;i < x;i++)
-			{
-				if (tempo[i] == ' ')
-				{
-					int j = 0;
-					for (int j = i;j < x;j++)
-					{
+			for (int i = 0; i < x; i++) {
+				if (tempo[i] == '/') {
+					for (int j = i; j < x; j++) {
 						tempo[j] = tempo[j + 1];
 					}
-					x--;
 				}
 			}
 			if (count == 1)
 			{
-				f5 << tempo << "\n";
+				char tempot[15] = { "        " };
+				strncpy(tempot, tempo, 8);
+				f5 << tempot << "\n";
 			}
 			if (count == 2)
 			{
+				
 				f5 << futureclass << "\n";
-				f5 << dob << "\n";
+				strcpy(tempo, dob);
+				x = strlen(tempo);
+				for (int i = 0; i < x; i++) {
+					if (tempo[i] == '/') tempo[i] = ' ';
+				}
+				f5 << tempo << "\n";
 				f5 << gender << "\n";
 				f5 << 1 << "\n";
 				for (int i = 0;i < 15;i++)
@@ -1291,26 +1294,29 @@ void change_student_classA_to_B(staff a[], int& idx)
 			f7.getline(tempo1, 100);
 			strcpy(tempo1, dob);
 			int p = strlen(tempo1);
-			for (int i = 0;i < p;i++)
-			{
-				if (tempo1[i] == ' ')
-				{
-					int j = 0;
-					for (int j = i;j < p;j++)
-					{
+			for (int i = 0; i < p; i++) {
+				if (tempo1[i] == '/') {
+					for (int j = i; j < p; j++) {
 						tempo1[j] = tempo1[j + 1];
 					}
-					p--;
 				}
 			}
 			if (cou == 1)
 			{
-				f6 << tempo1 << "\n";
+				char tempo1t[15] = { "        " };
+				strncpy(tempo1t, tempo1, 8);
+				f6 << tempo1t << "\n";
 			}
 			if (cou == 2)
 			{
+				
 				f6 << futureclass << "\n";
-				f6 << dob << "\n";
+				strcpy(tempo1, dob);
+				p = strlen(tempo1);
+				for (int i = 0; i < p; i++) {
+					if (tempo1[i] == '/') tempo1[i] = ' ';
+				}
+				f6 << tempo1 << "\n";
 				f6 << gender << "\n";
 				f6 << 0 << "\n";
 				for (int i = 0;i < 15;i++)
