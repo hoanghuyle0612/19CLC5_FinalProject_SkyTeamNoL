@@ -6,9 +6,9 @@ int main()
 	char AcaYear[] = "2019-2020", Semester[] = "HK2";
 	CourseList* list = NULL;
 	AddCourse(AcaYear, Semester);
+	 
 	
-	
-	return 0;
+	//return 0;
 
 
 
@@ -19,25 +19,26 @@ int main()
 
 	// TEST IMPORT COURSE !!!
 
-	/*CourseList* list = nullptr;
-	char AcaYear[] = "2019-2020",  Semester[] = "HK2";
+	//CourseList* list = nullptr;
+	//char AcaYear[] = "2019-2020",  Semester[] = "HK2";
 
 
-	
+	//
 
-	char temp[256], * Class, * Link;
-	cout << "Enter class: "; cin.getline(temp, 256, '\n');
-	Class = new char[strlen(temp) + 1];
-	strcpy_s(Class, strlen(temp) + 1, temp);
-	temp[0] = 0;
-	cout << "Enter Link: "; cin.getline(temp, 256, '\n');
-	Link = new char[strlen(temp) + 1];
-	strcpy_s(Link, strlen(temp) + 1, temp);
-	LoadCourses_csvfile(Link, list);
+	//char temp[256], * Class, * Link;
+	//cout << "Enter class: "; cin.getline(temp, 256, '\n');
+	//Class = new char[strlen(temp) + 1];
+	//strcpy_s(Class, strlen(temp) + 1, temp);
+	//temp[0] = 0;
+	//cout << "Enter Link: "; cin.getline(temp, 256, '\n');
+	//Link = new char[strlen(temp) + 1];
+	//strcpy_s(Link, strlen(temp) + 1, temp);
+	//LoadCourses_csvfile(Link, list);
+	//SaveSchedule(list, AcaYear, Semester, Class);
 
-	SaveSchedule(list, AcaYear, Semester, Class);
+	//Save_Course_Stu_List(list, AcaYear, Semester, Class);
 
-	Save_Course_Stu_List(list, AcaYear, Semester, Class);*/
+	return 0;
 
 	/*CourseList* cur = list;
 	while (cur != nullptr) {

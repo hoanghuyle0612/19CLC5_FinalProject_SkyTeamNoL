@@ -1,5 +1,4 @@
-3
-
+2
 CS162
 Introduction to Programming
 19APCS1
@@ -13,7 +12,6 @@ MON
 7:30
 11:30
 I32
-
 CM101
 Communication
 19APCS1
@@ -27,17 +25,3 @@ SAT
 13:30
 17:30
 I23
-
-CS163
-PROGRAMMING
-18APCS1
-dbtien
-Nguyen Minh Huy
-TS
-1
-2020 3 1
-2020 6 1
-TUE
-7:30
-11:30
-I71

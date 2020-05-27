@@ -14,13 +14,13 @@ StudentList* CreateStudentNode(ifstream& f)
 	f.getline(temp->data.Name, 30);
 	f.getline(temp->data.MSSV, 10);
 	f.getline(temp->data.Class, 10);
-	f >> temp->data.DoB.Year;
-	/*f.ignore(100, ' ');*/
-	f >> temp->data.DoB.Month;
-	/*f.ignore(100, ' ');*/
-	f>>temp->data.DoB.Day;
-	f.ignore(100, '\n');
-	f >> temp->data.Status;
+	f.getline(tmp, 21);
+	char* w = strtok(tmp, " /");
+	temp->data.DoB.Month = char_to_int(w);
+	w = strtok(tmp, " /");
+	temp->data.DoB.Day = char_to_int(w);
+	w = strtok(tmp, " \n");
+	temp->data.Status = char_to_int(w);
 	f.ignore(100, '\n');
 
 	temp->pNext = nullptr;
@@ -292,6 +292,7 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 	strcat(Link, "-");
 	strcat(Link, Class);
 	strcat(Link, ".txt");
+	cout << Link << endl;
 	ofstream f;
 	f.open(Link);
 	if (!f.is_open()) {
@@ -317,7 +318,7 @@ void SaveSchedule(CourseList* list,char* AcaYear,char* Semester,char* Class)
 			f << cur->data.DoW << endl;
 			f << cur->data.StartHour.h << ":" << cur->data.StartHour.m << endl;
 			f << cur->data.EndHour.h << ":" << cur->data.EndHour.m << endl;
-			f << cur->data.Room;
+			f << cur->data.Room << endl;
 			cur = cur->pNext;
 		}
 		f.close();
@@ -328,11 +329,11 @@ void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and s
 {
 	CourseList* list;
 	char temp[256], * Class, * Link;
-	cout << "Enter class: "; cin.getline(temp, 256, '\n');
+	cout << "Enter class: "; cin.getline(temp, 257, '\n');
 	Class = new char[strlen(temp) + 1];
 	strcpy_s(Class, strlen(temp) + 1, temp);
 	temp[0] = 0;
-	cout << "Enter Link: "; cin.getline(temp, 256, '\n');
+	cout << "Enter Link: "; cin.getline(temp, 257, '\n');
 	Link = new char[strlen(temp) + 1];
 	strcpy_s(Link, strlen(temp) + 1, temp);
 	LoadCourses_csvfile(Link,list);
@@ -345,11 +346,11 @@ void CoursesManagement()
 	system("cls");
 	char* AcaYear, * Semester;			//  INPUT ACADEMIC YEAR AND SEMESTER
 	char temp[256];
-	cout << "Enter Academic year: "; cin.getline(temp, 256, '\n');
+	cout << "Enter Academic year: "; cin.getline(temp, 257, '\n');
 	AcaYear = new char[strlen(temp) + 1];
 	strcpy_s(AcaYear, strlen(temp) + 1, temp);
 	temp[0] = 0;
-	cout << "Enter Semester: "; cin.getline(temp, 256, '\n');
+	cout << "Enter Semester: "; cin.getline(temp, 257, '\n');
 	Semester = new char[strlen(temp) + 1];
 	strcpy_s(Semester, strlen(temp) + 1, temp);
 	CreateAcaYear(AcaYear, Semester);		// SAVE ACADEMIC YEAR AND SEMESTER INTO FILE 
@@ -422,6 +423,7 @@ CourseList* LoadCourseNode_txtfile(ifstream& f)
 		'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', };
 	CourseList* newCourse;
 	newCourse = new CourseList;
+	f.ignore();
 	f.getline(newCourse->data.ID, 15);
 	f.getline(newCourse->data.Name, 100);
 	f.getline(newCourse->data.Class, 10);
@@ -516,11 +518,12 @@ void AddCourse(char* AcaYear,char* Semester)
 	strcat(Link, Class);
 	strcat(Link, ".txt");
 	LoadCourses_txtfile(Link, list);
+	if (list == nullptr) return;
 	int cnt = CountCourse(list);
 	CourseList* cur = list;
 	CourseList* p = CreateCourseNode();
 	while (cur != nullptr) {
-		if (strcmp(cur->data.ID, p->data.ID))
+		if (strcmp(cur->data.ID, p->data.ID)==0)
 		{
 			cout << "\n\t >>>  Course already exist!!!. <<<" << endl;
 			return;
@@ -550,6 +553,12 @@ void AddCourse(char* AcaYear,char* Semester)
 	else {
 		while (cur && cur->pNext != nullptr) cur = cur->pNext;
 		if (cur != nullptr) cur->pNext = p;
+	}
+	CourseList* cur3 = list;
+	while (cur3 != nullptr)
+	{
+		cout << cur3->data.ID << endl;
+		cur3 = cur3->pNext;
 	}
 
 	SaveSchedule(list, AcaYear, Semester, Class);
