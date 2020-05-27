@@ -607,15 +607,6 @@ void add_a_new_student(staff a[], int& idx)
 		int x = strlen(line8);
 		for (int i = 0;i < x;i++)
 		{
-			/*if (line5[i] == ' ')
-			{
-				int j = 0;
-				for (int j = i;j < k;j++)
-				{
-					line5[j] = line5[j + 1];
-				}
-				k--;
-			}*/
 			if (line8[i] == '/') {
 				for (int j = i; j < x; j++) {
 					line8[j] = line8[j + 1];
@@ -723,7 +714,7 @@ void edit_existing_student(staff a[], int& idx)
 	ofstream f5("temp_student.txt");
 	if (!f4.is_open() || !f5.is_open())
 	{
-		cout << "Error opening files!" << endl;
+		cout << "Cannon open file." << endl;
 	}
 	char temp[100];
 	char tempo[100];
@@ -979,7 +970,7 @@ void remove_a_student(staff a[], int& idx)
 			f4.getline(tempo, 100);
 			strcpy(tempo, dob);
 			int x = strlen(tempo);
-			for (int i = 0;i < x;i++)
+			/*for (int i = 0;i < x;i++)
 			{
 				if (tempo[i] == ' ')
 				{
@@ -990,16 +981,31 @@ void remove_a_student(staff a[], int& idx)
 					}
 					x--;
 				}
+			}*/
+			for (int i = 0; i < x; i++) {
+				if (tempo[i] == '/') {
+					for (int j = i; j < x; j++) {
+						tempo[j] = tempo[j + 1];
+					}
+				}
 			}
-			f5 << tempo << "\n";
-			if (count == 2)
+			char tempot[15] = { "        " };
+			strncpy(tempot, tempo, 8);
+			f5 << tempot << "\n";
+			if (count == 1)
 			{
+				f5 << fullname << "\n";
+				f5 << id << "\n";
 				f5 << currentclass << "\n";
-				f5 << dob << "\n";
+				strcpy(tempot, dob);
+				for (int i = 0; i < strlen(tempot); i++) {
+					if (tempot[i] == '/') tempot[i] = ' ';
+				}
+				f5 << tempot << "\n";
 				f5 << gender << "\n";
 				f5 << 0 << "\n";
 				f4.ignore();
-				for (int i = 0;i < 5;i++)
+				for (int i = 0;i < 6;i++)
 				{
 					char lind[100];
 					f4.getline(lind, 100);
@@ -1018,11 +1024,11 @@ void remove_a_student(staff a[], int& idx)
 	newFile.close();
 	if (remove("student.txt") == 0)
 	{
-		cout << "Processing changing" << endl;
+		/*cout << "Processing changing" << endl;*/
 	}
 	if (rename("temp_student.txt", "student.txt") == 0)
 	{
-		cout << "Successfully" << endl;
+		/*cout << "Successfully" << endl;*/
 	}
 	char temp1[100];
 	ofstream fi("temp.txt");
@@ -1058,7 +1064,7 @@ void remove_a_student(staff a[], int& idx)
 			f7.getline(tempo1, 100);
 			strcpy(tempo1, dob);
 			int p = strlen(tempo1);
-			for (int i = 0;i < p;i++)
+			/*for (int i = 0;i < p;i++)
 			{
 				if (tempo1[i] == ' ')
 				{
@@ -1069,16 +1075,31 @@ void remove_a_student(staff a[], int& idx)
 					}
 					p--;
 				}
+			}*/
+			for (int i = 0; i < p; i++) {
+				if (tempo1[i] == '/') {
+					for (int j = i; j < p; j++) {
+						tempo1[j] = tempo1[j + 1];
+					}
+				}
 			}
-			f6 << tempo1 << "\n";
-			if (cou == 2)
+			char tempo1t[15] = { "        " };
+			strncpy(tempo1t, tempo1, 8);
+			f6 << tempo1t << "\n";
+			if (cou == 1)
 			{
+				f6 << fullname << "\n";
+				f6 << id << "\n";
 				f6 << currentclass << "\n";
-				f6 << dob << "\n";
+				strcpy(tempo1t, dob);
+				for (int i = 0; i < strlen(tempo1t); i++) {
+					if (tempo1t[i] == '/') tempo1t[i] = ' ';
+				}
+				f6 << tempo1t << "\n";
 				f6 << gender << "\n";
 				f6 << 0 << "\n";
 				f7.ignore();
-				for (int i = 0;i < 5;i++)
+				for (int i = 0;i < 6;i++)
 				{
 					char lind1[100];
 					f7.getline(lind1, 100);
@@ -1531,6 +1552,9 @@ void list_of_student_in_class(staff a[], int& idx)
 			cout << " | ";
 			break;
 		case 6:
+			for (int i = 0; i < strlen(line); i++) {
+				if (line[i] == ' ') line[i] = '/';
+			}
 			cout << line << " | ";
 			break;
 		case 7:
@@ -1771,7 +1795,7 @@ void view_profile_staff(staff a[], int& idx)
 	std::system("pause");
 	Menu_Staff(a, idx);
 }
-
+	
 void changepassword_staff(staff a[], int& idx)
 {
 	std::system("cls");
@@ -2003,11 +2027,11 @@ void changepassword_student(student c[], int idx)
 	newFile.close();
 	if (remove("student.txt") == 0)
 	{
-		cout << "Processing changing" << endl;
+		/*cout << "Processing changing" << endl;*/
 	}
 	if (rename("temp_student.txt", "student.txt") == 0)
 	{
-		cout << "Successfully" << endl;
+		/*cout << "Successfully" << endl;*/
 	}
 	char tempq[100];
 	ofstream fi("temp.txt");

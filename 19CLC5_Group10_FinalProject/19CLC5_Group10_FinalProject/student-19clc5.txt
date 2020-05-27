@@ -1,4 +1,4 @@
-6
+5
 19127201
 02012001
 Le Quang Tan Long
@@ -46,4 +46,4 @@ Vuong Thuy Kieu
 19CLC5
 11 11 2000
 0
-1
+0
