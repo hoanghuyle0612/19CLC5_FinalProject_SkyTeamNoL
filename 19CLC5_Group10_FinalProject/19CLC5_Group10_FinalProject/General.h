@@ -19,4 +19,6 @@ using namespace std;
 
 void login();
 
+void cls();
+
 #endif

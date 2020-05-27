@@ -175,10 +175,11 @@ bool ExportAttList(Student_Course* stuHead, int n, string fName) {
 }
 
 void EditAtt(Student_Course*& stuHead, int n, string fName) {
-	cout << "-Attendance Edit-" << endl;
+	cout << "-Edit Attendance-" << endl << endl;
 
 	int idcur;
-	cout << "Enter ID: "; cin >> idcur;
+	cout << "[- ID ----------------]" << endl; 
+	cout << "> "; cin >> idcur;
 	while (idcur < 10000000 || idcur > 99999999) {
 		cout << "Invalid input" << endl;
 		cout << "> "; cin >> idcur;
@@ -194,7 +195,8 @@ void EditAtt(Student_Course*& stuHead, int n, string fName) {
 	}
 	AttDay* dcur = stucur->dHead;
 	char dtemp[11]; int ddtemp, dmtemp, dytemp;
-	cout << "Enter date (dd/mm/yyyy): "; cin >> dtemp;
+	cout << "[- Date (dd/mm/yyyy) -]" << endl; 
+	cout << "> "; cin >> dtemp;
 	while (dtemp[2] != '/' && dtemp[5] != '/') {
 		cout << "Invalid input" << endl;
 		cout << "> "; cin >> dtemp;
@@ -209,12 +211,14 @@ void EditAtt(Student_Course*& stuHead, int n, string fName) {
 		dcur = dcur->dNext;
 	}
 	if (dcur == nullptr) {
-		cout << "Cannot find date" << endl << endl;
+		cout << "Cannot find date." << endl << endl;
 		return;
 	}
 	if (dcur->pre == -1) dcur->pre = 1;
 	else dcur->pre = -1;
+	cout << "Edit complete." << endl;
 	SaveEdit(stuHead, n, fName);
+	cin.ignore();
 }
 
 void SaveEdit(Student_Course* stuHead, int n, string fName) {
@@ -436,18 +440,57 @@ void ShowScore(Student_Course* stu) {
 	cout << endl;*/
 }
 
+void ShowScoreSolo(Student_Course* stu) {
+	int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0 || i == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "| " << stu->id << " | ";
+	cout << stu->name;
+	for (int i = 0; i < 29 - stu->name.length(); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_mid;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_fin;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_lab;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
+		cout << " ";
+	} cout << "| ";
+	cout << stu->sc_ave;
+	for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
+		cout << " ";
+	} cout << "|" << endl;
+
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl;
+}
+
 void EditScore(Student_Course*& stuHead, int n, string fName) {
-	cout << "-Score Edit-" << endl;
+	std::system("cls");
+	cout << "-Edit Grade-" << endl << endl;
 
 	int ans = -1;
-	while (ans != 4) {
+	/*while (ans != 4) {*/
 		ShowScoreBoard(stuHead, n);
 		int idcur;
-		cout << "(Enter 0 to return)" << endl;
-		cout << "Enter ID: "; cin >> idcur;
-		if (idcur == 0) {
+		/*cout << "(Enter 0 to return)" << endl;*/
+		cout << endl;
+		cout << "[- ID --------]" << endl;
+		cout << "> "; cin >> idcur;
+		/*if (idcur == 0) {
 			return;
-		}
+		}*/
 		while (idcur < 10000000 || idcur > 99999999) {
 			cout << "Invalid input" << endl;
 			cout << "> "; cin >> idcur;
@@ -457,13 +500,17 @@ void EditScore(Student_Course*& stuHead, int n, string fName) {
 			if (stucur->id == idcur) break;
 			if (i < n - 1) stucur = stucur->stuNext;
 			else {
-				cout << "Cannot find ID" << endl << endl;
+				cout << "Cannot find ID." << endl << endl;
 				return;
 			}
 		}
 		system("cls");
-		ShowScore(stucur);
-		cout << "Choose which score to edit" << endl;
+		
+		Menu_EditScore(stucur, n);
+		SaveEdit(stuHead, n, fName);
+		cin.ignore();
+
+		/*cout << "Choose which score to edit" << endl;
 		cout << "0 - Midterm" << endl;
 		cout << "1 - Final" << endl;
 		cout << "2 - Bonus" << endl;
@@ -502,7 +549,8 @@ void EditScore(Student_Course*& stuHead, int n, string fName) {
 			cout << "Edit complete" << endl;
 		}
 		system("cls");
-	}
+	}*/
+	/*}*/
 }
 
 bool ImportScoreBoard(Student_Course*& stuHead, int n, string fName) {
@@ -707,6 +755,45 @@ void Advance_ExportScoreBoard(string YearSem) {
 	GetCourse_DelStu(stuHead, n);
 }
 
+void Advance_ImportScoreBoard(string YearSem) {
+	std::system("cls");
+	cout << "-Import Scoreboard of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameScr = fName + "Scoreboard";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot import Scoreboard." << endl;
+		std::system("pause");
+		return;
+	}
+	if (ImportScoreBoard(stuHead, n, fNameScr)) {
+		cout << "Import complete." << endl;
+		SaveEdit(stuHead, n, fNameStu);
+	}
+	else cout << "Cannot import Scoreboard." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Advance_EditScore(string YearSem) {
+	std::system("cls");
+	cout << "-Edit Grade-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameScr = fName + "Scoreboard";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot edit Grade." << endl;
+		std::system("pause");
+		return;
+	}
+	EditScore(stuHead, n, fNameStu);
+	GetCourse_DelStu(stuHead, n);
+}
+
 void Advance_ShowAttList(string YearSem) {
 	std::system("cls");
 	cout << "-View Attendance List of a Course-" << endl << endl;
@@ -734,7 +821,7 @@ void Advance_ShowAttList(string YearSem) {
 
 void Advance_ExportAttList(string YearSem) {
 	std::system("cls");
-	cout << "-View Attendance List of a Course-" << endl << endl;
+	cout << "-Export Attendance List-" << endl << endl;
 	char Link[] = "";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
@@ -753,7 +840,32 @@ void Advance_ExportAttList(string YearSem) {
 	GetCourse_DelStu(stuHead, n);
 }
 
-void Lecturer_ShowCourse(string YearSem) {
+void Advance_EditAtt(string YearSem) {
+	std::system("cls");
+	cout << "-Edit Attendance-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot edit Attendance List." << endl;
+		std::system("pause");
+		return;
+	}
+	ifstream fin; fin.open(fNameStu + ".txt");
+	int AttDayNo = CourseAttDay(fin) - 10;
+	fin.close();
+	std::system("cls");
+	cout << fName.substr(14, fName.length() - 14 - 1)
+		<< "\t Attendance List" << endl << endl;
+	ShowAttList(stuHead, n, AttDayNo);
+	cout << endl;
+	EditAtt(stuHead, n, fNameStu);
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Advance_ShowCourse(string YearSem) {
 	std::system("cls");
 	cout << "-View Student List of a Course-" << endl << endl;
 	char Link[] = "";

@@ -2,6 +2,8 @@
 
 #include "Login.h"
 #include "Course.h"
+#define ONCOL 12
+#define OFFCOL 15
 
 void staffclass_func(staff a[], int& idx);
 void Menu_Staff_Advance(staff a[], int& idx);
@@ -19,7 +21,9 @@ void SetColor(int color[], int i) {
 }
 
 void Menu_Main() {
-	int color[] = { 15, 12 };
+	std::system("cls");
+
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0 };
 	int ptr = 0;
 	int width = 35;
@@ -27,8 +31,8 @@ void Menu_Main() {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
-
+		cls();
+		
 		cout << setw(51) << "-MAIN MENU-" << endl;
 		cout << endl;
 
@@ -131,12 +135,14 @@ void Menu_Main() {
 		login();
 	} else {
 		std::system("cls");
+		cls();
 	}
 
 }
 
 void Menu_Staff(staff a[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -144,7 +150,7 @@ void Menu_Staff(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(53) << "-ACADEMIC STAFF-" << endl;
 		cout << endl;
@@ -305,7 +311,8 @@ void Menu_Staff(staff a[], int& idx) {
 //}
 
 void Menu_Staff_Advance(staff a[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -319,7 +326,7 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(53) << "-ACADEMIC STAFF-" << endl;
 		cout << endl;
@@ -501,7 +508,8 @@ void Menu_Staff_Advance(staff a[], int& idx) {
 }
 
 void Menu_Staff_Class(staff a[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -509,7 +517,7 @@ void Menu_Staff_Class(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - CLASS-" << endl;
 		cout << endl;
@@ -741,7 +749,8 @@ void Menu_Staff_Class(staff a[], int& idx) {
 }
 
 void Menu_Staff_Course(staff a[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -749,7 +758,7 @@ void Menu_Staff_Course(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - COURSE-" << endl;
 		cout << endl;
@@ -894,7 +903,8 @@ void Menu_Staff_Course(staff a[], int& idx) {
 }
 
 void Menu_Staff_Course_Course(staff a[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -902,7 +912,7 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(57) << "-ACADEMIC STAFF - COURSE-" << endl;
 		cout << endl;
@@ -1092,7 +1102,8 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 }
 
 void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
 	int width = 26;
@@ -1100,7 +1111,7 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(58) << "-ACADEMIC STAFF - SCOREBOARD-" << endl;
 		cout << endl;
@@ -1205,7 +1216,8 @@ void Menu_Staff_Scoreboard(staff a[], int &idx, string YearSem) {
 }
 
 void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0 };
 	int ptr = 0;
 	int width = 26;
@@ -1213,7 +1225,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(59) << "-ACADEMIC STAFF - ATTENDANCE LIST-" << endl;
 		cout << endl;
@@ -1318,8 +1330,88 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 }
 
 
+
+void Menu_EditScore(Student_Course*& stu, int n) {
+	std::system("cls");
+
+	int color[] = { OFFCOL, ONCOL };
+	int i[] = { 1, 0, 0, 0, 0 };
+	int ptr = 0;
+	int last = 4;
+	int KeyPressed = 0;
+
+	while (KeyPressed != 13) {
+
+		cls();
+
+		cout << "-Edit Grade-" << endl << endl;
+
+		int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+		for (int i = 0; i < width; i++) {
+			if (i == 0) cout << "[";
+			else if (i == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+		cout << "|    ID    |             Name             |   Mid   |  Final  |  Bonus  | Average |" << endl;
+
+		ShowScoreSolo(stu); cout << endl;
+
+		for (int j = 0; j < last + 1; j++) {
+			SetColor(color, i[j]);
+			if (i[j] == 1) cout << "> "; else cout << "  ";
+			switch (j) {
+			case 0: cout << "Mid-term"; break;
+			case 1: cout << "Final"; break;
+			case 2: cout << "Bonus"; break;
+			case 3: cout << "Total"; break;
+			case 4: cout << "Back"; break;
+			}
+			cout << endl;
+		}
+		cout << endl;
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 72) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr == last) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	if (ptr == 4) return;
+	float sc_ans;
+	cout << "[- New Score -]" << endl;
+	cout << "> "; cin >> sc_ans;
+	while (sc_ans < 0) {
+		cout << "Invalid input." << endl;
+		cout << "> "; cin >> sc_ans;
+	}
+	switch (ptr) {
+	case 0: stu->sc_mid = sc_ans; break;
+	case 1: stu->sc_fin = sc_ans; break;
+	case 2: stu->sc_lab = sc_ans; break;
+	case 3: stu->sc_ave = sc_ans; break;
+	}
+
+	cout << endl;
+	cout << "Edit complete." << endl;
+	system("pause");
+}
+
 void Menu_Lecturer(lecturer b[], int& idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -1327,7 +1419,7 @@ void Menu_Lecturer(lecturer b[], int& idx) {
 	int KeyPressed = 0;
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(50) << "-LECTURER-" << endl;
 		cout << endl;
@@ -1455,7 +1547,8 @@ void Menu_Lecturer(lecturer b[], int& idx) {
 }
 
 void Menu_Lecturer_Advance(lecturer b[], int &idx) {
-	int color[] = { 15, 12 };
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
 	int i[] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ptr = 0;
 	int width = 21;
@@ -1469,7 +1562,7 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
-		std::system("cls");
+		cls();
 
 		cout << setw(50) << "-LECTURER-" << endl;
 		cout << endl;
@@ -1677,7 +1770,22 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 		ShowCourseList(YearSem_str, Link);
 		break;
 	case 1:
-		Lecturer_ShowCourse(YearSem_str);
+		Advance_ShowCourse(YearSem_str);
+		break;
+	case 2:
+		Advance_ShowAttList(YearSem_str);
+		break;
+	case 3:
+		Advance_EditAtt(YearSem_str);
+		break;
+	case 4:
+		Advance_ImportScoreBoard(YearSem_str);
+		break;
+	case 5: 
+		Advance_EditScore(YearSem);
+		break;
+	case 6:
+		Advance_ShowScoreBoard(YearSem_str);
 		break;
 	case 7:
 		Menu_Lecturer(b, idx);

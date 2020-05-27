@@ -18,20 +18,23 @@ StudentList* CreateStudentNode(ifstream& f)
 	f.getline(temp->data.Name, 30);
 	f.getline(temp->data.MSSV, 10);
 	f.getline(temp->data.Class, 10);
-	f.getline(tmp, 21);
+	/*f.getline(tmp, 21);*/
 	/*char* w = strtok(tmp, " /");
 	temp->data.DoB.Month = char_to_int(w);
 	w = strtok(tmp, " /");
 	temp->data.DoB.Day = char_to_int(w);
 	w = strtok(tmp, " \n");
 	temp->data.Status = char_to_int(w);*/
-	char * w = strtok(tmp, " /");
-	for (int i = 0; w != NULL; i++) {
-		if (i == 1) temp->data.DoB.Month = char_to_int(w);
-		else if (i == 0) temp->data.DoB.Day = char_to_int(w);
-		else temp->data.DoB.Year = char_to_int(w);
-		w = strtok(NULL, " /");
-	}
+	//char * w = strtok(tmp, " /");
+	//for (int i = 0; w != NULL; i++) {
+	//	if (i == 1) temp->data.DoB.Month = char_to_int(w);
+	//	else if (i == 0) temp->data.DoB.Day = char_to_int(w);
+	//	else temp->data.DoB.Year = char_to_int(w);
+	//	w = strtok(NULL, " /");
+	//}
+	f >> temp->data.DoB.Day >> temp->data.DoB.Month
+		>> temp->data.DoB.Year;
+	
 	f >> temp->data.Gender >> temp->data.Status;
 	/*f.ignore(100, '\n');*/
 

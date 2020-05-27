@@ -151,6 +151,9 @@ void ShowScoreBoard(Student_Course* stuHead, int n);
 void ShowScore(Student_Course* stu);
 // Show score of a Student_Course
 
+void ShowScoreSolo(Student_Course* stu);
+// Show score of one Student_Course only
+
 void EditScore(Student_Course*& stuHead, int n, string fName);
 // Edit score of a Student_Course
 
@@ -180,14 +183,22 @@ Student_Course* GetStudent(Student_Course* stuHead, int id);
 // MENU FUNCTIONS
 //==========================================
 
+void Menu_EditScore(Student_Course*& stu, int n);
+
 void Advance_ShowScoreBoard(string YearSem);
 
 void Advance_ExportScoreBoard(string YearSem);
+
+void Advance_ImportScoreBoard(string YearSem);
+
+void Advance_EditScore(string YearSem);
 
 void Advance_ShowAttList(string YearSem);
 
 void Advance_ExportAttList(string YearSem);
 
-void Lecturer_ShowCourse(string YearSem);
+void Advance_EditAtt(string YearSem);
+
+void Advance_ShowCourse(string YearSem);
 
 #endif

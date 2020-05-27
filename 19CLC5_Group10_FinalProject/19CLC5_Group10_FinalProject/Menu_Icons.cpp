@@ -6,6 +6,8 @@
 #define ENDLRANGE 5
 #define SETWIDTH 55
 
+
+
 //void Icon_Sample() {
 
 //	cout << setw(25) << 1 " ------------ " << endl; // 1
@@ -425,6 +427,9 @@
 //	cout << setw(SETWIDTH) << "|_______________________|" << endl;
 //}
 
+
+
+
 void Welcome_25() {
 	cout << setw(SETWIDTH) << " _______________________ " << endl;
 	cout << setw(SETWIDTH) << "|              /|       |" << endl;
@@ -827,6 +832,7 @@ void Welcome_01() {
 }
 
 void Draw_WelCome(char name[], int gender) {
+	std::system("cls");
 	void (*draw[])() = { Welcome_01, Welcome_02, Welcome_03,
 		Welcome_04, Welcome_05, Welcome_06, Welcome_07, Welcome_08,
 		 Welcome_09, Welcome_10, Welcome_11, Welcome_12, Welcome_13,
@@ -834,11 +840,12 @@ void Draw_WelCome(char name[], int gender) {
 		 Welcome_19, Welcome_20, Welcome_21, Welcome_22, Welcome_23,
 		Welcome_24, Welcome_25 };
 	for (int i = 0; i < 25; i++) {
-		std::system("cls");
-		if (i == 0) Sleep(40);
+		cls();
+		/*std::system("cls");*/
+		if (i == 0) Sleep(60);
 		for (int j = 0; j < ENDLRANGE; j++) cout << endl;
 		draw[i]();
-		Sleep(40);
+		Sleep(60);
 	}
 	if (gender == 1)
 		cout << endl << setw(42 - strlen(name) / 2);
@@ -864,6 +871,45 @@ void Draw_WelCome(char name[], int gender) {
 	Sleep(2000);
 }
 
+void Draw_WelCome_Lec(char name[], int degree) {
+	std::system("cls");
+	void (*draw[])() = { Welcome_01, Welcome_02, Welcome_03,
+		Welcome_04, Welcome_05, Welcome_06, Welcome_07, Welcome_08,
+		 Welcome_09, Welcome_10, Welcome_11, Welcome_12, Welcome_13,
+		 Welcome_14, Welcome_15, Welcome_16, Welcome_17, Welcome_18,
+		 Welcome_19, Welcome_20, Welcome_21, Welcome_22, Welcome_23,
+		Welcome_24, Welcome_25 };
+	for (int i = 0; i < 25; i++) {
+		cls();
+		/*std::system("cls");*/
+		if (i == 0) Sleep(60);
+		for (int j = 0; j < ENDLRANGE; j++) cout << endl;
+		draw[i]();
+		Sleep(60);
+	}
+	if (degree == 1)
+		cout << endl << setw(42 - strlen(name) / 2);
+	else if (degree == 0)
+		cout << endl << setw(40 - strlen(name) / 2);
+	char preDoc[] = { "Doctor " };
+	char preProf[] = { "Professor " };
+	if (degree == 0)
+		for (int i = 0; i < strlen(preDoc); i++) {
+			cout << preDoc[i];
+			Sleep(30);
+		}
+	else
+		for (int i = 0; i < strlen(preProf); i++) {
+			cout << preProf[i];
+			Sleep(30);
+		}
+	for (int i = 0; i < strlen(name); i++) {
+		cout << name[i];
+		Sleep(30);
+	}
+	cout << endl;
+	Sleep(2000);
+}
 
 // Welcome
 
