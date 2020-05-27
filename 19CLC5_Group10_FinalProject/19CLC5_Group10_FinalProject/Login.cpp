@@ -141,7 +141,7 @@ void login()
 	f3.open("student.txt");
 	if (!f3.is_open())
 	{
-		cout << "Can not open file" << endl;
+		cout << "Cannot login." << endl;
 	}
 	else
 	{
@@ -151,12 +151,14 @@ void login()
 			if (c[i].type == 1 && !strcmp(userlogin, c[i].username) && !strcmp(passlogin, c[i].password))
 			{
 				idx = i;
-				cout << "Login successfully. Hello student " << c[i].fullname << " !";
 				f3.close();
-				student_menu(c, idx);
-				exit(1);
+				Draw_WelCome_Stu(c[i].fullname);
+				cin.ignore();
+				Menu_Student(c, idx);
+				return;
 			}
 		}
+		f3.close();
 	}
 	cout << "Incorrect username or password!" << endl;
 	std::system("pause");
@@ -1632,14 +1634,70 @@ void academic_student(student c[], int& idx)
 
 void view_profile_student(student c[], int& idx)
 {
+	int bsize = strlen(c[idx].fullname) + 20;
 	fstream f;
 	loadstudentarray(f, c, idx);
-	cout << "ID: " << c[idx].id << endl;
-	cout << "Full name: " << c[idx].fullname << endl;
-	cout << "Date of birth: " << c[idx].dob << endl;
-	cout << "Class: " << c[idx].classname << endl;
-	cout << "Gender: " << c[idx].gender << endl;
-	cout << "Type: " << c[idx].type << endl;
+	std::system("cls");
+	cout << "-Profile - Student-" << endl << endl;
+
+	for (int i = 0; i < 9; i++) {
+		if (i % 2 == 0) {
+			for (int j = 0; j < bsize; j++) {
+				if (j == 0 || j == bsize - 1) {
+					if (i == 0 || i == 8) {
+						if (j == 0) cout << "[";
+						else if (j == bsize - 1) cout << "]";
+					}
+					else cout << "|";
+				}
+				else cout << "-";
+			}
+		}
+		else {
+			cout << "|";
+			if (i == 1) {
+				cout << " Full Name | " << c[idx].fullname;
+				for (int j = 0; j < bsize - 14 - strlen(c[idx].fullname) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+			else if (i == 3) {
+				cout << " DoB       | ";
+				for (int j = 0; j < strlen(c[idx].dob); j++) {
+					if (j == 2 || j == 5) cout << "/";
+					else cout << c[idx].dob[j];
+				}
+				for (int j = 0; j < bsize - 14 - strlen(c[idx].dob) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+			else if (i == 5) {
+				cout << " Gender    | ";
+				char gentemp[2][7] = { "Female", "Male" };
+				cout << gentemp[c[idx].gender];
+				for (int j = 0; j < bsize - 14
+					- strlen(gentemp[c[idx].gender]) - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+			else {
+				cout << " Active    | ";
+				if (c[idx].type == 0) cout << " ";
+				else cout << "v";
+				for (int j = 0; j < bsize - 15 - 1; j++) {
+					cout << " ";
+				}
+				cout << "|";
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+	std::system("pause");
+	Menu_Student(c, idx);
 }
 void view_profile_lecturer(lecturer b[], int& idx)
 {
@@ -1932,7 +1990,7 @@ void changepassword_lecturer(lecturer b[], int idx)
 	ifstream f1("lecturer.txt");
 	if (!f1.is_open())
 	{
-		cout << "Cannot change password..." << endl;
+		cout << "Cannot change password." << endl;
 	}
 	else {
 		ofstream f2("temp_lecturer.txt");
@@ -1973,57 +2031,74 @@ void changepassword_lecturer(lecturer b[], int idx)
 }
 void changepassword_student(student c[], int idx)
 {
+	std::system("cls");
+	cout << "-Change password-" << endl << endl;
 	int n;
 	char currentusername[100];
 	char newpass1[100];
 	char newpass2[100];
 	char currentpass[100];
-	cout << "Enter your current password: ";
+	cout << "[- Current Password -----]";
+	cout << endl << "> ";
 	cin >> currentpass;
 	while (strcmp(currentpass, c[idx].password))
 	{
-		cout << "Uncorrect password." << endl;
-		cout << "Enter your current password: ";
-		cin >> currentpass;
+		cout << "Incorrect password." << endl;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> "; cin >> currentpass;
 	}
-	cout << "Enter new password: ";
+	cout << "[- New Password ---------]";
+	cout << endl << "> ";
 	cin >> newpass1;
-	cout << "Enter new password again: ";
+	cout << "[- Confirm New Password -]";
+	cout << endl << "> ";
 	cin >> newpass2;
 	while (strcmp(newpass1, newpass2))
 	{
-		cout << "Unmatched. Try again." << endl;
-		cout << "Enter new password: ";
-		cin >> newpass1;
-		cout << "Enter new password again: ";
-		cin >> newpass2;
+		cout << "Passwords don't match." << endl;
+		std::system("pause");
+		std::system("cls");
+		cout << "-Change password-" << endl << endl;
+		cout << "[- Current Password -----]" << endl;
+		cout << "> " << currentpass << endl;
+		cout << "[- New Password ---------]" << endl;
+		cout << "> "; cin >> newpass1;
+		cout << "[- Confirm New Password -]" << endl;
+		cout << "> "; cin >> newpass2;
 	}
-	cout << "Enter username to make sure: "; cin >> currentusername;
+	/*cout << "Enter username to make sure: "; cin >> currentusername;*/
 	ifstream f1("student.txt");
-	ofstream f2("temp_student.txt");
-	if (!f1.is_open() || !f2.is_open())
-	{
-		cout << "Error opening files!" << endl;
-	}
-	char temp[100];
-	char tempo[100];
-	int count = 0;
-	while (f1.getline(temp, 100))
-	{
-		f2 << temp << "\n";
-		if (!strcmp(temp, c[idx].username))
-		{
-			count++;
-			if (count == 1)
+	if (!f1.is_open()) {
+		cout << "Cannot change password." << endl;
+	} else {
+		ofstream f2("temp_student.txt");
+		if (!f2.is_open()) {
+			cout << "Cannot change password." << endl;
+		} else {
+			char temp[100];
+			char tempo[100];
+			int count = 0;
+			while (f1.getline(temp, 100))
 			{
-				f1.getline(tempo, 100);
-				strcpy(tempo, newpass1);
-				f2 << tempo << "\n";
+				f2 << temp << "\n";
+				if (!strcmp(temp, c[idx].username))
+				{
+					count++;
+					if (count == 1)
+					{
+						f1.getline(tempo, 100);
+						strcpy(tempo, newpass1);
+						f2 << tempo << "\n";
+					}
+				}
 			}
+			f2.close();
 		}
+		f1.close();
 	}
-	f1.close();
-	f2.close();
 	fstream newFile("student.txt");
 	if (!newFile)
 	{
@@ -2050,30 +2125,35 @@ void changepassword_student(student c[], int idx)
 	fo.close();
 	remove("temp.txt");
 	ifstream f3(tempq);
-	ofstream f4("temp_student.txt");
-	if (!f3.is_open() || !f4.is_open())
-	{
-		cout << "Error opening files!" << endl;
-	}
-	char temp1[100];
-	char tempo1[100];
-	int count1 = 0;
-	while (f3.getline(temp1, 100))
-	{
-		f4 << temp1 << "\n";
-		if (!strcmp(temp1, c[idx].username))
-		{
-			count1++;
-			if (count1 == 1)
+	if (!f3.is_open()) {
+		cout << "Cannot change password." << endl;
+	} else {
+		ofstream f4("temp_student.txt");
+		if (!f4.is_open()) {
+			cout << "Cannot change password." << endl;
+		} else {
+
+			char temp1[100];
+			char tempo1[100];
+			int count1 = 0;
+			while (f3.getline(temp1, 100))
 			{
-				f3.getline(tempo1, 100);
-				strcpy(tempo1, newpass1);
-				f4 << tempo1 << "\n";
+				f4 << temp1 << "\n";
+				if (!strcmp(temp1, c[idx].username))
+				{
+					count1++;
+					if (count1 == 1)
+					{
+						f3.getline(tempo1, 100);
+						strcpy(tempo1, newpass1);
+						f4 << tempo1 << "\n";
+					}
+				}
 			}
+			f4.close();
 		}
+		f3.close();
 	}
-	f3.close();
-	f4.close();
 	fstream newFile1(tempq);
 	if (!newFile1)
 	{
@@ -2083,12 +2163,17 @@ void changepassword_student(student c[], int idx)
 	newFile1.close();
 	if (remove(tempq) == 0)
 	{
-		cout << "Processing changing" << endl;
+		cout << "Changing password..." << endl;
 	}
+	else cout << "Cannot change password." << endl;
 	if (rename("temp_student.txt", tempq) == 0)
 	{
-		cout << "Successfully" << endl;
+		cout << "Password changed successfully." << endl;
 	}
+	else cout << "Cannot change password." << endl;
+	std::system("pause");
+	cin.ignore();
+	Menu_Student(c, idx);
 }
 
 void academic_staff(staff a[], int& idx)

@@ -911,6 +911,31 @@ void Draw_WelCome_Lec(char name[], int degree) {
 	Sleep(2000);
 }
 
+void Draw_WelCome_Stu(char name[]) {
+	std::system("cls");
+	void (*draw[])() = { Welcome_01, Welcome_02, Welcome_03,
+		Welcome_04, Welcome_05, Welcome_06, Welcome_07, Welcome_08,
+		 Welcome_09, Welcome_10, Welcome_11, Welcome_12, Welcome_13,
+		 Welcome_14, Welcome_15, Welcome_16, Welcome_17, Welcome_18,
+		 Welcome_19, Welcome_20, Welcome_21, Welcome_22, Welcome_23,
+		Welcome_24, Welcome_25 };
+	for (int i = 0; i < 25; i++) {
+		cls();
+		/*std::system("cls");*/
+		if (i == 0) Sleep(60);
+		for (int j = 0; j < ENDLRANGE; j++) cout << endl;
+		draw[i]();
+		Sleep(60);
+	}
+	cout << endl << setw(43 - strlen(name) / 2);
+	for (int i = 0; i < strlen(name); i++) {
+		cout << name[i];
+		Sleep(30);
+	}
+	cout << endl;
+	Sleep(2000);
+}
+
 // Welcome
 
 //void Welcome_01() {

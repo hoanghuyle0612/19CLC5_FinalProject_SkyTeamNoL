@@ -69,6 +69,8 @@ void Menu_Staff(staff a[], int& idx);
 void Menu_Staff_Class(staff a[], int& idx);
 void Draw_WelCome(char name[], int gender);
 void Draw_WelCome_Lec(char name[], int degree);
+void Draw_WelCome_Stu(char name[]);
 void Menu_Lecturer(lecturer b[], int& idx);
+void Menu_Student(student c[], int& idx);
 
 #endif
