@@ -2,7 +2,7 @@
 
 CS162
 Introduction to Programming
-19APCS1
+19CLC5
 dbtien
 Dinh Ba Tien
 TS
@@ -16,7 +16,7 @@ I32
 
 CM101
 Communication
-19APCS1
+19CLC5
 dnvu
 Duong Nguyen Vu
 GS

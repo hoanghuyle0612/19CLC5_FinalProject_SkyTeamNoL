@@ -416,54 +416,74 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 	CourseList* newCourse;
 	newCourse = new CourseList;
 	char temp[256];
-	cout << "Enter course's ID: ";
+	cout << "[- Course ID -----------------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.ID, 15);
-	cout << "Enter course's name: ";
+	cout << "[- Course Name ---------------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.Name, 100);
-	cout << "Enter class: ";
+	cout << "[- Course Class --------------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.Class, 10);
-	cout << "Enter Lecturer user: ";
+	cout << "[- Lecturer Username ---------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.LecturerUser, 15);
+	cout << "[- Lecturer Name -------------------]";
+	cout << endl << "> ";
+	cin.getline(newCourse->data.LecturerName, 30);
+	cout << "[- Lecturer Degree -----------------]";
+	cout << endl << "> ";
+	cin.getline(newCourse->data.LecturerDegree, 20);
+	cout << "[- Lecturer Gender (0 - F | 1 - M) -]";
+	cout << endl << "> ";
+	cin >> newCourse->data.LecturerGender;
+	cin.ignore();
 
-	cout << "Enter start date (dd/mm/yyyy): ";
+	cout << "[- Start Date (dd/mm/yyyy) ---------]";
+	cout << endl << "> ";
 	cin.getline(temp, 256);
-	char* w = strtok(temp, " ");
+	char* w = strtok(temp, "/");
 	newCourse->data.StartDate.Day = char_to_int(w);
-	w = strtok(NULL, " ");
+	w = strtok(NULL, "/");
 	newCourse->data.StartDate.Month = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.StartDate.Year = char_to_int(w);
 	temp[0] = '\0';
 
-	cout << "Enter end date (dd/mm/yyyy): ";
+	cout << "[- End Date (dd/mm/yyyy) -----------]";
+	cout << endl << "> ";
 	cin.getline(temp, 256);
-	w = strtok(temp, " ");
+	w = strtok(temp, "/");
 	newCourse->data.EndDate.Day = char_to_int(w);
-	w = strtok(NULL, " ");
+	w = strtok(NULL, "/");
 	newCourse->data.EndDate.Month = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.EndDate.Year = char_to_int(w);
 	temp[0] = '\0';
 
-	cout << "Enter Day of week: ";
+	cout << "[- Day of Week ---------------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.DoW, 10);
 
-	cout << "Enter start hour (hh:mm): ";
+	cout << "[- Start Hour (hh:mm) --------------]";
+	cout << endl << "> ";
 	cin.getline(temp, 256);
-	w = strtok(temp, " ");
+	w = strtok(temp, ":");
 	newCourse->data.StartHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.StartHour.m = char_to_int(w);
 	temp[0] = '\0';
 
-	cout << "Enter end hour (hh:mm): ";
+	cout << "[- End Hour (hh:mm) ----------------]";
+	cout << endl << "> ";
 	cin.getline(temp, 256);
-	w = strtok(temp, " ");
+	w = strtok(temp, ":");
 	newCourse->data.EndHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
 	newCourse->data.EndHour.m = char_to_int(w);
 
-	cout << "Enter room: ";
+	cout << "[- Room ----------------------------]";
+	cout << endl << "> ";
 	cin.getline(newCourse->data.Room, 10);
 
 	newCourse->pNext = nullptr;
@@ -472,7 +492,7 @@ CourseList* CreateCourseNode()  // Create Course Node by typing in
 
 CourseList* LoadCourseNode_txtfile(ifstream& f)
 {
-	f.ignore(256, '\n');
+	
 	char tmp[20] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 		'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', };
 	CourseList* newCourse;
@@ -484,28 +504,34 @@ CourseList* LoadCourseNode_txtfile(ifstream& f)
 	f.getline(newCourse->data.LecturerName, 30);
 	f.getline(newCourse->data.LecturerDegree, 20);
 	f >> newCourse->data.LecturerGender;
-	f.ignore(256, '\n');
-	f.getline(tmp, 20);
-	//cout << "word: " << tmp << endl;
-	char* w = strtok(tmp, " ");
-	//cout << "word: " << w << endl;
-	newCourse->data.StartDate.Year = char_to_int(w);
-	w = strtok(NULL, " ");
-	newCourse->data.StartDate.Month = char_to_int(w);
-	w = strtok(NULL, "\n");
-	newCourse->data.StartDate.Day = char_to_int(w);
-
-	f.getline(tmp, 20);
+	f.ignore();
+	//f.getline(tmp, 20);
+	////cout << "word: " << tmp << endl;
+	//char* w = strtok(tmp, " ");
+	////cout << "word: " << w << endl;
+	//newCourse->data.StartDate.Year = char_to_int(w);
+	//w = strtok(NULL, " ");
+	//newCourse->data.StartDate.Month = char_to_int(w);
+	//w = strtok(NULL, "\n");
+	//newCourse->data.StartDate.Day = char_to_int(w);
+	f >> newCourse->data.StartDate.Year >> newCourse->data.StartDate.Month >> newCourse->data.StartDate.Day;
+	f.ignore();
+	f >> newCourse->data.EndDate.Year >> newCourse->data.EndDate.Month >> newCourse->data.EndDate.Day;
+	f.ignore();
+	/*f.getline(tmp, 20);
 	w = strtok(tmp, " ");
 	newCourse->data.EndDate.Year = char_to_int(w);
 	w = strtok(NULL, " ");
 	newCourse->data.EndDate.Month = char_to_int(w);
 	w = strtok(NULL, "\n");
-	newCourse->data.EndDate.Day = char_to_int(w);
+	newCourse->data.EndDate.Day = char_to_int(w);*/
 
 	f.getline(newCourse->data.DoW, 10);
-
-	f.getline(tmp, 20);
+	f >> newCourse->data.StartHour.h >> newCourse->data.StartHour.m;
+	f.ignore();
+	f >> newCourse->data.EndHour.h >> newCourse->data.EndHour.m;
+	f.ignore();
+	/*f.getline(tmp, 20);
 	w = strtok(tmp, " :");
 	newCourse->data.StartHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
@@ -515,11 +541,12 @@ CourseList* LoadCourseNode_txtfile(ifstream& f)
 	w = strtok(tmp, " :");
 	newCourse->data.EndHour.h = char_to_int(w);
 	w = strtok(NULL, "\n");
-	newCourse->data.EndHour.m = char_to_int(w);
+	newCourse->data.EndHour.m = char_to_int(w);*/
 
-	f.get(newCourse->data.Room, '\n');
+	f.getline(newCourse->data.Room,11);
 
 	newCourse->pNext = nullptr;
+	f.ignore();
 	return newCourse;
 }
 
@@ -536,14 +563,14 @@ void LoadCourses_txtfile(char* Link, CourseList*& list)
 	else {
 		int n;
 		f >> n;
+		f.ignore(2);
+		cur = LoadCourseNode_txtfile(f);
+		list = cur;
 		while (!f.eof())
 		{
-			if (cur == nullptr) cur = LoadCourseNode_txtfile(f);
-			else if (cur != nullptr) {
 				tmp = LoadCourseNode_txtfile(f);
 				cur->pNext = tmp;
 				cur = cur->pNext;
-			}
 		}
 		f.close();
 	}
@@ -554,7 +581,7 @@ void AddCourse(char* AcaYear, char* Semester)
 	std::system("cls");
 	cout << "-Add Course-" << endl << endl;
 
-	CourseList* list;
+	CourseList* list = nullptr;
 	char Class[10];
 	cout << "[- Class -----]"; cout << endl << "> ";
 	cin.getline(Class, 10);
@@ -568,12 +595,19 @@ void AddCourse(char* AcaYear, char* Semester)
 	LoadCourses_txtfile(Link, list);
 	int cnt = CountCourse(list);
 	CourseList* cur = list;
-	while (cur->pNext != nullptr) cur = cur->pNext;
+	while (true) {
+		if (cur->pNext != nullptr)
+			cur = cur->pNext;
+		else break;
+	}
 	CourseList* p = CreateCourseNode();
 	cur->pNext = p;
 	p->data.No = cnt + 1;
 	SaveSchedule(list, AcaYear, Semester, Class);
-	Save_Course_Stu_List(list, AcaYear, Semester, Class);
+	Create_Course_Student(p, AcaYear, Semester, Class);
+	cout << endl << "New Course added." << endl;
+	std::system("pause");
+	/*Save_Course_Stu_List(list, AcaYear, Semester, Class);*/
 
 }
 //=========================================================================================
