@@ -118,6 +118,9 @@ string GetFileName(string Sem, char* Link);
 // Get the file name through the file's directory
 // Ex: C:/Users/ADMIN/2019-2020-HK2-19CLC05-CS162-Student.txt
 
+int CourseAttDay(ifstream& fin);
+// Get total days of a course
+
 Student_Course* GetStudentFile(ifstream& fin, int n);
 // Get all information of a student from a Course .txt file
 
@@ -200,5 +203,9 @@ void Advance_ExportAttList(string YearSem);
 void Advance_EditAtt(string YearSem);
 
 void Advance_ShowCourse(string YearSem);
+
+void Advance_CheckIn(string YearSem, int id);
+
+void Advance_CheckInRes(string YearSem, int id);
 
 #endif

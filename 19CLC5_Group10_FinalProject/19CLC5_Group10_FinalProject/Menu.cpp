@@ -2115,7 +2115,12 @@ void Menu_Student_Advance(student c[], int& idx) {
 	}
 
 	switch (ptr) {
-	
+	case 0:
+		Advance_CheckIn(YearSem, c[idx].id);
+		break;
+	case 1:
+		Advance_CheckInRes(YearSem, c[idx].id);
+		break;
 	case 4:
 		Menu_Student(c, idx);
 		break;

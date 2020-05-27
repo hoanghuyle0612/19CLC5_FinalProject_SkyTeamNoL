@@ -886,3 +886,48 @@ void Advance_ShowCourse(string YearSem) {
 	system("pause");
 	GetCourse_DelStu(stuHead, n);
 }
+
+void Advance_CheckIn(string YearSem, int id) {
+	std::system("cls");
+	cout << "-Check-in-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameAL = fName + "AttList";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot Check-in." << endl;
+		std::system("pause");
+		return;
+	}
+	Student_Course* stu = GetStudent(stuHead, id);
+	cout << endl;
+	if (CheckIn(stu)) {
+		cout << "Check-in successfully!" << endl;
+		SaveEdit(stuHead, n, fNameStu);
+	}
+	else cout << "Cannot check-in." << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
+
+void Advance_CheckInRes(string YearSem, int id) {
+	std::system("cls");
+	cout << "-Check-in-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameAL = fName + "AttList";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot Check-in." << endl;
+		std::system("pause");
+		return;
+	}
+	Student_Course* stu = GetStudent(stuHead, id);
+	cout << endl;
+	CheckInRes(stu);
+	cout << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}

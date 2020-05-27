@@ -49,9 +49,14 @@ void CheckInRes(Student_Course* stu) {
 	if (!first)
 		while (true) {
 			if (dcur->dNext != nullptr)
-				if (ti->tm_year <= dcur->dNext->ay - 1900 &&
+				/*if (ti->tm_year <= dcur->dNext->ay - 1900 &&
 					ti->tm_mon + 1 <= dcur->dNext->am &&
 					ti->tm_mday <= dcur->dNext->ad) {
+					break;
+				}*/
+				if ((ti->tm_year < dcur->dNext->ay - 1900) ||
+					((ti->tm_year == dcur->dNext->ay - 1900) && (ti->tm_mon + 1 < dcur->dNext->am)) ||
+					((ti->tm_mon + 1 == dcur->dNext->am) && (ti->tm_mday < dcur->dNext->ad))) {
 					break;
 				}
 			if (dcur->dNext != nullptr)

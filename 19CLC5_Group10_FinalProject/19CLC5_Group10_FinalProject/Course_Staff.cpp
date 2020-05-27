@@ -214,7 +214,6 @@ void LoadCourses_csvfile(char* Link, CourseList*& list)
 		return;
 	}
 	else {
-
 		f.ignore(256, '\n');
 		CourseList* cur = nullptr;
 
@@ -290,10 +289,16 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 		f << -1 << endl;	//bonus
 		f << -1 << endl;	//total
 		Date tmp_day = list->data.StartDate;
+		Date tmp_day_end = list->data.EndDate;
 		Hour Start_Hour = list->data.StartHour;
 		Hour End_Hour = list->data.EndHour;
-		for (int i = 0; i < 10; i++)
+		while (true)
 		{
+			if (tmp_day.Year > tmp_day_end.Year) break;
+			if ((tmp_day.Year == tmp_day_end.Year) && 
+				(tmp_day.Month > tmp_day_end.Month)) break;
+			if ((tmp_day.Month == tmp_day_end.Month) &&
+				(tmp_day.Day > tmp_day_end.Day)) break;
 			f << tmp_day.Year << " ";
 			if (tmp_day.Month < 10) f << "0";
 			f << tmp_day.Month << " ";
