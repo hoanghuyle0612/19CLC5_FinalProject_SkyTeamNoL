@@ -2,7 +2,7 @@
 
 #include "Login.h"
 #include "Course.h"
-#define ONCOL 12
+#define ONCOL 11
 #define OFFCOL 15
 
 void staffclass_func(staff a[], int& idx);
@@ -13,6 +13,7 @@ void Menu_Staff_Course_Course(staff a[], int& idx);
 void Menu_Staff_Scoreboard(staff a[], int& idx, string YearSem);
 void Menu_Staff_AttList(staff a[], int& idx, string YearSem);
 void Menu_Lecturer_Advance(lecturer b[], int& idx);
+void Menu_Student_Advance(student c[], int& idx);
 
 void SetColor(int color[], int i) {
 	if (i == 1)
@@ -1919,6 +1920,9 @@ void Menu_Student(student c[], int& idx) {
 	}
 
 	switch (ptr) {
+	case 0:
+		Menu_Student_Advance(c, idx);
+		break;
 	case 1:
 		view_profile_student(c, idx);
 		break;
@@ -1929,4 +1933,192 @@ void Menu_Student(student c[], int& idx) {
 		Menu_Main();
 		break;
 	}
+}
+
+void Menu_Student_Advance(student c[], int& idx) {
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
+	int i[] = { 1, 0, 0, 0, 0 };
+	int ptr = 0;
+	int width = 21;
+	int last = 4;
+	int KeyPressed = 0;
+
+	char AcaYear[] = "2019-2020";
+	char Semester[] = "HK2";
+	char YearSem[] = "2019-2020-HK2";
+	char Link[] = "";
+	string YearSem_str(YearSem);
+
+	while (KeyPressed != 13) {
+		cls();
+
+		cout << setw(50) << "-STUDENT-" << endl;
+		cout << endl;
+
+		{
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 1
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|  _      _  |"; // 2
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |        | |"; // 3
+			SetColor(color, i[1]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "| [][------] |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  --------  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |      / | |"; // 4
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "| | MID  8 | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |  \\  /  | |"; // 5
+			SetColor(color, i[1]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "| [][------] |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "| | FIN  9 | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |   \\/   | |"; // 6
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "| | LAB  7 | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |_      _| |"; // 7
+			SetColor(color, i[1]);
+			cout << setw(width) << "| ====== [v] |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "| [][------] |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  --------  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|            |"; // 8
+			SetColor(color, i[1]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[2]);
+			cout << setw(width) << "|            |";
+			SetColor(color, i[3]);
+			cout << setw(width) << "|            |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 9
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ ";
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "   CHECK-IN   ";
+			SetColor(color, i[1]);
+			cout << setw(width) << " CHECK-IN RES ";
+			SetColor(color, i[2]);
+			cout << setw(width) << "VIEW SCHEDULE ";
+			SetColor(color, i[3]);
+			cout << setw(width) << "  VIEW SCRBD  " << endl;
+			SetColor(color, i[0]);
+		}
+		cout << endl;
+		{
+			SetColor(color, i[4]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|  <=======  |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			cout << setw(width) << "     BACK     " << endl;
+		}
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 72 || KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr >= 4) ptr -= 4;
+			else ptr = 4;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+
+		/*while (true) {
+			if (GetAsyncKeyState(VK_LEFT) != 0) {
+				i[ptr] = 0;
+				if (ptr == 0) ptr = 1;
+				else ptr--;
+				i[ptr] = 1;
+				break;
+			}
+			else if (GetAsyncKeyState(VK_RIGHT) != 0) {
+				i[ptr] = 0;
+				if (ptr == 1) ptr = 0;
+				else ptr++;
+				i[ptr] = 1;
+				break;
+			}
+			else if (GetAsyncKeyState(VK_RETURN) != 0) {
+				switch (ptr) {
+					case 0:
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+						cin.ignore();
+						login();
+						break;
+					case 1:
+						system("cls");
+						return;
+				}
+				break;
+			}
+		}*/
+		/*Sleep(50);*/
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	switch (ptr) {
+	
+	case 4:
+		Menu_Student(c, idx);
+		break;
+	}
+	if (ptr != last) Menu_Student_Advance(c, idx);
 }
