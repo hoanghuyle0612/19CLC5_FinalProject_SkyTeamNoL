@@ -1,6 +1,7 @@
 // COURSE FUNCTION
 
 #include "Course.h"
+#define COURSELINE 13
 
 string GetFileName(string Sem, char* Link) {
 
@@ -640,7 +641,7 @@ void ShowCourseList(string Sem, char* Link) {
 	std::system("cls");
 	cout << "-List of Courses-" << endl << endl;
 	string fName(Link);
-	fName = fName + Sem + ".txt";
+	fName = fName + Sem + "-AllCourses.txt";
 	ifstream fin;
 	fin.open(fName);
 	if (!fin.is_open()) {
@@ -648,48 +649,118 @@ void ShowCourseList(string Sem, char* Link) {
 	}
 	else {
 		int n;
-		string Class, Course, CName;
-		fin >> n; fin.ignore();
-		cout << "Total: " << n << endl;
-
-		int width = 1 + 11 + 1 + 16 + 1 + 32 + 1;
-		for (int i = 0; i < width; i++) {
-			if (i == 0) cout << "[";
-			else if (i == width - 1) cout << "]";
-			else cout << "-";
-		} cout << endl;
-		cout << "|   Class   |      Code      |              Name              |" << endl;
-
-		while (!fin.eof()) {
-			getline(fin, Class);
-			getline(fin, Course);
-			getline(fin, CName);
-			for (int i = 0; i < width; i++) {
-				if (i == 0 || i == width - 1) cout << "|";
-				else cout << "-";
-			} cout << endl;
-
-			cout << "| " << Class;
-			for (int i = 0; i < 9 - Class.length(); i++) cout << " ";
-			cout << " | " << Course;
-			for (int i = 0; i < 14 - Course.length(); i++) cout << " ";
-			cout << " | " << CName;
-			for (int i = 0; i < 31 - CName.length(); i++) cout << " ";
-			cout << "|" << endl;
-			/*cout << "[" << Class << " - "
-				<< Course << "] " << CName << endl;*/
-			/*fin.ignore();*/
+		fin >> n; fin.ignore(2);
+		if (n == 0) {
+			cout << "No Course available." << endl;
+			std::system("pause");
+			fin.close();
+			return;
 		}
-
+		cout << "Total: " << n << endl << endl;
+		int width = 1 + 12 + 1 + 35 + 1;
 		for (int i = 0; i < width; i++) {
 			if (i == 0) cout << "[";
 			else if (i == width - 1) cout << "]";
 			else cout << "-";
 		} cout << endl;
+		for (int i = 0; i < n; i++) {
+			string Line; int EndSpace = 0;
+			for (int j = 0; j < COURSELINE; j++) {
+				if (j == 3 || j == 6 || j == 5) continue;
+				switch (j) {
+					case 0:
+						cout << "| ID         |";
+						break;
+					case 1:
+						cout << "| Name       |";
+						break;
+					case 2:
+						cout << "| Class      |";
+						break;
+					case 4:
+						cout << "| Lecturer   |";
+						break;
+					case 7:
+						cout << "| Start Date |";
+						break;
+					case 8:
+						cout << "| End Date   |";
+						break;
+					case 9:
+						cout << "| Week Date  |";
+						break;
+					case 10:
+						cout << "| Start Time |";
+						break;
+					case 11:
+						cout << "| End Time   |";
+						break;
+					case 12:
+						cout << "| Room       |";
+						break;
+				} cout << " ";
+				if (j == 7 || j == 8) {
+					int xd, xm, xy;
+					fin >> xy >> xm >> xd;
+					fin.ignore();
+					if (xd < 10) cout << "0";
+					cout << xd << "/";
+					if (xm < 10) cout << "0";
+					cout << xm << "/" << xy;
+					EndSpace = 34 - 10;
+				} else if (j == 10 || j == 11) {
+					int xh, xm;
+					fin >> xh >> xm;
+					fin.ignore();
+					if (xh < 10) cout << "0";
+					cout << xh << ":";
+					if (xm < 10) cout << "0";
+					cout << xm;
+					EndSpace = 34 - 5;
+				}
+
+				else {
+					getline(fin, Line);
+				
+					cout << Line;
+					EndSpace = 34 - Line.length();
+				}
+				for (int k = 0; k < EndSpace; k++)
+					cout << " ";
+				cout << "|" << endl;
+
+				if (j < COURSELINE - 1) {
+					for (int k = 0; k < width; k++) {
+						if (k == 0) cout << "|";
+						else if (k == width - 1) cout << "|";
+						else cout << "-";
+					} cout << endl;
+				}
+			}
+			
+		}
+		for (int i = 0; i < width; i++) {
+			if (i == 0) cout << "[";
+			else if (i == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl << endl;
 		fin.close();
 	}
 	cout << endl;
 	std::system("pause");
+}
+
+void ShowCourseList_New(string Sem, char* Link) {
+	std::system("cls");
+	cout << "-List of Courses-" << endl << endl;
+	string fName(Link);
+	fName = fName + Sem + "-AllCourses.txt";
+	ifstream fin;
+	fin.open(fName);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+		return;
+	}
 }
 
 bool ExportScoreBoard(Student_Course*& stuHead, int n, string fName) {

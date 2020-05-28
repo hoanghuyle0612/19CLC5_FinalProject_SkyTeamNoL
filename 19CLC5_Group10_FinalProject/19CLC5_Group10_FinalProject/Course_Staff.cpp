@@ -407,9 +407,11 @@ void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, cha
 			char line[50];
 			for (int i = 0; i < 2; i++)
 				fin.getline(line, 50);
-			while (!fin.eof()) {
+			int no_line = 0;
+			while (!fin.eof()) { 
 				fin.getline(line, 50);
-				fout << line << endl;
+				fout << line;
+				if (!fin.eof()) fout << endl;
 			}
 			fout.close();
 		}
@@ -427,6 +429,7 @@ void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, cha
 	}
 
 	// Rewrite the file
+	
 	fin.open(LinkTemp);
 	if (!fin.is_open()) {
 		cout << "Cannot open file." << endl;
@@ -442,10 +445,12 @@ void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, cha
 			fout << (TotalCourse + CountCourse(list));
 			fout << endl << endl;
 			char line[50];
-			for (int i = 0; i < 2; i++) fin.getline(line, 50);
-			while (!fin.eof()) {
-				fin.getline(line, 50);
-				fout << line << endl;
+			
+			if (TotalCourse != 0) {
+				while (!fin.eof()) {
+					fin.getline(line, 50);
+					fout << line << endl;
+				}
 			}
 			fout.close();
 		}
@@ -479,6 +484,7 @@ void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, cha
 			f << cur->data.StartHour.h << " " << cur->data.StartHour.m << endl;
 			f << cur->data.EndHour.h << " " << cur->data.EndHour.m << endl;
 			f << cur->data.Room << endl;
+			if (cur->pNext != nullptr) f << endl;
 			cur = cur->pNext;
 		}
 		f.close();
