@@ -373,6 +373,118 @@ void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class)
 	}
 }
 
+void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, char* Class)
+{
+	char* Link;
+	Link = new char[strlen(AcaYear) + strlen(Semester) + 15];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-AllCourses.txt");
+	char* LinkTemp;
+	LinkTemp = new char[strlen(AcaYear) + strlen(Semester) + 20];
+	strcpy(LinkTemp, AcaYear);
+	strcat(LinkTemp, "-");
+	strcat(LinkTemp, Semester);
+	strcat(LinkTemp, "-AllCourses-temp.txt");
+	
+
+	int TotalCourse = 0;
+	ifstream fin;
+
+	// Temporary file
+	fin.open(Link);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+	} else {
+		ofstream fout;
+		fout.open(LinkTemp);
+		if (!fout.is_open()) {
+			cout << "Cannot create file." << endl;
+			fin.close();
+			return;
+		} else {
+			char line[50];
+			for (int i = 0; i < 2; i++)
+				fin.getline(line, 50);
+			while (!fin.eof()) {
+				fin.getline(line, 50);
+				fout << line << endl;
+			}
+			fout.close();
+		}
+		fin.close();
+	}
+
+	// Get total number of Courses before importing new Courses
+	fin.open(Link);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+		return;
+	} else {
+		fin >> TotalCourse;
+		fin.close();
+	}
+
+	// Rewrite the file
+	fin.open(LinkTemp);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+		return;
+	} else {
+		ofstream fout;
+		fout.open(Link);
+		if (!fout.is_open()) {
+			cout << "Cannot create file." << endl;
+			fin.close();
+			return;
+		} else {
+			fout << (TotalCourse + CountCourse(list));
+			fout << endl << endl;
+			char line[50];
+			for (int i = 0; i < 2; i++) fin.getline(line, 50);
+			while (!fin.eof()) {
+				fin.getline(line, 50);
+				fout << line << endl;
+			}
+			fout.close();
+		}
+		fin.close();
+	}
+	remove(LinkTemp);
+
+	// Write the new Courses into the file
+	ofstream f;
+	f.open(Link, ios::app);
+	if (!f.is_open()) {
+		cout << "Cannot create/open file.\n";
+		return;
+	}
+	else
+	{
+		/*int cnt = CountCourse(list);
+		f << cnt << endl;*/
+		CourseList* cur = list;
+		while (cur != nullptr) {
+			f << cur->data.ID << endl;
+			f << cur->data.Name << endl;
+			f << cur->data.Class << endl;
+			f << cur->data.LecturerUser << endl;
+			f << cur->data.LecturerName << endl;
+			f << cur->data.LecturerDegree << endl;
+			f << cur->data.LecturerGender << endl;
+			f << cur->data.StartDate.Year << " " << cur->data.StartDate.Month << " " << cur->data.StartDate.Day << endl;
+			f << cur->data.EndDate.Year << " " << cur->data.EndDate.Month << " " << cur->data.EndDate.Day << endl;
+			f << cur->data.DoW << endl;
+			f << cur->data.StartHour.h << " " << cur->data.StartHour.m << endl;
+			f << cur->data.EndHour.h << " " << cur->data.EndHour.m << endl;
+			f << cur->data.Room << endl;
+			cur = cur->pNext;
+		}
+		f.close();
+	}
+}
+
 void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and save schedule
 {
 	std::system("cls");
@@ -391,6 +503,7 @@ void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and s
 	strcpy_s(Link, strlen(temp) + 1, temp);
 	LoadCourses_csvfile(Link, list);
 	SaveSchedule(list, AcaYear, Semester, Class);
+	SaveSchedule_AllCourse(list, AcaYear, Semester, Class);
 	Save_Course_Stu_List(list, AcaYear, Semester, Class);
 
 	delete[]Link; delete[]Class;

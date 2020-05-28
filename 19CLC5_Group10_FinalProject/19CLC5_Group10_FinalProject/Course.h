@@ -208,4 +208,6 @@ void Advance_CheckIn(string YearSem, int id);
 
 void Advance_CheckInRes(string YearSem, int id);
 
+void Advance_StuShowScore(string YearSem, int id);
+
 #endif

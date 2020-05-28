@@ -931,3 +931,31 @@ void Advance_CheckInRes(string YearSem, int id) {
 	system("pause");
 	GetCourse_DelStu(stuHead, n);
 }
+
+void Advance_StuShowScore(string YearSem, int id) {
+	std::system("cls");
+	cout << "-View Score of a Course-" << endl << endl;
+	char Link[] = "";
+	string fName = GetFileName(YearSem, Link);
+	string fNameStu = fName + "Student";
+	string fNameAL = fName + "AttList";
+	Student_Course* stuHead; int n = 0;
+	if (!GetCourse(stuHead, n, fNameStu)) {
+		cout << "Cannot Check-in." << endl;
+		std::system("pause");
+		return;
+	}
+	Student_Course* stu = GetStudent(stuHead, id);
+	cout << endl;
+	int width = 1 + 10 + 1 + 30 + 1 + 9 + 1 + 9 + 1 + 9 + 1 + 9 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+	cout << "|    ID    |             Name             |   Mid   |  Final  |  Bonus  | Average |" << endl;
+	ShowScoreSolo(stu);
+	cout << endl;
+	system("pause");
+	GetCourse_DelStu(stuHead, n);
+}
