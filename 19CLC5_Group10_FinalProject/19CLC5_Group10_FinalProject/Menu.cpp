@@ -2121,6 +2121,9 @@ void Menu_Student_Advance(student c[], int& idx) {
 	case 1:
 		Advance_CheckInRes(YearSem, c[idx].id);
 		break;
+	case 2:
+		ShowSchedule(YearSem, Link, c[idx].id);
+		break;
 	case 3:
 		Advance_StuShowScore(YearSem, c[idx].id);
 		break;

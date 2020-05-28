@@ -44,6 +44,12 @@ struct Course {
 	char Room[10];
 };
 
+struct CourseSchedule {
+	string id, name, clss, lecturer, dow, room;
+	int sd, sm, sy, ed, em, ey, sHr, sMin, eHr, eMin;
+	CourseSchedule* cNext;
+};
+
 struct CourseList {
 	Course data;
 	CourseList* pNext;
@@ -165,6 +171,9 @@ bool ImportScoreBoard(Student_Course*& stuHead, int n, string fName);
 
 void ShowCourseList(string Sem, char* Link);
 // Show Semester's list of Courses
+
+void ShowSchedule(string Sem, char* Link, int id);
+// Show Student's Schedule
 
 
 

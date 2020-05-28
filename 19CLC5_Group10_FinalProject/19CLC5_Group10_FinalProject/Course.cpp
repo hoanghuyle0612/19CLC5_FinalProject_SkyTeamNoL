@@ -756,17 +756,177 @@ void ShowCourseList(string Sem, char* Link) {
 	std::system("pause");
 }
 
-void ShowCourseList_New(string Sem, char* Link) {
+bool CheckStuInCourse(string fName, string Class, string Course, int id) {
+	ifstream fin;
+	fin.open(fName + "-" + Class + "-" + Course + "-Student.txt");
+	if (!fin.is_open()) {
+		return false;
+	}
+	string Line; int x = 0, n, active = 0;
+	fin >> n; fin.ignore();
+	for (int i = 0; !fin.eof(); i++) {
+		for (int j = 0; j < 20; j++) {
+			if (j == 0) {
+				fin >> x; fin.ignore();
+			}
+			else {
+				if (x == id && j == 5) {
+					fin >> active; fin.ignore();
+					fin.close();
+					if (active == 1) return true;
+					else return false;
+				}
+				else getline(fin, Line);
+			}
+		}
+	}
+	fin.close();
+	return false;
+}
+
+CourseSchedule *GetCourseSchedule(ifstream &fin) {
+	CourseSchedule* crs = new CourseSchedule;
+	string Line;
+	getline(fin, crs->id);
+	getline(fin, crs->name);
+	getline(fin, crs->clss);
+	getline(fin, Line);
+	getline(fin, crs->lecturer);
+	getline(fin, Line); getline(fin, Line);
+	fin >> crs->sy >> crs->sm >> crs->sd; fin.ignore();
+	fin >> crs->ey >> crs->em >> crs->ed; fin.ignore();
+	getline(fin, crs->dow);
+	fin >> crs->sHr >> crs->sMin; fin.ignore();
+	fin >> crs->eHr >> crs->eMin; fin.ignore();
+	getline(fin, crs->room);
+	getline(fin, Line);
+	crs->cNext = nullptr;
+	return crs;
+}
+
+void DrawScheduleCourse(CourseSchedule* crs) {
+	int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
+	for (int j = 0; j < width; j++) {
+		if (j == 0 || j == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "|";
+	for (int i = 0; i < 8; i++) {
+		string Line; int LineLen;
+		cout << " ";
+		switch (i) {
+			case 0:
+				Line = crs->clss;
+				LineLen = 10;
+				break;
+			case 1:
+				Line = crs->id;
+				LineLen = 10;
+				break;
+			case 2:
+				Line = crs->dow;
+				LineLen = 5;
+				break;
+			case 3:
+				if (crs->sd < 10) cout << "0";
+				cout << crs->sd << "/";
+				if (crs->sm < 10) cout << "0";
+				cout << crs->sm << " |";
+				break;
+			case 4:
+				if (crs->ed < 10) cout << "0";
+				cout << crs->ed << "/";
+				if (crs->em < 10) cout << "0";
+				cout << crs->em << " |";
+				break;
+			case 5:
+				if (crs->sHr < 10) cout << "0";
+				cout << crs->sHr << ":";
+				if (crs->sMin < 10) cout << "0";
+				cout << crs->sMin << " |";
+				break;
+			case 6:
+				if (crs->eHr < 10) cout << "0";
+				cout << crs->eHr << ":";
+				if (crs->eMin < 10) cout << "0";
+				cout << crs->eMin << " |";
+				break;
+			case 7:
+				Line = crs->room;
+				LineLen = 7;
+				break;
+		}
+		if (i == 0 || i == 1 || i == 2 || i == 7) {
+			cout << Line;
+			for (int j = 0; j < LineLen - 1 - Line.length(); j++) {
+				cout << " ";
+			} cout << "|";
+		}
+	}
+	cout << endl;
+}
+
+void DeleteScheduleList(CourseSchedule*& cHead, int n) {
+	CourseSchedule* crscur = cHead;
+	for (int i = 0; i < n; i++) {
+		CourseSchedule* crsdel = crscur;
+		crscur = crscur->cNext;
+		delete crsdel;
+	}
+	cHead = nullptr;
+}
+
+void ShowSchedule(string Sem, char* Link, int id) {
 	std::system("cls");
-	cout << "-List of Courses-" << endl << endl;
-	string fName(Link);
+	cout << "-Schedule-" << endl << endl;
+	string fName(Link), fNameCourse(Link + Sem);
 	fName = fName + Sem + "-AllCourses.txt";
 	ifstream fin;
 	fin.open(fName);
+	// Get all course
 	if (!fin.is_open()) {
 		cout << "Cannot open file." << endl;
 		return;
+	} else {
+		int n; fin >> n; fin.ignore(2);
+		CourseSchedule* cHead;
+		CourseSchedule* crs = GetCourseSchedule(fin);
+		cHead = crs;
+		CourseSchedule* crscur = crs;
+		for (int i = 1; i < n; i++) {
+			crs = GetCourseSchedule(fin);
+			crscur->cNext = crs;
+			crscur = crscur->cNext;
+		}
+
+		int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
+		for (int j = 0; j < width; j++) {
+			if (j == 0) cout << "[";
+			else if (j == width - 1) cout << "]";
+			else cout << "-";
+		}
+		cout << endl;
+		cout << "|  Class   |    ID    | DoW | SDate | EDate | STime | ETime | Room  |" << endl;
+		crscur = cHead;
+		for (int i = 0; i < n; i++) {
+			if (CheckStuInCourse(fNameCourse, crscur->clss, crscur->id, id)) {
+				DrawScheduleCourse(crscur);
+			}
+			
+			crscur = crscur->cNext;
+		}
+		for (int j = 0; j < width; j++) {
+			if (j == 0) cout << "[";
+			else if (j == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+		
+		DeleteScheduleList(cHead, n);
+		fin.close();
 	}
+
+	cout << endl;
+	std::system("pause");
 }
 
 bool ExportScoreBoard(Student_Course*& stuHead, int n, string fName) {
