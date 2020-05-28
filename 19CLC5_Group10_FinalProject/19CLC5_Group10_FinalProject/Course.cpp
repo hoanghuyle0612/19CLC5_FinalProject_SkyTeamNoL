@@ -1,7 +1,7 @@
 // COURSE FUNCTION
 
 #include "Course.h"
-#define COURSELINE 13
+#define COURSELINE 14
 
 string GetFileName(string Sem, char* Link) {
 
@@ -658,15 +658,21 @@ void ShowCourseList(string Sem, char* Link) {
 		}
 		cout << "Total: " << n << endl << endl;
 		int width = 1 + 12 + 1 + 35 + 1;
-		for (int i = 0; i < width; i++) {
-			if (i == 0) cout << "[";
-			else if (i == width - 1) cout << "]";
-			else cout << "-";
-		} cout << endl;
+		
 		for (int i = 0; i < n; i++) {
+			cout << endl;
+			for (int i = 0; i < width; i++) {
+				if (i == 0) cout << "[";
+				else if (i == width - 1) cout << "]";
+				else cout << "-";
+			} cout << endl;
 			string Line; int EndSpace = 0;
 			for (int j = 0; j < COURSELINE; j++) {
-				if (j == 3 || j == 6 || j == 5) continue;
+				if (j == 3 || j == 6 || j == 5 ||
+					j == COURSELINE - 1) {
+					getline(fin, Line);
+					continue;
+				}
 				switch (j) {
 					case 0:
 						cout << "| ID         |";
@@ -729,7 +735,7 @@ void ShowCourseList(string Sem, char* Link) {
 					cout << " ";
 				cout << "|" << endl;
 
-				if (j < COURSELINE - 1) {
+				if (j < COURSELINE - 2) {
 					for (int k = 0; k < width; k++) {
 						if (k == 0) cout << "|";
 						else if (k == width - 1) cout << "|";
@@ -737,13 +743,13 @@ void ShowCourseList(string Sem, char* Link) {
 					} cout << endl;
 				}
 			}
+			for (int i = 0; i < width; i++) {
+				if (i == 0) cout << "[";
+				else if (i == width - 1) cout << "]";
+				else cout << "-";
+			} cout << endl << endl;
 			
 		}
-		for (int i = 0; i < width; i++) {
-			if (i == 0) cout << "[";
-			else if (i == width - 1) cout << "]";
-			else cout << "-";
-		} cout << endl << endl;
 		fin.close();
 	}
 	cout << endl;
