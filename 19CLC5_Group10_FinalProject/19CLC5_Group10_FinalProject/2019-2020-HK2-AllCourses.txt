@@ -35,9 +35,9 @@ dbtien
 Dinh Ba Tien
 TS
 0
-2020 4 6
-2020 6 1
-MON
+2020 4 7
+2020 6 9
+TUE
 7 30
 11 30
 I41

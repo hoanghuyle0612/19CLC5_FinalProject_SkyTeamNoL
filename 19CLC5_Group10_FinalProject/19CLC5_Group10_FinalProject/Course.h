@@ -45,7 +45,7 @@ struct Course {
 };
 
 struct CourseSchedule {
-	string id, name, clss, lecturer, dow, room;
+	string id, name, clss, lecturer, dow, room, lecid;
 	int sd, sm, sy, ed, em, ey, sHr, sMin, eHr, eMin;
 	CourseSchedule* cNext;
 };
@@ -172,10 +172,20 @@ bool ImportScoreBoard(Student_Course*& stuHead, int n, string fName);
 void ShowCourseList(string Sem, char* Link);
 // Show Semester's list of Courses
 
+CourseSchedule* GetCourseSchedule(ifstream& fin);
+// Get Course
+
+void DrawScheduleCourse(CourseSchedule* crs);
+// Draw Course for Schedule
+
 void ShowSchedule(string Sem, char* Link, int id);
 // Show Student's Schedule
 
+void DeleteScheduleList(CourseSchedule*& cHead, int n);
+// Delete Schedule List
 
+void ShowCourseListLec(string Sem, char* Link, string lecid);
+// Show List of Courses of a Lecturer
 
 //STUDENT (Student.cpp)
 //==========================================================
