@@ -805,7 +805,7 @@ CourseSchedule *GetCourseSchedule(ifstream &fin) {
 }
 
 void DrawScheduleCourse(CourseSchedule* crs) {
-	int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
+	int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 12 + 1 + 12 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
 	for (int j = 0; j < width; j++) {
 		if (j == 0 || j == width - 1) cout << "|";
 		else cout << "-";
@@ -831,13 +831,15 @@ void DrawScheduleCourse(CourseSchedule* crs) {
 				if (crs->sd < 10) cout << "0";
 				cout << crs->sd << "/";
 				if (crs->sm < 10) cout << "0";
-				cout << crs->sm << " |";
+				cout << crs->sm << "/";
+				cout << crs->sy << " |";
 				break;
 			case 4:
 				if (crs->ed < 10) cout << "0";
 				cout << crs->ed << "/";
 				if (crs->em < 10) cout << "0";
-				cout << crs->em << " |";
+				cout << crs->em << "/";
+				cout << crs->ey << " |";
 				break;
 			case 5:
 				if (crs->sHr < 10) cout << "0";
@@ -862,6 +864,42 @@ void DrawScheduleCourse(CourseSchedule* crs) {
 				cout << " ";
 			} cout << "|";
 		}
+	}
+	cout << endl;
+}
+
+void DrawScheduleIndex(CourseSchedule* crs) {
+	int width = 1 + 10 + 1 + 10 + 1 + 35 + 1 + 25 + 1;
+	for (int j = 0; j < width; j++) {
+		if (j == 0 || j == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "|";
+	for (int i = 0; i < 4; i++) {
+		string Line; int LineLen;
+		cout << " ";
+		switch (i) {
+			case 0:
+				Line = crs->clss;
+				LineLen = 10;
+				break;
+			case 1:
+				Line = crs->id;
+				LineLen = 10;
+				break;
+			case 2:
+				Line = crs->name;
+				LineLen = 35;
+				break;
+			case 3:
+				Line = crs->lecturer;
+				LineLen = 25;
+				break;
+		}
+		cout << Line;
+		for (int j = 0; j < LineLen - 1 - Line.length(); j++)
+			cout << " ";
+		cout << "|";
 	}
 	cout << endl;
 }
@@ -899,14 +937,14 @@ void ShowSchedule(string Sem, char* Link, int id) {
 			crscur = crscur->cNext;
 		}
 
-		int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
+		int width = 1 + 10 + 1 + 10 + 1 + 5 + 1 + 12 + 1 + 12 + 1 + 7 + 1 + 7 + 1 + 7 + 1;
 		for (int j = 0; j < width; j++) {
 			if (j == 0) cout << "[";
 			else if (j == width - 1) cout << "]";
 			else cout << "-";
 		}
 		cout << endl;
-		cout << "|  Class   |    ID    | DoW | SDate | EDate | STime | ETime | Room  |" << endl;
+		cout << "|  Class   |    ID    | DoW |   StDate   |   EnDate   | STime | ETime | Room  |" << endl;
 		crscur = cHead;
 		for (int i = 0; i < n; i++) {
 			if (CheckStuInCourse(fNameCourse, crscur->clss, crscur->id, id)) {
@@ -920,7 +958,30 @@ void ShowSchedule(string Sem, char* Link, int id) {
 			else if (j == width - 1) cout << "]";
 			else cout << "-";
 		} cout << endl;
-		
+
+		cout << endl << endl;
+
+		cout << "-Index-" << endl << endl;
+		width = 1 + 10 + 1 + 10 + 1 + 35 + 1 + 25 + 1;
+		for (int j = 0; j < width; j++) {
+			if (j == 0) cout << "[";
+			else if (j == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+		cout << "|  Class   |    ID    |               Name                |        Lecturer         |" << endl;
+		crscur = cHead;
+		for (int i = 0; i < n; i++) {
+			if (CheckStuInCourse(fNameCourse, crscur->clss, crscur->id, id)) {
+				DrawScheduleIndex(crscur);
+			}
+			crscur = crscur->cNext;
+		}
+		for (int j = 0; j < width; j++) {
+			if (j == 0) cout << "[";
+			else if (j == width - 1) cout << "]";
+			else cout << "-";
+		} cout << endl;
+
 		DeleteScheduleList(cHead, n);
 		fin.close();
 	}
