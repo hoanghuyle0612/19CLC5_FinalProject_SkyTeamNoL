@@ -89,6 +89,8 @@ void ImportCourses(char* AcaYear, char* Semester);
 void AddCourse(char* AcaYear, char* Semester);
 void LoadCourses_txtfile(char* Link, CourseList*& list);
 void delete_CourseList(CourseList*& list);
+void EditCourse(char* AcaYear, char* Semester);
+CourseList* FindCourse(CourseList* list, char* Course);
 //=====================================================================================
 
 
@@ -107,7 +109,7 @@ void delete_StudentList(StudentList*& list);
 LecturerList* LoadLecturerNode(ifstream& f);
 void LoadLecturerList(LecturerList*& list);
 void delete_LecturerList(LecturerList*& list);
-
+LecturerList* FindLecturer(LecturerList* list, char* username);
 int char_to_int(char* s);
 
 

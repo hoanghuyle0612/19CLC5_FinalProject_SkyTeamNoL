@@ -17,10 +17,11 @@ StudentList* CreateStudentNode(ifstream& f)
 	f.getline(tmp, 21);
 	char* w = strtok(tmp, " /");
 	temp->data.DoB.Month = char_to_int(w);
-	w = strtok(tmp, " /");
+	w = strtok(NULL, " /");
 	temp->data.DoB.Day = char_to_int(w);
-	w = strtok(tmp, " \n");
-	temp->data.Status = char_to_int(w);
+	w = strtok(NULL, " \n");
+	temp->data.DoB.Year = char_to_int(w);
+	f >> temp->data.Status;
 	f.ignore(100, '\n');
 
 	temp->pNext = nullptr;
@@ -569,6 +570,167 @@ void AddCourse(char* AcaYear,char* Semester)
 	delete_CourseList(list);
 
 }
+
+
+void EditCourse(char* AcaYear,char* Semester)
+{
+	char tmp[256];
+	char* Course;
+	char Class[10];
+	cout << "Enter Class: \n\t>";
+	cin.getline(Class, 10);
+	char Link[256];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	cout << "Which course do you want to edit? \n\t >"; cin.getline(tmp, 256);
+	Course = new char[strlen(tmp)];
+	strcpy(Course, tmp);
+	CourseList* list = nullptr;
+	LoadCourses_txtfile(Link,list);
+	CourseList* cur_Course = FindCourse(list, Course);
+	if (cur_Course == nullptr)
+	{
+		system("cls");
+		cout << "\tCannot find course. " << endl;
+		return;
+	}
+	system("cls");
+	cout << "Enter new course's ID: \n\t>"; cin.getline(tmp, 256);
+	strcpy(cur_Course->data.ID, tmp);
+	cout << "Enter new course's name: \n\t>"; cin.getline(tmp, 256);
+	strcpy(cur_Course->data.Name, tmp);
+	LecturerList* L_list = nullptr, * cur_Lecturer = nullptr;
+	LoadLecturerList(L_list);
+	do {
+		cout << "Enter lecturer username: \n\t>"; cin.getline(tmp, 256);
+		cur_Lecturer = FindLecturer(L_list, tmp);
+	} while (cur_Lecturer == nullptr);
+	strcpy(cur_Course->data.LecturerUser, tmp);
+	strcpy(cur_Course->data.LecturerName, cur_Lecturer->data.fullname);
+	strcpy(cur_Course->data.LecturerDegree, cur_Lecturer->data.degree);
+	cur_Course->data.LecturerGender = cur_Lecturer->data.gender;
+	cout << "Enter new Start day (dd/mm/yyyy): \n\t>"; cin.getline(tmp, 256);
+	char* w = strtok(tmp, " /");
+	cur_Course->data.StartDate.Day = char_to_int(w);
+	w = strtok(NULL, " /");
+	cur_Course->data.StartDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.StartDate.Year = char_to_int(w);
+	cout << "Enter new End day (dd/mm/yyyy): \n\t>"; cin.getline(tmp, 256);
+	w = strtok(w, " /");
+	cur_Course->data.EndDate.Day = char_to_int(w);
+	w = strtok(NULL, " /");
+	cur_Course->data.EndDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.EndDate.Year = char_to_int(w);
+	cout << "Enter Day of week (MON / TUE / WED / THU / FRI / SAT / SUN): \n\t> "; cin.getline(tmp, 256);
+	strcpy(cur_Course->data.DoW, tmp);
+	cout << "Enter new Start hour (hh:mm): "; cin.getline(tmp, 256);
+	w = strtok(tmp, " :");
+	cur_Course->data.StartHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.StartHour.m = char_to_int(w);
+	cout << "Enter new End houd (hh:mm): \n\t>"; cin.getline(tmp, 256);
+	w = strtok(tmp, " :");
+	cur_Course->data.EndHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.EndHour.m = char_to_int(w);
+	cout << "Enter new Room: \n\t>"; cin.getline(tmp, 256);
+	strcpy(cur_Course->data.Room, tmp);
+	SaveSchedule(list, AcaYear, Semester, Class);
+}
+
+CourseList* FindCourse(CourseList* list,char* Course)
+{
+	CourseList* cur = list;
+	while (cur != nullptr)
+	{
+		if (strcmp(Course, cur->data.ID) == 0)
+		{
+			return cur;
+		}
+		cur = cur->pNext;
+	}
+	return nullptr;
+}
+
+void RemoveStudentFromCourse(char* AcaYear, char* Semester)
+{
+	char StudentID[10], CourseID[10], tmp[256];
+	cout << "Enter Course's ID: "; cin.getline(CourseID, 10);
+	cout << "Enter Student's ID: "; cin.getline(StudentID, 10);
+	char Link[256];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, CourseID);
+	strcat(Link, "-Student.txt");
+	ifstream fin;
+	fin.open(Link);
+	if (!fin.is_open())
+	{
+		cout << "Cannot load student list." << endl;
+		return;
+	}
+	bool flag = false;
+	while (!fin.eof())
+	{
+		fin.getline(tmp, 256);
+		if (strcmp(tmp, StudentID) == 0)
+		{
+			flag = true;
+			break;
+		}
+	}
+	if (flag == false)
+	{
+		cout << "Cannot find student." << endl;
+		return;
+	}
+	fin.ignore(256, '\n');
+	fin.ignore(256, '\n');
+	fin.ignore(256, '\n');
+	fin.ignore(256, '\n');
+	int pos = fin.tellg();
+	fin.close();
+	ofstream fout;
+	fout.open(Link);
+	if (fout.is_open())
+	{
+		fout.seekp(pos);
+		fout << 0;
+	}
+}
+StudentList* Load_Stu_Node_FromCourse(ifstream& f)
+{
+	StudentList* temp;
+	temp = new StudentList;
+	char tmp[20];
+	f.ignore(100, '\n');
+	f.getline(temp->data.ID, 10);
+	f.getline(temp->data.Pwd, 20);
+	f.getline(temp->data.Name, 30);
+	f.getline(temp->data.MSSV, 10);
+	f.getline(temp->data.Class, 10);
+	f.getline(tmp, 21);
+	char* w = strtok(tmp, " /");
+	temp->data.DoB.Month = char_to_int(w);
+	w = strtok(NULL, " /");
+	temp->data.DoB.Day = char_to_int(w);
+	w = strtok(NULL, " \n");
+	temp->data.DoB.Year = char_to_int(w);
+	f >> temp->data.Status;
+	f.ignore(100, '\n');
+
+	temp->pNext = nullptr;
+	return temp;
+}
+
 //=========================================================================================
 
 
@@ -681,6 +843,16 @@ void LoadLecturerList(LecturerList*& list)
 	}
 }
 
+LecturerList* FindLecturer(LecturerList* list, char* username) //find lecturer by username
+{
+	LecturerList* cur = list;
+	while (cur != nullptr)
+	{
+		if (strcmp(username, cur->data.username) == 0) return cur;
+		cur = cur->pNext;
+	}
+	return nullptr;
+}
 
 void delete_LecturerList(LecturerList*& list)
 {
