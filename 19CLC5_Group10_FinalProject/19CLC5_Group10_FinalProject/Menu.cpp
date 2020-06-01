@@ -1766,9 +1766,10 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
 	}
 
+	string lecid(b[idx].username);
 	switch (ptr) {
 	case 0:
-		ShowCourseList(YearSem_str, Link);
+		ShowCourseListLec(YearSem, Link, lecid);
 		break;
 	case 1:
 		Advance_ShowCourse(YearSem_str);
