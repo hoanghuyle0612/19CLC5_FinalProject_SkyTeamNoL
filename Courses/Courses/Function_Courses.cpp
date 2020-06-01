@@ -642,6 +642,8 @@ void EditCourse(char* AcaYear,char* Semester)
 	cout << "Enter new Room: \n\t>"; cin.getline(tmp, 256);
 	strcpy(cur_Course->data.Room, tmp);
 	SaveSchedule(list, AcaYear, Semester, Class);
+	delete_CourseList(list);
+	delete_LecturerList(L_list);
 }
 
 CourseList* FindCourse(CourseList* list,char* Course)
@@ -706,6 +708,7 @@ void RemoveStudentFromCourse(char* AcaYear, char* Semester)
 		fout << 0;
 	}
 }
+
 StudentList* Load_Stu_Node_FromCourse(ifstream& f)
 {
 	StudentList* temp;
@@ -729,6 +732,69 @@ StudentList* Load_Stu_Node_FromCourse(ifstream& f)
 
 	temp->pNext = nullptr;
 	return temp;
+}
+
+void RemoveACourse(char* AcaYear, char* Semester, char* Class)
+{
+	char Link[256];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	ifstream fin;
+	fin.open(Link);
+	if (!fin.is_open())
+	{
+		cout << "Cannot load courses of class " << Class << endl;
+		return;
+	}
+	CourseList* list = nullptr;
+	LoadCourses_txtfile(Link, list);
+	if (list == nullptr)
+	{
+		return;
+	}
+	char CourseID[10];
+	cout << "Enter Course's ID you want to delete. \n\t>"; cin.getline(CourseID, 10);
+	CourseList* cur_Course = list;
+	CourseList* prev_Course = nullptr;
+	bool flag = false;
+	while (cur_Course != nullptr)
+	{
+		if (strcmp(CourseID, cur_Course->data.ID) == 0)
+		{
+			flag = true;
+			break;
+		}
+		prev_Course = cur_Course;
+		cur_Course = cur_Course->pNext;
+	}
+	if (flag == false)
+	{
+		cout << "Cannot find Course by ID! " << endl;
+		return;
+	}
+	else
+	{
+		if (prev_Course == nullptr)
+		{
+			list = list->pNext;
+			delete cur_Course;
+		}
+		else
+		{
+			prev_Course->pNext = cur_Course->pNext;
+			delete cur_Course;
+		}
+	}
+	SaveSchedule(list, AcaYear, Semester, Class);
+	Link[strlen(Link) - 4] = '\0';
+	strcat(Link, "-");
+	strcat(Link, CourseID);
+	strcat(Link, "-Student.txt");
+	if (remove(Link)) cout << "Remove Course successfully." << endl;
 }
 
 //=========================================================================================

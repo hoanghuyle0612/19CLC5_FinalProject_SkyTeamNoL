@@ -3,6 +3,7 @@
 #define _HEADER_H_
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 using namespace std;
 
 // DATE STRUCT
