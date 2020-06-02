@@ -98,6 +98,7 @@ void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char*
 void ImportCourses(char* AcaYear, char* Semester);
 void AddCourse(char* AcaYear, char* Semester);
 void EditCourse(char* AcaYear, char* Semester);
+void RemoveCourse(char* AcaYear, char* Semester);
 void LoadCourses_txtfile(char* Link, CourseList*& list);
 CourseList* FindCourse(CourseList* list, char* Course, char *Class);
 LecturerList* FindLecturer(LecturerList* list, char* username);

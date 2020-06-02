@@ -1138,6 +1138,135 @@ void EditCourse(char* AcaYear, char* Semester)
 	std::system("pause");
 }
 
+void RemoveCourse(char *AcaYear, char* Semester) {
+	std::system("cls");
+	cout << "-Remove Course-" << endl << endl;
+	char Class[10], Course[25];
+	cout << "[- Class -----]";
+	cout << endl << "> ";
+	cin.getline(Class, 10);
+	cout << "[- Course ----]";
+	cout << endl << "> ";
+	cin.getline(Course, 25);
+	char Link[256];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	ifstream fin;
+	fin.open(Link);
+	if (!fin.is_open())
+	{
+		cout << "Cannot load courses of class " << Class << "." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* list = nullptr;
+	LoadCourses_txtfile(Link, list);
+	if (list == nullptr)
+	{
+		cout << "No Course available." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* cur_Course = list;
+	CourseList* prev_Course = nullptr;
+	bool flag = false;
+	while (cur_Course != nullptr)
+	{
+		if (strcmp(Course, cur_Course->data.ID) == 0)
+		{
+			flag = true;
+			break;
+		}
+		prev_Course = cur_Course;
+		cur_Course = cur_Course->pNext;
+	}
+	if (flag == false)
+	{
+		cout << "Cannot find Course." << endl;
+		return;
+	}
+	if (prev_Course == nullptr)
+	{
+		list = list->pNext;
+		delete cur_Course;
+	}
+	else
+	{
+		prev_Course->pNext = cur_Course->pNext;
+		delete cur_Course;
+	}
+	fin.close();
+	SaveSchedule(list, AcaYear, Semester, Class);
+	Link[strlen(Link) - 4] = '\0';
+	strcat(Link, "-");
+	strcat(Link, Course);
+	strcat(Link, "-Student.txt");
+
+	// All Course
+	char LinkAC[256];
+	strcpy(LinkAC, "Files/Course/");
+	strcat(LinkAC, AcaYear);
+	strcat(LinkAC, "-");
+	strcat(LinkAC, Semester);
+	strcat(LinkAC, "-AllCourses.txt");
+	ifstream finAC;
+	finAC.open(Link);
+	if (!finAC.is_open())
+	{
+		cout << "Cannot load courses of class " << Class << "." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* listAC = nullptr;
+	LoadCourses_txtfile(LinkAC, listAC);
+	if (listAC == nullptr)
+	{
+		cout << "No Course available." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* cur_CourseAC = listAC;
+	CourseList* prev_CourseAC = nullptr;
+	bool flagAC = false;
+	while (cur_CourseAC != nullptr)
+	{
+		if (strcmp(Course, cur_CourseAC->data.ID) == 0)
+		{
+			flagAC = true;
+			break;
+		}
+		prev_CourseAC = cur_CourseAC;
+		cur_CourseAC = cur_CourseAC->pNext;
+	}
+	if (flagAC == false)
+	{
+		cout << "Cannot find Course." << endl;
+		return;
+	}
+	if (prev_CourseAC == nullptr)
+	{
+		listAC = listAC->pNext;
+		delete cur_CourseAC;
+	}
+	else
+	{
+		prev_CourseAC->pNext = cur_CourseAC->pNext;
+		delete cur_CourseAC;
+	}
+	finAC.close();
+	SaveSchedule_AllCourse_Rewrite(listAC, AcaYear, Semester, Class);
+
+	if (remove(Link) == 0) cout << "Course removed.";
+	else cout << "Failed to remove Course.";
+	cout << endl;
+	std::system("pause");
+}
+
 CourseList* FindCourse(CourseList* list, char* Course, char *Class)
 {
 	CourseList* cur = list;

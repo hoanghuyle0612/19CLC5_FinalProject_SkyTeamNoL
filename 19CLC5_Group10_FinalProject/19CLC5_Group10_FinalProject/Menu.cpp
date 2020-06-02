@@ -1095,6 +1095,9 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 	case 1:
 		EditCourse(AcaYear, Semester);
 		break;
+	case 2:
+		RemoveCourse(AcaYear, Semester);
+		break;
 	case 3:
 		ImportCourses(AcaYear, Semester);
 		break;
