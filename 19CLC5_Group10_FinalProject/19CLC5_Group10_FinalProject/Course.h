@@ -97,7 +97,13 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char* Class);
 void ImportCourses(char* AcaYear, char* Semester);
 void AddCourse(char* AcaYear, char* Semester);
+void EditCourse(char* AcaYear, char* Semester);
 void LoadCourses_txtfile(char* Link, CourseList*& list);
+CourseList* FindCourse(CourseList* list, char* Course, char *Class);
+LecturerList* FindLecturer(LecturerList* list, char* username);
+void LoadLecturerList(LecturerList*& list);
+void delete_CourseList(CourseList*& list);
+void delete_LecturerList(LecturerList*& list);
 //=====================================================================================
 
 

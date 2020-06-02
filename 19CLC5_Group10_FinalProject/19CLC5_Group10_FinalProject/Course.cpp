@@ -1201,7 +1201,7 @@ bool ExportScoreBoard(Student_Course*& stuHead, int n, string fName) {
 void Advance_ShowScoreBoard(string YearSem) {
 	std::system("cls");
 	cout << "-Search & View Scoreboard of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	Student_Course* stuHead; int n = 0;
@@ -1211,7 +1211,7 @@ void Advance_ShowScoreBoard(string YearSem) {
 		return;
 	}
 	std::system("cls");
-	cout << fName.substr(14, fName.length() - 14 - 1)
+	cout << fName.substr(27, fName.length() - 27 - 1)
 		<< "\t Scoreboard" << endl << endl;
 	ShowScoreBoard(stuHead, n);
 	cout << endl;
@@ -1222,10 +1222,12 @@ void Advance_ShowScoreBoard(string YearSem) {
 void Advance_ExportScoreBoard(string YearSem) {
 	std::system("cls");
 	cout << "-Export Scoreboard of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
-	string fNameScr = fName + "Scoreboard";
+	char Link_Scr[] = "Files/Scoreboard/";
+	string fNameScr = fName.substr(13, fName.length() - 14);
+	fNameScr = Link_Scr + fNameScr + "-Scoreboard";
 	Student_Course* stuHead; int n = 0;
 	if (!GetCourse(stuHead, n, fNameStu)) {
 		cout << "Cannot export Scoreboard." << endl;
@@ -1242,10 +1244,12 @@ void Advance_ExportScoreBoard(string YearSem) {
 void Advance_ImportScoreBoard(string YearSem) {
 	std::system("cls");
 	cout << "-Import Scoreboard of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
-	string fNameScr = fName + "Scoreboard";
+	char Link_Scr[] = "Files/Scoreboard/";
+	string fNameScr = fName.substr(13, fName.length() - 14);
+	fNameScr = Link_Scr + fNameScr + "-Scoreboard";
 	Student_Course* stuHead; int n = 0;
 	if (!GetCourse(stuHead, n, fNameStu)) {
 		cout << "Cannot import Scoreboard." << endl;
@@ -1264,7 +1268,7 @@ void Advance_ImportScoreBoard(string YearSem) {
 void Advance_EditScore(string YearSem) {
 	std::system("cls");
 	cout << "-Edit Grade-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	string fNameScr = fName + "Scoreboard";
@@ -1281,7 +1285,7 @@ void Advance_EditScore(string YearSem) {
 void Advance_ShowAttList(string YearSem) {
 	std::system("cls");
 	cout << "-View Attendance List of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	Student_Course* stuHead; int n = 0;
@@ -1306,10 +1310,13 @@ void Advance_ShowAttList(string YearSem) {
 void Advance_ExportAttList(string YearSem) {
 	std::system("cls");
 	cout << "-Export Attendance List-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
-	string fNameAL = fName + "AttList";
+	char Link_AttList[] = "Files/AttList/";
+	
+	string fNameAL = fName.substr(13, fName.length() - 14);
+	fNameAL = Link_AttList + fNameAL + "-AttList";
 	Student_Course* stuHead; int n = 0;
 	if (!GetCourse(stuHead, n, fNameStu)) {
 		cout << "Cannot export Attendance List." << endl;
@@ -1327,7 +1334,7 @@ void Advance_ExportAttList(string YearSem) {
 void Advance_EditAtt(string YearSem) {
 	std::system("cls");
 	cout << "-Edit Attendance-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	Student_Course* stuHead; int n = 0;
@@ -1352,7 +1359,7 @@ void Advance_EditAtt(string YearSem) {
 void Advance_ShowCourse(string YearSem) {
 	std::system("cls");
 	cout << "-View Student List of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	string fNameAL = fName + "AttList";
@@ -1374,7 +1381,7 @@ void Advance_ShowCourse(string YearSem) {
 void Advance_CheckIn(string YearSem, int id) {
 	std::system("cls");
 	cout << "-Check-in-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	string fNameAL = fName + "AttList";
@@ -1398,7 +1405,7 @@ void Advance_CheckIn(string YearSem, int id) {
 void Advance_CheckInRes(string YearSem, int id) {
 	std::system("cls");
 	cout << "-Check-in-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	string fNameAL = fName + "AttList";
@@ -1419,7 +1426,7 @@ void Advance_CheckInRes(string YearSem, int id) {
 void Advance_StuShowScore(string YearSem, int id) {
 	std::system("cls");
 	cout << "-View Score of a Course-" << endl << endl;
-	char Link[] = "";
+	char Link[] = "Files/Course/";
 	string fName = GetFileName(YearSem, Link);
 	string fNameStu = fName + "Student";
 	string fNameAL = fName + "AttList";

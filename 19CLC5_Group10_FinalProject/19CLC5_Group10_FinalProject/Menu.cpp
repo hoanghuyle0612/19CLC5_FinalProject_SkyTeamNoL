@@ -1,4 +1,4 @@
-// MENU FUNCTION
+﻿// MENU FUNCTION
 
 #include "Login.h"
 #include "Course.h"
@@ -38,6 +38,10 @@ void Menu_Main() {
 		cout << endl;
 
 		{
+		}
+
+		{
+			
 			SetColor(color, i[0]);
 			cout << setw(width) << " ------------ ";
 			SetColor(color, i[1]);
@@ -1081,18 +1085,21 @@ void Menu_Staff_Course_Course(staff a[], int& idx) {
 	char AcaYear[] = "2019-2020";
 	char Semester[] = "HK2";
 	char YearSem[] = "2019-2020-HK2";
-	char Link[] = "";
+	char Link_Crs[] = "Files/Course/";
 	string YearSem_str(YearSem);
 
 	switch (ptr) {
 	case 0:
 		AddCourse(AcaYear, Semester);
 		break;
+	case 1:
+		EditCourse(AcaYear, Semester);
+		break;
 	case 3:
 		ImportCourses(AcaYear, Semester);
 		break;
 	case 4:
-		ShowCourseList(YearSem_str, Link);
+		ShowCourseList(YearSem_str, Link_Crs);
 		break;
 	case 5:
 		Menu_Staff_Course(a, idx);
@@ -1559,7 +1566,7 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	char AcaYear[] = "2019-2020";
 	char Semester[] = "HK2";
 	char YearSem[] = "2019-2020-HK2";
-	char Link[] = "";
+	char Link_Course[] = "Files/Course/";
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
@@ -1769,7 +1776,7 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	string lecid(b[idx].username);
 	switch (ptr) {
 	case 0:
-		ShowCourseListLec(YearSem, Link, lecid);
+		ShowCourseListLec(YearSem, Link_Course, lecid);
 		break;
 	case 1:
 		Advance_ShowCourse(YearSem_str);
@@ -1795,7 +1802,6 @@ void Menu_Lecturer_Advance(lecturer b[], int &idx) {
 	}
 	if (ptr != last) Menu_Lecturer_Advance(b, idx);
 }
-
 
 
 
@@ -1948,7 +1954,7 @@ void Menu_Student_Advance(student c[], int& idx) {
 	char AcaYear[] = "2019-2020";
 	char Semester[] = "HK2";
 	char YearSem[] = "2019-2020-HK2";
-	char Link[] = "";
+	char Link_Schedule[] = "Files/Course/";
 	string YearSem_str(YearSem);
 
 	while (KeyPressed != 13) {
@@ -2123,7 +2129,7 @@ void Menu_Student_Advance(student c[], int& idx) {
 		Advance_CheckInRes(YearSem, c[idx].id);
 		break;
 	case 2:
-		ShowSchedule(YearSem, Link, c[idx].id);
+		ShowSchedule(YearSem, Link_Schedule, c[idx].id);
 		break;
 	case 3:
 		Advance_StuShowScore(YearSem, c[idx].id);
