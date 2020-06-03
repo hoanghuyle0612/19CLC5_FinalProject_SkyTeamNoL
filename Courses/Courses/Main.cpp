@@ -1,12 +1,17 @@
 #include "Header.h"
 
-
+#include <vector>
 int main()
 {
 
+
+
 	char AcaYear[] = "2019-2020", Semester[] = "HK2";
-	CourseList* list = NULL;
-	AddCourse(AcaYear, Semester);
+	char Class[] = "18APCS1";
+	RemoveStudentFromCourse(AcaYear, Semester, Class);
+
+	/*CourseList* list = NULL;
+	AddCourse(AcaYear, Semester);*/
 	 
 	
 	//return 0;

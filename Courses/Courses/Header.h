@@ -92,6 +92,9 @@ void LoadCourses_txtfile(char* Link, CourseList*& list);
 void delete_CourseList(CourseList*& list);
 void EditCourse(char* AcaYear, char* Semester);
 CourseList* FindCourse(CourseList* list, char* Course);
+void RemoveStudentFromCourse(char* AcaYear, char* Semeste,char* Class);
+void RemoveACourse(char* AcaYear, char* Semester, char* Class);
+
 //=====================================================================================
 
 
@@ -105,6 +108,7 @@ StudentList* CreateStudentNode(ifstream& f);
 void LoadStudentList(StudentList*& list, char* Class);
 int StudentCount(StudentList* list);
 void delete_StudentList(StudentList*& list);
+StudentList* Load_Stu_Node_FromCourse(ifstream& f);
 
 
 LecturerList* LoadLecturerNode(ifstream& f);

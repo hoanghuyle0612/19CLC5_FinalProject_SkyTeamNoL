@@ -660,7 +660,7 @@ CourseList* FindCourse(CourseList* list,char* Course)
 	return nullptr;
 }
 
-void RemoveStudentFromCourse(char* AcaYear, char* Semester)
+void RemoveStudentFromCourse(char* AcaYear, char* Semester,char* Class)
 {
 	char StudentID[10], CourseID[10], tmp[256];
 	cout << "Enter Course's ID: "; cin.getline(CourseID, 10);
@@ -670,19 +670,21 @@ void RemoveStudentFromCourse(char* AcaYear, char* Semester)
 	strcat(Link, "-");
 	strcat(Link, Semester);
 	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, "-");
 	strcat(Link, CourseID);
 	strcat(Link, "-Student.txt");
-	ifstream fin;
-	fin.open(Link);
-	if (!fin.is_open())
+	fstream f;
+	f.open(Link,ios::in|ios::out);
+	if (!f.is_open())
 	{
 		cout << "Cannot load student list." << endl;
 		return;
 	}
 	bool flag = false;
-	while (!fin.eof())
+	while (!f.eof())
 	{
-		fin.getline(tmp, 256);
+		f.getline(tmp, 256);
 		if (strcmp(tmp, StudentID) == 0)
 		{
 			flag = true;
@@ -694,19 +696,17 @@ void RemoveStudentFromCourse(char* AcaYear, char* Semester)
 		cout << "Cannot find student." << endl;
 		return;
 	}
-	fin.ignore(256, '\n');
-	fin.ignore(256, '\n');
-	fin.ignore(256, '\n');
-	fin.ignore(256, '\n');
-	int pos = fin.tellg();
-	fin.close();
-	ofstream fout;
-	fout.open(Link);
-	if (fout.is_open())
-	{
-		fout.seekp(pos);
-		fout << 0;
-	}
+
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	cout << f.tellg() << endl;
+	int pos = f.tellg();
+	f.seekp(pos,ios::beg);
+	f << 0;
+	if (flag == true) cout << "Remove successfully." << endl;
+	f.close();
 }
 
 StudentList* Load_Stu_Node_FromCourse(ifstream& f)
