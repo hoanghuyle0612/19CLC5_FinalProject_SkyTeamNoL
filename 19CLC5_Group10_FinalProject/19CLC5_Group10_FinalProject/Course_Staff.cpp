@@ -253,7 +253,8 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 	StudentList* st_list = nullptr;
 	LoadStudentList(st_list, Class);
 	char Link[256];
-	strcpy(Link, AcaYear);
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
 	strcat(Link, "-");
 	strcat(Link, Semester);
 	strcat(Link, "-");
@@ -321,6 +322,80 @@ void Create_Course_Student(CourseList* list, char* AcaYear, char* Semester, char
 
 }
 
+void Create_Course_Student_Single(CourseList* list, char* AcaYear, char* Semester)   // CREATE COURSE FILE WHICH ALLOWS STUDENT MANAGEMENT
+{
+	StudentList* st_list = nullptr;
+	LoadStudentList(st_list, list->data.Class);
+	char Link[256];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, list->data.Class);
+	strcat(Link, "-");
+	strcat(Link, list->data.ID);
+	strcat(Link, "-");
+	strcat(Link, "Student.txt");
+	ofstream f;
+	f.open(Link);
+	if (!f.is_open())
+	{
+		cout << "Cannot create file\n";
+		return;
+	}
+	f << StudentCount(st_list);
+	StudentList* cur = st_list;
+	while (cur != nullptr)
+	{
+		f << endl;
+		f << cur->data.ID << endl;
+		f << cur->data.Pwd << endl;
+		f << cur->data.Name << endl;
+		f << cur->data.DoB.Year << " ";
+		if (cur->data.DoB.Month < 10) f << "0";
+		f << cur->data.DoB.Month << " ";
+		if (cur->data.DoB.Day < 10) f << "0";
+		f << cur->data.DoB.Day << endl;
+		f << cur->data.Class << endl;
+		f << cur->data.Status << endl;
+		f << -1 << endl;    //midterm
+		f << -1 << endl;	//final
+		f << -1 << endl;	//bonus
+		f << -1 << endl;	//total
+		Date tmp_day = list->data.StartDate;
+		Date tmp_day_end = list->data.EndDate;
+		Hour Start_Hour = list->data.StartHour;
+		Hour End_Hour = list->data.EndHour;
+		while (true)
+		{
+			if (tmp_day.Year > tmp_day_end.Year) break;
+			if ((tmp_day.Year == tmp_day_end.Year) &&
+				(tmp_day.Month > tmp_day_end.Month)) break;
+			if ((tmp_day.Month == tmp_day_end.Month) &&
+				(tmp_day.Day > tmp_day_end.Day)) break;
+			f << tmp_day.Year << " ";
+			if (tmp_day.Month < 10) f << "0";
+			f << tmp_day.Month << " ";
+			if (tmp_day.Day < 10) f << "0";
+			f << tmp_day.Day << " ";
+			if (Start_Hour.h < 10) f << "0";
+			f << Start_Hour.h << " ";
+			if (Start_Hour.m < 10) f << "0";
+			f << Start_Hour.m << " ";
+			if (End_Hour.h < 10) f << "0";
+			f << End_Hour.h << " ";
+			if (End_Hour.m < 10) f << "0";
+			f << End_Hour.m << " " << -1 << endl;
+			tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
+		}
+		f << "-";
+		cur = cur->pNext;
+	}
+
+
+}
+
 void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char* Class)
 {
 	CourseList* cur = list;
@@ -334,8 +409,9 @@ void Save_Course_Stu_List(CourseList* list, char* AcaYear, char* Semester, char*
 void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class)
 {
 	char* Link;
-	Link = new char[strlen(AcaYear) + strlen(Semester) + strlen(Class) + 4];
-	strcpy(Link, AcaYear);
+	Link = new char[strlen(AcaYear) + strlen(Semester) + 15 + 7];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
 	strcat(Link, "-");
 	strcat(Link, Semester);
 	strcat(Link, "-");
@@ -376,14 +452,16 @@ void SaveSchedule(CourseList* list, char* AcaYear, char* Semester, char* Class)
 void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, char* Class)
 {
 	char* Link;
-	Link = new char[strlen(AcaYear) + strlen(Semester) + 15];
-	strcpy(Link, AcaYear);
+	Link = new char[strlen(AcaYear) + strlen(Semester) + 15 + 7];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
 	strcat(Link, "-");
 	strcat(Link, Semester);
 	strcat(Link, "-AllCourses.txt");
 	char* LinkTemp;
-	LinkTemp = new char[strlen(AcaYear) + strlen(Semester) + 20];
-	strcpy(LinkTemp, AcaYear);
+	LinkTemp = new char[strlen(AcaYear) + strlen(Semester) + 20 + 7];
+	strcpy(LinkTemp, "Files/Course/");
+	strcat(LinkTemp, AcaYear);
 	strcat(LinkTemp, "-");
 	strcat(LinkTemp, Semester);
 	strcat(LinkTemp, "-AllCourses-temp.txt");
@@ -491,6 +569,174 @@ void SaveSchedule_AllCourse(CourseList* list, char* AcaYear, char* Semester, cha
 	}
 }
 
+void SaveSchedule_AllCourse_Single(CourseList* list, char* AcaYear, char* Semester, char* Class)
+{
+	char* Link;
+	Link = new char[strlen(AcaYear) + strlen(Semester) + 15 + 7];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-AllCourses.txt");
+	char* LinkTemp;
+	LinkTemp = new char[strlen(AcaYear) + strlen(Semester) + 20 + 7];
+	strcpy(LinkTemp, "Files/Course/");
+	strcat(LinkTemp, AcaYear);
+	strcat(LinkTemp, "-");
+	strcat(LinkTemp, Semester);
+	strcat(LinkTemp, "-AllCourses-temp.txt");
+
+
+	int TotalCourse = 0;
+	ifstream fin;
+
+	// Temporary file
+	fin.open(Link);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+	}
+	else {
+		ofstream fout;
+		fout.open(LinkTemp);
+		if (!fout.is_open()) {
+			cout << "Cannot create file." << endl;
+			fin.close();
+			return;
+		}
+		else {
+			char line[50];
+			for (int i = 0; i < 2; i++)
+				fin.getline(line, 50);
+			int no_line = 0;
+			while (!fin.eof()) {
+				fin.getline(line, 50);
+				fout << line;
+				if (!fin.eof()) fout << endl;
+			}
+			fout.close();
+		}
+		fin.close();
+	}
+
+	// Get total number of Courses before importing new Courses
+	fin.open(Link);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+		return;
+	}
+	else {
+		fin >> TotalCourse;
+		fin.close();
+	}
+
+	// Rewrite the file
+
+	fin.open(LinkTemp);
+	if (!fin.is_open()) {
+		cout << "Cannot open file." << endl;
+		return;
+	}
+	else {
+		ofstream fout;
+		fout.open(Link);
+		if (!fout.is_open()) {
+			cout << "Cannot create file." << endl;
+			fin.close();
+			return;
+		}
+		else {
+			fout << TotalCourse + 1;
+			fout << endl << endl;
+			char line[50];
+
+			if (TotalCourse != 0) {
+				while (!fin.eof()) {
+					fin.getline(line, 50);
+					fout << line << endl;
+				}
+			}
+			fout.close();
+		}
+		fin.close();
+	}
+	remove(LinkTemp);
+
+	// Write the new Course into the file
+	ofstream f;
+	f.open(Link, ios::app);
+	if (!f.is_open()) {
+		cout << "Cannot create/open file.\n";
+		return;
+	}
+	else
+	{
+		/*int cnt = CountCourse(list);
+		f << cnt << endl;*/
+		CourseList* cur = list;
+		f << cur->data.ID << endl;
+		f << cur->data.Name << endl;
+		f << cur->data.Class << endl;
+		f << cur->data.LecturerUser << endl;
+		f << cur->data.LecturerName << endl;
+		f << cur->data.LecturerDegree << endl;
+		f << cur->data.LecturerGender << endl;
+		f << cur->data.StartDate.Year << " " << cur->data.StartDate.Month << " " << cur->data.StartDate.Day << endl;
+		f << cur->data.EndDate.Year << " " << cur->data.EndDate.Month << " " << cur->data.EndDate.Day << endl;
+		f << cur->data.DoW << endl;
+		f << cur->data.StartHour.h << " " << cur->data.StartHour.m << endl;
+		f << cur->data.EndHour.h << " " << cur->data.EndHour.m << endl;
+		f << cur->data.Room << endl;
+		if (cur->pNext != nullptr) f << endl;
+		f.close();
+	}
+}
+
+void SaveSchedule_AllCourse_Rewrite(CourseList* list, char* AcaYear, char* Semester, char* Class)
+{
+	char* Link;
+	Link = new char[strlen(AcaYear) + strlen(Semester) + 15 + 7];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-AllCourses.txt");
+
+
+	int TotalCourse = 0;
+	ifstream fin;
+
+	// Write the new Courses into the file
+	ofstream f;
+	f.open(Link);
+	if (!f.is_open()) {
+		cout << "Cannot create/open file.\n";
+		return;
+	}
+	else
+	{
+		f << CountCourse(list) << endl << endl;
+		CourseList* cur = list;
+		while (cur != nullptr) {
+			f << cur->data.ID << endl;
+			f << cur->data.Name << endl;
+			f << cur->data.Class << endl;
+			f << cur->data.LecturerUser << endl;
+			f << cur->data.LecturerName << endl;
+			f << cur->data.LecturerDegree << endl;
+			f << cur->data.LecturerGender << endl;
+			f << cur->data.StartDate.Year << " " << cur->data.StartDate.Month << " " << cur->data.StartDate.Day << endl;
+			f << cur->data.EndDate.Year << " " << cur->data.EndDate.Month << " " << cur->data.EndDate.Day << endl;
+			f << cur->data.DoW << endl;
+			f << cur->data.StartHour.h << " " << cur->data.StartHour.m << endl;
+			f << cur->data.EndHour.h << " " << cur->data.EndHour.m << endl;
+			f << cur->data.Room << endl;
+			if (cur->pNext != nullptr) f << endl;
+			cur = cur->pNext;
+		}
+		f.close();
+	}
+}
+
 void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and save schedule
 {
 	std::system("cls");
@@ -503,10 +749,14 @@ void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and s
 	Class = new char[strlen(temp) + 1];
 	strcpy_s(Class, strlen(temp) + 1, temp);
 	temp[0] = 0;
-	cout << "[- Link ------]"; cout << endl << "> ";
-	cin.getline(temp, 256, '\n');
-	Link = new char[strlen(temp) + 1];
-	strcpy_s(Link, strlen(temp) + 1, temp);
+	/*cout << "[- File ------]"; cout << endl << "> ";
+	cin.getline(temp, 256, '\n');*/
+	Link = new char[15 + 8 +strlen(Class) + 4 + 1];
+	strcpy(Link, "Files/Course/Courses-");
+	strcat(Link, Class);
+	strcat(Link, ".csv");
+	/*strcpy_s(Link, strlen(temp) + 1, temp);*/
+
 	LoadCourses_csvfile(Link, list);
 	SaveSchedule(list, AcaYear, Semester, Class);
 	SaveSchedule_AllCourse(list, AcaYear, Semester, Class);
@@ -710,7 +960,8 @@ void AddCourse(char* AcaYear, char* Semester)
 	cout << "[- Class -----]"; cout << endl << "> ";
 	cin.getline(Class, 10);
 	char Link[256];
-	strcpy(Link, AcaYear);
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
 	strcat(Link, "-");
 	strcat(Link, Semester);
 	strcat(Link, "-");
@@ -728,11 +979,318 @@ void AddCourse(char* AcaYear, char* Semester)
 	cur->pNext = p;
 	p->data.No = cnt + 1;
 	SaveSchedule(list, AcaYear, Semester, Class);
+	SaveSchedule_AllCourse_Single(p, AcaYear, Semester, Class);
 	Create_Course_Student(p, AcaYear, Semester, Class);
 	cout << endl << "New Course added." << endl;
 	std::system("pause");
 	/*Save_Course_Stu_List(list, AcaYear, Semester, Class);*/
 
+}
+
+void EditCourse(char* AcaYear, char* Semester)
+{
+	std::system("cls");
+	cout << "-Edit Course-" << endl;
+	cout << endl << "-Old Course-" << endl << endl;
+	char tmp[256];
+	char* Course;
+	char Class[10];
+	cout << "[- Class -----]";
+	cout << endl << "> ";
+	cin.getline(Class, 10);
+	char Link[256];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	cout << "[- Course ----]";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	Course = new char[strlen(tmp)];
+	strcpy(Course, tmp);
+	CourseList* list = nullptr;
+	LoadCourses_txtfile(Link, list);
+	CourseList* cur_Course = FindCourse(list, Course, Class);
+	if (cur_Course == nullptr)
+	{
+		/*system("cls");*/
+		cout << "Cannot find course." << endl;
+		delete_CourseList(list);
+		std::system("pause");
+		return;
+	}
+	/*system("cls");*/
+	cout << endl << "-New Course-" << endl << endl;
+	cout << "[- ID ---------]"; 
+	cout << endl << "> "; 
+	cin.getline(tmp, 256);
+	strcpy(cur_Course->data.ID, tmp);
+	cout << "[- Name -------]"; 
+	cout << endl << "> "; 
+	cin.getline(tmp, 256);
+	strcpy(cur_Course->data.Name, tmp);
+	LecturerList* L_list = nullptr, * cur_Lecturer = nullptr;
+	LoadLecturerList(L_list);
+	bool f_first = true;
+	do {
+		if (f_first) f_first = false;
+		else {
+			cout << "Cannot find Lecturer." << endl;
+		}
+		cout << "[- Lecturer ---]";
+		cout << endl << "> "; 
+		cin.getline(tmp, 256);
+		cur_Lecturer = FindLecturer(L_list, tmp);
+	} while (cur_Lecturer == nullptr);
+	strcpy(cur_Course->data.LecturerUser, tmp);
+	strcpy(cur_Course->data.LecturerName, cur_Lecturer->data.fullname);
+	strcpy(cur_Course->data.LecturerDegree, cur_Lecturer->data.degree);
+	cur_Course->data.LecturerGender = cur_Lecturer->data.gender;
+	cout << "[- Start Date -] (dd/mm/yyyy)";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	char* w = strtok(tmp, "/");
+	cur_Course->data.StartDate.Day = char_to_int(w);
+	w = strtok(NULL, "/");
+	cur_Course->data.StartDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.StartDate.Year = char_to_int(w);
+	tmp[0] = '\0';
+	cout << "[- End Date ---] (dd/mm/yyyy)";
+	cout << endl << "> "; 
+	cin.getline(tmp, 256);
+	w = strtok(tmp, "/");
+	cur_Course->data.EndDate.Day = char_to_int(w);
+	w = strtok(NULL, "/");
+	cur_Course->data.EndDate.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.EndDate.Year = char_to_int(w);
+	tmp[0] = '\0';
+	cout << "[- DoW --------] (MON/TUE/WED/THU/FRI/SAT/SUN)";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	strcpy(cur_Course->data.DoW, tmp);
+	cout << "[- Start Hour -] (hh:mm)";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	w = strtok(tmp, " :");
+	cur_Course->data.StartHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.StartHour.m = char_to_int(w);
+	cout << "[- End Hour ---] (hh:mm)";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	w = strtok(tmp, " :");
+	cur_Course->data.EndHour.h = char_to_int(w);
+	w = strtok(NULL, "\n");
+	cur_Course->data.EndHour.m = char_to_int(w);
+	cout << "[- Room -------]";
+	cout << endl << "> ";
+	cin.getline(tmp, 256);
+	strcpy(cur_Course->data.Room, tmp);
+	SaveSchedule(list, AcaYear, Semester, Class);
+
+	// Save to AllCourses.txt
+	char LinkAC[256];
+	strcpy(LinkAC, "Files/Course/");
+	strcat(LinkAC, AcaYear);
+	strcat(LinkAC, "-");
+	strcat(LinkAC, Semester);
+	strcat(LinkAC, "-AllCourses.txt");
+	CourseList* listAC;
+	LoadCourses_txtfile(LinkAC, listAC);
+	CourseList* cur_CourseAC = FindCourse(listAC, Course, Class);
+	strcpy(cur_CourseAC->data.ID, cur_Course->data.ID);
+	strcpy(cur_CourseAC->data.Name, cur_Course->data.Name);
+	strcpy(cur_CourseAC->data.LecturerUser, cur_Course->data.LecturerUser);
+	strcpy(cur_CourseAC->data.LecturerName, cur_Course->data.LecturerName);
+	strcpy(cur_CourseAC->data.LecturerDegree, cur_Course->data.LecturerDegree);
+	cur_CourseAC->data.LecturerGender = cur_Course->data.LecturerGender;
+	cur_CourseAC->data.StartDate = cur_Course->data.StartDate;
+	cur_CourseAC->data.EndDate = cur_Course->data.EndDate;
+	cur_CourseAC->data.StartHour = cur_Course->data.StartHour;
+	/*cur_CourseAC->data.EndHour.h = cur_Course->data.EndHour.h;
+	cur_CourseAC->data.EndHour.m = cur_Course->data.EndHour.m;*/
+	strcpy(cur_CourseAC->data.DoW, cur_Course->data.DoW);
+	cur_CourseAC->data.EndHour = cur_Course->data.EndHour;
+	strcpy(cur_CourseAC->data.Room, cur_Course->data.Room);
+
+	SaveSchedule_AllCourse_Rewrite(listAC, AcaYear, Semester, Class);
+	
+	// Rewrite the Course File
+	char CourseFileRemoved[256];
+	strcpy(CourseFileRemoved, "Files/Course/");
+	strcat(CourseFileRemoved, AcaYear); strcat(CourseFileRemoved, "-");
+	strcat(CourseFileRemoved, Semester);strcat(CourseFileRemoved, "-");
+	strcat(CourseFileRemoved, Class); strcat(CourseFileRemoved, "-");
+	strcat(CourseFileRemoved, Course); strcat(CourseFileRemoved, "-Student.txt");
+	remove(CourseFileRemoved);
+	Create_Course_Student_Single(cur_Course, AcaYear, Semester);
+
+	delete_CourseList(list);
+	delete_CourseList(listAC);
+	delete_LecturerList(L_list);
+
+	cout << endl << "Course edited." << endl;
+	std::system("pause");
+}
+
+void RemoveCourse(char *AcaYear, char* Semester) {
+	std::system("cls");
+	cout << "-Remove Course-" << endl << endl;
+	char Class[10], Course[25];
+	cout << "[- Class -----]";
+	cout << endl << "> ";
+	cin.getline(Class, 10);
+	cout << "[- Course ----]";
+	cout << endl << "> ";
+	cin.getline(Course, 25);
+	char Link[256];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, ".txt");
+	ifstream fin;
+	fin.open(Link);
+	if (!fin.is_open())
+	{
+		cout << "Cannot load courses of class " << Class << "." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* list = nullptr;
+	LoadCourses_txtfile(Link, list);
+	if (list == nullptr)
+	{
+		cout << "No Course available." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* cur_Course = list;
+	CourseList* prev_Course = nullptr;
+	bool flag = false;
+	while (cur_Course != nullptr)
+	{
+		if (strcmp(Course, cur_Course->data.ID) == 0)
+		{
+			flag = true;
+			break;
+		}
+		prev_Course = cur_Course;
+		cur_Course = cur_Course->pNext;
+	}
+	if (flag == false)
+	{
+		cout << "Cannot find Course." << endl;
+		return;
+	}
+	if (prev_Course == nullptr)
+	{
+		list = list->pNext;
+		delete cur_Course;
+	}
+	else
+	{
+		prev_Course->pNext = cur_Course->pNext;
+		delete cur_Course;
+	}
+	fin.close();
+	SaveSchedule(list, AcaYear, Semester, Class);
+	Link[strlen(Link) - 4] = '\0';
+	strcat(Link, "-");
+	strcat(Link, Course);
+	strcat(Link, "-Student.txt");
+
+	// All Course
+	char LinkAC[256];
+	strcpy(LinkAC, "Files/Course/");
+	strcat(LinkAC, AcaYear);
+	strcat(LinkAC, "-");
+	strcat(LinkAC, Semester);
+	strcat(LinkAC, "-AllCourses.txt");
+	ifstream finAC;
+	finAC.open(Link);
+	if (!finAC.is_open())
+	{
+		cout << "Cannot load courses of class " << Class << "." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* listAC = nullptr;
+	LoadCourses_txtfile(LinkAC, listAC);
+	if (listAC == nullptr)
+	{
+		cout << "No Course available." << endl;
+		std::system("pause");
+		return;
+	}
+	CourseList* cur_CourseAC = listAC;
+	CourseList* prev_CourseAC = nullptr;
+	bool flagAC = false;
+	while (cur_CourseAC != nullptr)
+	{
+		if (strcmp(Course, cur_CourseAC->data.ID) == 0)
+		{
+			flagAC = true;
+			break;
+		}
+		prev_CourseAC = cur_CourseAC;
+		cur_CourseAC = cur_CourseAC->pNext;
+	}
+	if (flagAC == false)
+	{
+		cout << "Cannot find Course." << endl;
+		return;
+	}
+	if (prev_CourseAC == nullptr)
+	{
+		listAC = listAC->pNext;
+		delete cur_CourseAC;
+	}
+	else
+	{
+		prev_CourseAC->pNext = cur_CourseAC->pNext;
+		delete cur_CourseAC;
+	}
+	finAC.close();
+	SaveSchedule_AllCourse_Rewrite(listAC, AcaYear, Semester, Class);
+
+	if (remove(Link) == 0) cout << "Course removed.";
+	else cout << "Failed to remove Course.";
+	cout << endl;
+	std::system("pause");
+}
+
+CourseList* FindCourse(CourseList* list, char* Course, char *Class)
+{
+	CourseList* cur = list;
+	while (cur != nullptr)
+	{
+		if ((strcmp(Course, cur->data.ID) == 0) &&
+			(strcmp(Class, cur->data.Class) == 0))
+		{
+			return cur;
+		}
+		cur = cur->pNext;
+	}
+	return nullptr;
+}	 
+
+LecturerList* FindLecturer(LecturerList* list, char* username) //find lecturer by username
+{
+	LecturerList* cur = list;
+	while (cur != nullptr)
+	{
+		if (strcmp(username, cur->data.username) == 0) return cur;
+		cur = cur->pNext;
+	}
+	return nullptr;
 }
 //=========================================================================================
 
@@ -804,14 +1362,14 @@ LecturerList* LoadLecturerNode(ifstream& f)
 {
 	LecturerList* b = nullptr;
 	b = new LecturerList;
-	f.ignore(256, '\n');
 	f.getline(b->data.username, 101);
 	if (b->data.username == NULL) return NULL;
 	f.getline(b->data.password, 101);
 	f.getline(b->data.fullname, 101);
 	f.getline(b->data.dob, 101);
 	f.getline(b->data.degree, 20);
-	f >> b->data.gender;
+	f >> b->data.gender; f.ignore();
+	f.ignore(256, '\n');
 
 	b->pNext = nullptr;
 	return b;
@@ -829,6 +1387,7 @@ void LoadLecturerList(LecturerList*& list)
 	}
 	else
 	{
+		fin.ignore(256, '\n');
 		LecturerList* cur = list;
 		while (!fin.eof())
 		{

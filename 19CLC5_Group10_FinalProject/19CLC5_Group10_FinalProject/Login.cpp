@@ -1859,7 +1859,7 @@ void view_profile_staff(staff a[], int& idx)
 	std::system("pause");
 	Menu_Staff(a, idx);
 }
-	
+
 void changepassword_staff(staff a[], int& idx)
 {
 	std::system("cls");

@@ -1,0 +1,29 @@
+2
+
+CS162
+Introduction to Programming
+19CLC5
+dbtien
+Dinh Ba Tien
+TS
+0
+2020 4 6
+2020 6 1
+MON
+7 30
+11 30
+I32
+
+CM101
+Communication
+19CLC5
+dnvu
+Duong Nguyen Vu
+GS
+0
+2020 4 11
+2020 6 6
+SAT
+13 30
+17 30
+I23
