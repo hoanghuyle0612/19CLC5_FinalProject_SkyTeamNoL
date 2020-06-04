@@ -2,10 +2,12 @@
 // This file is used only to draw icons & animations
 
 #include "Login.h"
+#include "Menu.h"
 
 #define ENDLRANGE 5
 #define SETWIDTH 55
-
+#define IW 14
+#define IH 9
 
 
 //void Icon_Sample() {
@@ -25,7 +27,7 @@
 
 //void Icon_Login() {
 
-//	cout << setw(25) << " ------------- " << endl; // 1
+//	cout << setw(25) << " ------------ " << endl; // 1
 //	cout << setw(25) << "|    ----    |" << endl; // 2
 //	cout << setw(25) << "|   |----|   |" << endl; // 3
 //	cout << setw(25) << "|   |    |   |" << endl; // 4
@@ -36,6 +38,7 @@
 //	cout << setw(25) << " ------------ " << endl; // 9
 //	cout << endl;
 //}
+
 
 //void Icon_Exit() {
 
@@ -295,7 +298,7 @@
 
 //void Icon_Remove() {
 
-	//	cout << setw(25) << 1 " ------------ " << endl; // 1
+//	cout << setw(25) << 1 " ------------ " << endl; // 1
 //	cout << setw(25) << 2 "|            |" << endl; // 2
 //	cout << setw(25) << 3 "|            |" << endl; // 3
 //	cout << setw(25) << 4 "|  ________  |" << endl; // 4

@@ -40,8 +40,8 @@ void loadlecturer(fstream& f, lecturer& b)
 	f.getline(b.password, 101);
 	f.getline(b.fullname, 101);
 	f.getline(b.dob, 101);
+	f.getline(b.degree, 10);
 	f >> b.gender;
-	f >> b.degree;
 	f >> b.type;
 }
 void loadlecturerarray(fstream& f, lecturer b[], int& n)
@@ -129,7 +129,10 @@ void login()
 			{
 				idx = i;
 				f1.close();
-				Draw_WelCome_Lec(b[i].fullname, b[i].degree);
+				int dgr = 0;
+				if (strcmp(b[i].degree, "TS") == 0) dgr = 0;
+				else if (strcmp(b[i].degree, "GS") == 0) dgr = 1;
+				Draw_WelCome_Lec(b[i].fullname, dgr);
 				cin.ignore();
 				Menu_Lecturer(b, idx);
 				return;
@@ -1752,10 +1755,13 @@ void view_profile_lecturer(lecturer b[], int& idx)
 			}
 			else if (i == 7) {
 				cout << " Degree    | ";
+				int dgridx = 0;
+				if (strcmp(b[idx].degree, "TS") == 0) dgridx = 0;
+				else if (strcmp(b[idx].degree, "GS") == 0) dgridx = 1;
 				char dgrtemp[2][11] = { "Doctor", "Professor" };
-				cout << dgrtemp[b[idx].degree];
+				cout << dgrtemp[dgridx];
 				for (int j = 0; j < bsize - 14
-					- strlen(dgrtemp[b[idx].degree]) - 1; j++) {
+					- strlen(dgrtemp[dgridx]) - 1; j++) {
 					cout << " ";
 				}
 				cout << "|";

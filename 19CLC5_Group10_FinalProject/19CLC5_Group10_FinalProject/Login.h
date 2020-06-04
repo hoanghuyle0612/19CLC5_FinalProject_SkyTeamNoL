@@ -21,7 +21,7 @@ struct lecturer {
 	char dob[20];
 	int gender;
 	int type;
-	int degree;
+	char degree[10];
 };
 
 struct student {
