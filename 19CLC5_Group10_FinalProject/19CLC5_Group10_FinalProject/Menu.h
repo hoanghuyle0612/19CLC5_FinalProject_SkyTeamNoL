@@ -11,6 +11,4 @@ void Menu_Main();
 
 void Menu_Staff(staff a[], int& idx);
 
-void Draw_WelCome();
-
 #endif

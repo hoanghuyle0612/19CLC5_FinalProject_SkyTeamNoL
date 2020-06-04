@@ -1295,6 +1295,76 @@ LecturerList* FindLecturer(LecturerList* list, char* username) //find lecturer b
 //=========================================================================================
 
 
+//   STUDENT
+//=========================================================================================
+
+void RemoveStudentFromCourse(char* AcaYear, char* Semester)
+{
+	std::system("cls");
+	cout << "-Remove Student From Course-" << endl << endl;
+	char StudentID[10], Class[10], CourseID[10], tmp[256];
+	cout << "[- Class ------]";
+	cout << endl << "> ";
+	cin.getline(Class, 10);
+	cout << "[- Course -----]";
+	cout << endl << "> ";
+	cin.getline(CourseID, 10);
+	cout << "[- Student ID -]";
+	cout << endl << "> ";
+	cin.getline(StudentID, 10);
+	char Link[256];
+	strcpy(Link, "Files/Course/");
+	strcat(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	strcat(Link, "-");
+	strcat(Link, CourseID);
+	strcat(Link, "-Student.txt");
+	fstream f;
+	f.open(Link, ios::in | ios::out);
+	if (!f.is_open())
+	{
+		cout << "Cannot load student list." << endl;
+		std::system("pause");
+		return;
+	}
+	bool flag = false;
+	int n; f >> n; f.ignore();
+	while (!f.eof())
+	{
+		f.getline(tmp, 256);
+		if (strcmp(tmp, StudentID) == 0)
+		{
+			flag = true;
+			break;
+		}
+	}
+	if (flag == false)
+	{
+		cout << "Cannot find student." << endl;
+		std::system("pause");
+		f.close();
+		return;
+	}
+
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	f.ignore(256, '\n');
+	int pos = f.tellg();
+	f.seekp(pos, ios::beg);
+	f << 0;
+	f.seekp(0, ios::beg);
+	f << n - 1;
+	if (flag == true) cout << "Student removed successfully." << endl;
+	else cout << "Student removal failed." << endl;
+	f.close();
+	std::system("pause");
+}
+
+
 
 //   DATE HANDLE FUNCTION
 //=====================================================================================

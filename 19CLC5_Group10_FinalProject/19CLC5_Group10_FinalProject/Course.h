@@ -107,6 +107,11 @@ void delete_CourseList(CourseList*& list);
 void delete_LecturerList(LecturerList*& list);
 //=====================================================================================
 
+//  COURSE STUDENT FUNCTION
+//===============================================
+void RemoveStudentFromCourse(char* AcaYear, char* Semester);
+//===============================================
+
 
 //  DATE FUNCTION
 //===============================================

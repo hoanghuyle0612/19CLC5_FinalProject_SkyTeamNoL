@@ -1,4 +1,4 @@
-2
+4
 
 CS162
 Introduction to Programming
@@ -27,3 +27,31 @@ SAT
 13 30
 17 30
 I23
+
+CS166
+Introduction to Programming
+19CLC3
+dbtien
+Dinh Ba Tien
+TS
+0
+2020 4 7
+2020 6 9
+TUE
+7 30
+11 30
+I41
+
+CM047
+Communication
+19CLC3
+dnvu
+Duong Nguyen Vu
+GS
+0
+2020 4 10
+2020 6 5
+FRI
+13 30
+15 30
+I52

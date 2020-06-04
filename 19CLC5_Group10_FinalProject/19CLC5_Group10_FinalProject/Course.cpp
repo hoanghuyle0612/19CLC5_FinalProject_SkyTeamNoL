@@ -1295,7 +1295,7 @@ void Advance_ShowAttList(string YearSem) {
 		return;
 	}
 	std::system("cls");
-	cout << fName.substr(14, fName.length() - 14 - 1)
+	cout << fName.substr(27, fName.length() - 27 - 1)
 		<< "\t Attendance List" << endl << endl;
 
 	ifstream fin; fin.open(fNameStu + ".txt");
@@ -1370,7 +1370,7 @@ void Advance_ShowCourse(string YearSem) {
 		return;
 	}
 	std::system("cls");
-	cout << fName.substr(14, fName.length() - 14 - 1)
+	cout << fName.substr(27, fName.length() - 27 - 1)
 		<< "\t Student List" << endl << endl;
 	ShowCourse(stuHead, n);
 	cout << endl;
