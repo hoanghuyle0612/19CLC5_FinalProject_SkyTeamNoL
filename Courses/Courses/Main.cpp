@@ -8,7 +8,8 @@ int main()
 
 	char AcaYear[] = "2019-2020", Semester[] = "HK2";
 	char Class[] = "18APCS1";
-	RemoveStudentFromCourse(AcaYear, Semester, Class);
+	AddAStudentToCourse(AcaYear, Semester);
+	/*RemoveStudentFromCourse(AcaYear, Semester, Class);*/
 
 	/*CourseList* list = NULL;
 	AddCourse(AcaYear, Semester);*/

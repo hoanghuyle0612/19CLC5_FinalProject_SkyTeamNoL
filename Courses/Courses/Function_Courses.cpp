@@ -21,8 +21,10 @@ StudentList* CreateStudentNode(ifstream& f)
 	temp->data.DoB.Day = char_to_int(w);
 	w = strtok(NULL, " \n");
 	temp->data.DoB.Year = char_to_int(w);
-	f >> temp->data.Status;
+	f >> temp->data.Gender;
 	f.ignore(100, '\n');
+	f >> temp->data.Status;
+
 
 	temp->pNext = nullptr;
 	return temp;
@@ -795,6 +797,148 @@ void RemoveACourse(char* AcaYear, char* Semester, char* Class)
 	strcat(Link, CourseID);
 	strcat(Link, "-Student.txt");
 	if (remove(Link)) cout << "Remove Course successfully." << endl;
+}
+
+char* CreateLinkCourse_Stu(char* AcaYear, char* Semester, char* Class,char* CourseID)  // create link, if there isnt courseid in link type 0
+{
+	char* Link;
+	Link = new char[strlen(AcaYear) + strlen(Semester) + strlen(Class) + 5];
+	strcpy(Link, AcaYear);
+	strcat(Link,"-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	if (CourseID != NULL)
+	{
+		strcat(Link, "-");
+		strcat(Link, CourseID);
+		strcat(Link, "-Student.txt");
+	}else
+	strcat(Link, ".txt");
+	return Link;
+}
+
+void AddAStudentToCourse(char* AcaYear, char* Semester)
+{
+	char StudentID[10], CourseID[10];
+	cout << "Enter Student's ID:\n\t>"; cin.getline(StudentID, 10);
+	StudentList* curStudent = FindStudent(StudentID);
+	if (curStudent == nullptr)
+	{
+		cout << "Student does not exist." << endl;
+		return;
+	}
+	cout << "Enter Course's ID: \n\t>"; cin.getline(CourseID, 10);
+	char Class[10];
+	cout << "Enter Class: \n\t>"; cin.getline(Class, 10);
+	CourseList* list = nullptr;
+	fstream f;
+	LoadCourses_txtfile(CreateLinkCourse_Stu(AcaYear, Semester, Class, 0), list);
+	CourseList* cur_Course = list;
+	while (cur_Course != nullptr)
+	{
+		if (strcmp(cur_Course->data.ID, CourseID) == 0) break;
+		cur_Course = cur_Course->pNext;
+	}
+
+	f.open(CreateLinkCourse_Stu(AcaYear, Semester, Class, CourseID), ios::in | ios::out);
+	if (!f.is_open())
+	{
+		cout << "Cannot open file 1." << endl;
+		return;
+	}
+	int cnt = 0;
+	char tmp[256];
+	while (!f.eof())
+	{
+		f.getline(tmp, 256);
+		if (strcmp(tmp, "-") == 0) cnt++;
+	}
+	f.seekp(0, ios::beg);
+	f << cnt++;
+	f.seekg(0, ios::end);
+	f << endl;
+	f << curStudent->data.ID << endl;
+	f << curStudent->data.Pwd << endl;
+	f << curStudent->data.Name << endl;
+	f << curStudent->data.DoB.Year << " " << curStudent->data.DoB.Month << " " << curStudent->data.DoB.Day << endl;
+	f << curStudent->data.Class << endl;
+	f << curStudent->data.Status << endl;
+	f << -1 << endl;    //midterm
+	f << -1 << endl;	//final
+	f << -1 << endl;	//bonus
+	f << -1 << endl;	//total
+	Date tmp_day = cur_Course->data.StartDate;
+	Hour Start_Hour = cur_Course->data.StartHour;
+	Hour End_Hour = cur_Course->data.EndHour;
+	for (int i = 0; i < 10; i++)
+	{
+		f << tmp_day.Year << " " << tmp_day.Month << " " << tmp_day.Day << " " << Start_Hour.h
+			<< " " << Start_Hour.m << " " << End_Hour.h << " " << End_Hour.m << " " << -1 << endl;
+		tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
+	}
+	f << "-";
+	f.close();
+	delete_CourseList(list);
+	delete curStudent;
+}
+
+StudentList* FindStudent(char* StudentID)
+{
+	StudentList* list = nullptr;
+	ifstream fi;
+	fi.open("student.txt");
+	if (!fi.is_open())
+	{
+		cout << "Cannot open file 2." << endl;
+		return nullptr;
+	}
+	int n;
+	fi >> n;
+	StudentList* cur = list;
+	for (int i = 0; i < n; i++)
+	{
+		if (cur == nullptr)
+		{
+			StudentList* p = CreateStudentNode(fi);
+			list = p;
+			cur = list;
+
+		}
+		else if (cur != nullptr)
+		{
+			StudentList* temp = CreateStudentNode(fi);
+			cur->pNext = temp;
+			cur = cur->pNext;
+		}
+	}
+	fi.close();
+	cur = list;
+	while (cur != nullptr)
+	{
+		if (strcmp(StudentID, cur->data.ID) == 0) {
+			break;
+		}
+		cur = cur->pNext;
+	}
+	if (cur == nullptr)
+	{
+		cout << "cannot find student." << endl;
+		return nullptr;
+	}
+	StudentList* curStudent = new StudentList;
+	strcpy(curStudent->data.ID, cur->data.ID);
+	strcpy(curStudent->data.Pwd, cur->data.Pwd);
+	strcpy(curStudent->data.Name, cur->data.Name);
+	strcpy(curStudent->data.MSSV, cur->data.MSSV);
+	strcpy(curStudent->data.Class, cur->data.Class);
+	curStudent->data.DoB = cur->data.DoB;
+	curStudent->data.Gender = cur->data.Gender;
+	curStudent->data.Status = cur->data.Status;
+	curStudent->pNext = nullptr;
+	delete_StudentList(list);
+	return curStudent;
+
 }
 
 //=========================================================================================

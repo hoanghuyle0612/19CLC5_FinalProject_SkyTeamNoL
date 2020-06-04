@@ -42,6 +42,7 @@ struct Student {
 	char MSSV[10];
 	Date DoB;
 	char Class[10];
+	int Gender;
 	int Status; 
 };				
 
@@ -94,7 +95,8 @@ void EditCourse(char* AcaYear, char* Semester);
 CourseList* FindCourse(CourseList* list, char* Course);
 void RemoveStudentFromCourse(char* AcaYear, char* Semeste,char* Class);
 void RemoveACourse(char* AcaYear, char* Semester, char* Class);
-
+char* CreateLinkCourse_Stu(char* AcaYear, char* Semester, char* Class, char* CourseID);
+void AddAStudentToCourse(char* AcaYear, char* Semester);
 //=====================================================================================
 
 
@@ -109,7 +111,7 @@ void LoadStudentList(StudentList*& list, char* Class);
 int StudentCount(StudentList* list);
 void delete_StudentList(StudentList*& list);
 StudentList* Load_Stu_Node_FromCourse(ifstream& f);
-
+StudentList* FindStudent(char* StudentID);
 
 LecturerList* LoadLecturerNode(ifstream& f);
 void LoadLecturerList(LecturerList*& list);
