@@ -97,6 +97,11 @@ void RemoveStudentFromCourse(char* AcaYear, char* Semeste,char* Class);
 void RemoveACourse(char* AcaYear, char* Semester, char* Class);
 char* CreateLinkCourse_Stu(char* AcaYear, char* Semester, char* Class, char* CourseID);
 void AddAStudentToCourse(char* AcaYear, char* Semester);
+
+
+
+void CreateLecturer();
+
 //=====================================================================================
 
 

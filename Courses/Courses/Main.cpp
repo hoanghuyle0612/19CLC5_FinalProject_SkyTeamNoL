@@ -3,12 +3,10 @@
 #include <vector>
 int main()
 {
-
-
-
-	char AcaYear[] = "2019-2020", Semester[] = "HK2";
-	char Class[] = "18APCS1";
-	AddAStudentToCourse(AcaYear, Semester);
+	CreateLecturer();
+	//char AcaYear[] = "2019-2020", Semester[] = "HK2";
+	//char Class[] = "18APCS1";
+	//AddAStudentToCourse(AcaYear, Semester);
 	/*RemoveStudentFromCourse(AcaYear, Semester, Class);*/
 
 	/*CourseList* list = NULL;

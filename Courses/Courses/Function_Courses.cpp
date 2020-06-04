@@ -941,6 +941,105 @@ StudentList* FindStudent(char* StudentID)
 
 }
 
+
+void CreateLecturer()
+{
+	char tmp[256], * Lec_Name, * Lec_Degree, Lec_Username[20], Lec_Pwd[20];
+	int Lec_Gender;
+	Date Lec_DoB;
+	cout << "Enter lecturer's name: \n  >"; cin.getline(tmp, 256);
+	Lec_Name = new char[strlen(tmp)];
+	strcpy(Lec_Name, tmp);
+	fstream f;
+	f.open("lecturer.txt", ios::in | ios::out);
+	int nLecturer = 0;
+	if (!f.is_open())
+	{
+		f.open("lecturer.txt", ios::out);
+	}
+	else {
+		bool flag = false;
+		f >> nLecturer;
+		if (nLecturer != 0) {
+			while (!f.eof())
+			{
+				f.getline(tmp, 256);
+				if (strcmp(tmp, Lec_Name) == 0)
+				{
+					flag = true;
+					break;
+				}
+			}
+			if (flag == true)
+			{
+				cout << "Lecturer already exists." << endl;
+				return;
+			}
+		}
+	}
+	int spacecnt = 0, lastspace_idx = 0;
+	strcpy(tmp, Lec_Name);
+	for (int i = 0; i < strlen(tmp); i++)
+	{
+		if (tmp[i] == ' ')
+		{
+			lastspace_idx = i;
+			spacecnt++;
+		}
+	}
+	char* w = strtok(tmp, " ");
+	Lec_Username[0] = w[0] + 32;
+	int cur_char = 0;
+	int idx = 0;
+	idx += strlen(w);
+	while (idx <= lastspace_idx)
+	{
+		w = strtok(NULL, " \n");
+		if (idx < lastspace_idx)
+		{
+			cur_char++;
+			Lec_Username[cur_char] = w[0] + 32;
+			idx += strlen(w) + 1;
+		}
+		else {
+			cur_char++;
+			Lec_Username[cur_char] = '\0';
+			strcat(Lec_Username, w);
+			Lec_Username[cur_char] = w[0] + 32;
+			idx += strlen(w);
+		}
+	}
+	strcpy(Lec_Pwd, Lec_Username);
+	cout << "Enter lecturer's date of birth (dd/mm/yyyy): \n  >"; cin.getline(tmp, 256);
+	w = strtok(tmp, " /");
+	Lec_DoB.Day = char_to_int(w);
+	w = strtok(NULL, " /");
+	Lec_DoB.Month = char_to_int(w);
+	w = strtok(NULL, "\n");
+	Lec_DoB.Year = char_to_int(w);
+	cout << "Enter lecturer's degree:\n  >"; cin.getline(tmp, 256);
+	Lec_Degree = new char[strlen(tmp)];
+	strcpy(Lec_Degree, tmp);
+	cout << "Enter lecturer's gender (0 - Female / 1 - Male): \n  >"; cin >> Lec_Gender;
+	cin.ignore(100, '\n');
+	f.seekg(0, ios::end);
+	f.seekp(0, ios::beg);
+	f << ++nLecturer;
+	f.seekp(0, ios::end);
+	f << endl;
+	f << Lec_Username << endl;
+	f << Lec_Pwd << endl;
+	f << Lec_Name << endl;
+	if (Lec_DoB.Day < 10) f << "0" << Lec_DoB.Day << " ";
+	else f << Lec_DoB.Day << " ";
+	if (Lec_DoB.Month < 10) f << "0" << Lec_DoB.Month << " ";
+	else f << Lec_DoB.Month << " ";
+	f << Lec_DoB.Year << endl;
+	f << Lec_Degree << endl;
+	f << Lec_Gender;
+	f.close();
+}
+
 //=========================================================================================
 
 
