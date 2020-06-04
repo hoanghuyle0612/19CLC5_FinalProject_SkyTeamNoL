@@ -109,6 +109,7 @@ void delete_LecturerList(LecturerList*& list);
 
 //  COURSE STUDENT FUNCTION
 //===============================================
+void AddAStudentToCourse(char* AcaYear, char* Semester);
 void RemoveStudentFromCourse(char* AcaYear, char* Semester);
 //===============================================
 
@@ -125,6 +126,8 @@ int StudentCount(StudentList* list);
 
 int char_to_int(char* s);
 
+
+void delete_StudentList(StudentList*& list);
 
 
 //A.STAFF & LECTURER (Course.cpp)

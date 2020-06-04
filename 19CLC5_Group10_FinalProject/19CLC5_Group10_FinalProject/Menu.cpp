@@ -1244,6 +1244,9 @@ void Menu_Staff_Course_Student(staff a[], int& idx) {
 	string YearSem_str(YearSem);
 
 	switch (ptr) {
+	case 0:
+		AddAStudentToCourse(AcaYear, Semester);
+		break;
 	case 1:
 		RemoveStudentFromCourse(AcaYear, Semester);
 		break;

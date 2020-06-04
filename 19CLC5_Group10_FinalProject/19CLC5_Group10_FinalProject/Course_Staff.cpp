@@ -1298,6 +1298,84 @@ LecturerList* FindLecturer(LecturerList* list, char* username) //find lecturer b
 //   STUDENT
 //=========================================================================================
 
+char* CreateLinkCourse_Stu(char* AcaYear, char* Semester, char* Class, char* CourseID)  // create link, if there isnt courseid in link type 0
+{
+	char* Link;
+	Link = new char[strlen(AcaYear) + strlen(Semester) + strlen(Class) + 5];
+	strcpy(Link, AcaYear);
+	strcat(Link, "-");
+	strcat(Link, Semester);
+	strcat(Link, "-");
+	strcat(Link, Class);
+	if (CourseID != NULL)
+	{
+		strcat(Link, "-");
+		strcat(Link, CourseID);
+		strcat(Link, "-Student.txt");
+	}
+	else
+		strcat(Link, ".txt");
+	return Link;
+}
+
+StudentList* FindStudent(char* StudentID)
+{
+	StudentList* list = nullptr;
+	ifstream fi;
+	fi.open("student.txt");
+	if (!fi.is_open())
+	{
+		cout << "Cannot open file 2." << endl;
+		return nullptr;
+	}
+	int n;
+	fi >> n;
+	StudentList* cur = list;
+	for (int i = 0; i < n; i++)
+	{
+		if (cur == nullptr)
+		{
+			StudentList* p = CreateStudentNode(fi);
+			list = p;
+			cur = list;
+
+		}
+		else if (cur != nullptr)
+		{
+			StudentList* temp = CreateStudentNode(fi);
+			cur->pNext = temp;
+			cur = cur->pNext;
+		}
+	}
+	fi.close();
+	cur = list;
+	while (cur != nullptr)
+	{
+		if (strcmp(StudentID, cur->data.ID) == 0) {
+			break;
+		}
+		cur = cur->pNext;
+	}
+	if (cur == nullptr)
+	{
+		cout << "cannot find student." << endl;
+		return nullptr;
+	}
+	StudentList* curStudent = new StudentList;
+	strcpy(curStudent->data.ID, cur->data.ID);
+	strcpy(curStudent->data.Pwd, cur->data.Pwd);
+	strcpy(curStudent->data.Name, cur->data.Name);
+	strcpy(curStudent->data.MSSV, cur->data.MSSV);
+	strcpy(curStudent->data.Class, cur->data.Class);
+	curStudent->data.DoB = cur->data.DoB;
+	curStudent->data.Gender = cur->data.Gender;
+	curStudent->data.Status = cur->data.Status;
+	curStudent->pNext = nullptr;
+	delete_StudentList(list);
+	return curStudent;
+
+}
+
 void RemoveStudentFromCourse(char* AcaYear, char* Semester)
 {
 	std::system("cls");
@@ -1364,6 +1442,109 @@ void RemoveStudentFromCourse(char* AcaYear, char* Semester)
 	std::system("pause");
 }
 
+void AddAStudentToCourse(char* AcaYear, char* Semester)
+{
+	std::system("cls");
+	cout << "-Add Student to Course-" << endl << endl;
+	char StudentID[10], CourseID[10];
+	cout << "[- Student ID ---]"; 
+	cout << endl << "> ";
+	cin.getline(StudentID, 10);
+	StudentList* curStudent = FindStudent(StudentID);
+	if (curStudent == nullptr)
+	{
+		cout << "Student does not exist." << endl;
+		std::system("pause");
+		return;
+	}
+	char Class[10];
+	cout << "[- Class --------]";
+	cout << endl << "> ";
+	cin.getline(Class, 10);
+	cout << "[- Course ID ----]";
+	cout << endl << "> ";
+	cin.getline(CourseID, 10);
+	CourseList* list = nullptr;
+	fstream f;
+	char f_Link[256] = { "Files/Course/" };
+	char f_Link_AC[256];
+	strcpy(f_Link_AC, f_Link);
+	strcat(f_Link_AC, AcaYear);	strcat(f_Link_AC, "-");
+	strcat(f_Link_AC, Semester);
+	strcat(f_Link_AC, "-AllCourses.txt");
+	strcat(f_Link, CreateLinkCourse_Stu(AcaYear, Semester, Class, CourseID));
+	
+	ifstream fin;
+	fin.open(f_Link);
+	if (!fin.is_open()) {
+		cout << "Cannot add Student to Course." << endl;
+		std::system("pause");
+		return;
+	}
+	int AttDayNo = CourseAttDay(fin) - 11;
+	fin.close();
+	LoadCourses_txtfile(f_Link_AC, list);
+	CourseList* cur_Course = list;
+	while (cur_Course->pNext != nullptr)
+	{
+		if (strcmp(cur_Course->data.ID, CourseID) == 0) break;
+		cur_Course = cur_Course->pNext;
+	}
+	int cnt = 0;
+	fin.open(f_Link);
+	fin >> cnt;
+	fin.close();
+	f.open(f_Link, ios::in | ios::out);
+	if (!f.is_open())
+	{
+		cout << "Cannot open file." << endl;
+		return;
+	}
+	/*char tmp[256];
+	while (!f.eof())
+	{
+		f.getline(tmp, 256);
+		if (strcmp(tmp, "-") == 0) cnt++;
+	}*/
+	f.seekp(0, ios::beg);
+	f << cnt + 1;
+	f.close();
+	/*f.seekp(0, ios::end);*/
+	ofstream fout;
+	fout.open(f_Link, ios::app);
+	if (!fout.is_open()) {
+		cout << "Cannot add Student to Course." << endl;
+		std::system("pause");
+		return;
+	}
+	fout << endl;
+	fout << curStudent->data.ID << endl;
+	fout << curStudent->data.Pwd << endl;
+	fout << curStudent->data.Name << endl;
+	fout << curStudent->data.DoB.Year << " " << curStudent->data.DoB.Month << " " << curStudent->data.DoB.Day << endl;
+	fout << curStudent->data.Class << endl;
+	fout << curStudent->data.Status << endl;
+	fout << -1 << endl;    //midterm
+	fout << -1 << endl;	//final
+	fout << -1 << endl;	//bonus
+	fout << -1 << endl;	//total
+	Date tmp_day = cur_Course->data.StartDate;
+	Hour Start_Hour = cur_Course->data.StartHour;
+	Hour End_Hour = cur_Course->data.EndHour;
+	for (int i = 0; i < AttDayNo; i++)
+	{
+		fout << tmp_day.Year << " " << tmp_day.Month << " " << tmp_day.Day << " " << Start_Hour.h
+			<< " " << Start_Hour.m << " " << End_Hour.h << " " << End_Hour.m << " " << -1 << endl;
+		tmp_day = PlusDay(tmp_day, 7);   // change day to next week date
+	}
+	fout << "-";
+	/*f.close();*/
+	fout.close();
+	delete_CourseList(list);
+	delete curStudent;
+	cout << "Student added to Course successfully." << endl;
+	std::system("pause");
+}
 
 
 //   DATE HANDLE FUNCTION

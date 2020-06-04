@@ -270,9 +270,11 @@ void SaveEdit(Student_Course* stuHead, int n, string fName) {
 				fout << dcur->pre << endl;
 				dcur = dcur->dNext;
 			}
-			fout << "-" << endl;
-			if (i < n - 1)
+			fout << "-";
+			if (i < n - 1) {
+				fout << endl;
 				stucur = stucur->stuNext;
+			}
 		}
 		fout.close();
 	}
