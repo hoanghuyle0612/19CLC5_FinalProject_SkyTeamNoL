@@ -122,6 +122,35 @@ void LoadStudentList(StudentList*& list, char* Class)
 //	fout.close();
 //}
 
+AcY* GetAcaYear(ifstream &fin) {
+	AcY* ay = new AcY;
+	fin >> ay->Year >> ay->Sem;
+	ay->yNext = nullptr;
+	fin.ignore();
+	return ay;
+}
+
+void GetAcaYearList(ifstream &fin, AcY*& ayHead) {
+	AcY* ay = GetAcaYear(fin);
+	ayHead = ay;
+	AcY* aycur = ay;
+	while (!fin.eof()) {
+		ay = GetAcaYear(fin);
+		aycur->yNext = ay;
+		aycur = aycur->yNext;
+	}
+}
+
+void DelAcaYearList(AcY*& ayHead) {
+	AcY* aycur = ayHead;
+	while (aycur != nullptr) {
+		AcY* aydel = aycur;
+		aycur = aycur->yNext;
+		delete aydel;
+	}
+	ayHead = nullptr;
+}
+
 void CreateAcaYear() {
 	std::system("cls");
 	cout << "-Create Academic Year-" << endl << endl;
@@ -129,34 +158,40 @@ void CreateAcaYear() {
 	cout << "[- Academic Year (XXXX-XXXX) -]";
 	cout << endl << "> ";
 	cin.getline(AcaYear, 20);
-	while (AcaYear[4] != ' ') {
+	while (AcaYear[4] != '-') {
 		cout << "Invalid input." << endl;
 		cout << "> "; cin.getline(AcaYear, 20);
 	}
+	char Semester[10];
+	cout << "[- Semester (HKX) ------------]";
+	cout << endl << "> ";
+	cin.getline(Semester, 10);
 	ifstream fin("Semester.txt");
 	if (!fin.is_open()) {
 		cout << "Cannot create Academic Year." << endl;
 		std::system("pause");
 		return;
 	}
-	int n; fin >> n;
+	int n; fin >> n; fin.ignore();
+	AcY* ayHead = nullptr;
+	GetAcaYearList(fin, ayHead);
 	fin.close();
-	char Semester[10];
-	cout << "[- Semester (HKX) ------------]";
-	cout << endl << "> ";
-	cin.getline(Semester, 10);
 	ofstream fout;
-	fout.open("Semester.txt", ios::app);
+	fout.open("Semester.txt");
 	if (!fout.is_open()) {
 		cout << "Cannot create Academic Year." << endl;
 		std::system("pause");
 		return;
 	}
-	fout << endl;
+	fout << n + 1 << endl;
+	AcY* aycur = ayHead;
+	while (aycur != nullptr) {
+		fout << aycur->Year << endl << aycur->Sem << endl;
+		aycur = aycur->yNext;
+	}
 	fout << AcaYear << endl << Semester;
-	fout.seekp(0, ios::beg);
-	fout << n + 1;
 	fout.close();
+	DelAcaYearList(ayHead);
 	cout << endl << "Academic Year created successfully." << endl << endl;
 	cout << "[- Set as current Semester? --]";
 	int color[] = { 15, 11 };
@@ -166,12 +201,22 @@ void CreateAcaYear() {
 	while (KeyPressed != 13) {
 		cls();
 
+		cout << "-Create Academic Year-" << endl << endl;
+		cout << "[- Academic Year (XXXX-XXXX) -]";
+		cout << endl << "> " << AcaYear << endl;
+		cout << "[- Semester (HKX) ------------]";
+		cout << endl << "> " << Semester << endl;
+		cout << endl << "Academic Year created successfully." << endl << endl;
+		cout << "[- Set as current Semester? --]" << endl;
+
 		SetColor(color, i[0]);
 		if (ptr == 0) cout << "> "; else cout << "  ";
 		cout << "Yes";
+		cout << "\t";
 		SetColor(color, i[1]);
 		if (ptr == 1) cout << "> "; else cout << "  ";
 		cout << "No";
+		cout << endl;
 
 		KeyPressed = _getch();
 		fflush(stdin);

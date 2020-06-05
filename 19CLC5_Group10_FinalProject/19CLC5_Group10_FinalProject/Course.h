@@ -84,6 +84,11 @@ struct LecturerList {
 	LecturerList* pNext;
 };
 
+struct AcY {
+	string Year, Sem;
+	AcY* yNext;
+};
+
 // COURSE FUNCTIONS
 //====================================================================================
 //void CoursesManagement();

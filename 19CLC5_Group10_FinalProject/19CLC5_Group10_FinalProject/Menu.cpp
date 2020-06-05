@@ -15,6 +15,7 @@ void Menu_Staff_Scoreboard(staff a[], int& idx, string YearSem);
 void Menu_Staff_AttList(staff a[], int& idx, string YearSem);
 void Menu_Lecturer_Advance(lecturer b[], int& idx);
 void Menu_Student_Advance(student c[], int& idx);
+void Menu_Staff_AcaYear(staff a[], int& idx);
 
 void SetColor(int color[], int i) {
 	if (i == 1)
@@ -902,6 +903,9 @@ void Menu_Staff_Course(staff a[], int& idx) {
 	case 4:
 		Menu_Staff_Advance(a, idx);
 		break;
+	case 0:
+		Menu_Staff_AcaYear(a, idx);
+		break;
 	case 1:
 		Menu_Staff_Course_Course(a, idx);
 		break;
@@ -1642,6 +1646,7 @@ void Menu_Staff_AcaYear(staff a[], int& idx) {
 		break;
 
 	}
+	if (ptr != 4) Menu_Staff_AcaYear(a, idx);
 }
 
 

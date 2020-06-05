@@ -696,13 +696,13 @@ void edit_existing_student(staff a[], int& idx)
 	int gender;
 	cout << "[- ID -------------------------] ";
 	cout << endl << "> ";  cin >> id;
-	cin.ignore();
+	/*cin.ignore();
 	cout << "[- Full name ------------------] ";
 	cout << endl << "> ";  cin.getline(fullname, 101);
 	cout << "[- Date of Birth (dd/mm/yyyy) -] ";
 	cout << endl << "> ";  cin.getline(dob, 16);
 	cout << "[- Gender (0 - F | 1 - M) -----] ";
-	cout << endl << "> ";  cin >> gender;
+	cout << endl << "> ";  cin >> gender;*/
 	/*cout << "You want to edit this student? Yes(1) or no(2)?" << endl;
 	cout << "Enter your choice: "; cin >> choice;
 	if (choice == 1)
