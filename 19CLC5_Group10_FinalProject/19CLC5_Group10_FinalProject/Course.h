@@ -122,6 +122,11 @@ void ViewAcaYear();
 void DeleteAcaYear();
 
 
+//  COURSE LECTURER FUNCTION
+//===============================================
+void CreateLecturer();
+
+
 //  COURSE STUDENT FUNCTION
 //===============================================
 void AddAStudentToCourse(char* AcaYear, char* Semester);

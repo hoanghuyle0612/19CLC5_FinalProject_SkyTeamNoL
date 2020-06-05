@@ -16,6 +16,7 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem);
 void Menu_Lecturer_Advance(lecturer b[], int& idx);
 void Menu_Student_Advance(student c[], int& idx);
 void Menu_Staff_AcaYear(staff a[], int& idx);
+void Menu_Staff_Course_Lecturer(staff a[], int& idx);
 
 void SetColor(int color[], int i) {
 	if (i == 1)
@@ -909,6 +910,9 @@ void Menu_Staff_Course(staff a[], int& idx) {
 	case 1:
 		Menu_Staff_Course_Course(a, idx);
 		break;
+	case 2:
+		Menu_Staff_Course_Lecturer(a, idx);
+		break;
 	case 3:
 		Menu_Staff_Course_Student(a, idx);
 		break;
@@ -1658,6 +1662,161 @@ void Menu_Staff_AcaYear(staff a[], int& idx) {
 	if (ptr != 4) Menu_Staff_AcaYear(a, idx);
 }
 
+void Menu_Staff_Course_Lecturer(staff a[], int& idx) {
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
+	int i[] = { 1, 0, 0, 0, 0 };
+	int ptr = 0;
+	int width = 21;
+	int last = 4;
+	int KeyPressed = 0;
+
+	while (KeyPressed != 13) {
+		cls();
+
+		cout << setw(57) << "-ACADEMIC STAFF - COURSE-" << endl;
+		cout << endl;
+
+		// Don't open, unless it's for editing buttons
+
+		{
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 1.1
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ "; // 1.2
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ "; // 1.3
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|    ----    |"; // 2.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|    ----    |"; // 2.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|    ----    |"; // 2.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|    ----    |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|   |---(+)  |"; // 3.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|   |---(^)  |"; // 3.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|   |---(-)  |"; // 3.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|   |---(=)  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|   |    |   |"; // 4.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|   |    |   |"; // 4.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|   |    |   |"; // 4.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|   |    |   |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|    \\  /    |"; // 5.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|    \\  /    |"; // 5.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|    \\  /    |"; // 5.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|    \\  /    |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|   /|  |\\   |"; // 6.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|   /|  |\\   |"; // 6.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|   /|  |\\   |"; // 6.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|   /|  |\\   |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|  | |\\/| |  |"; // 7.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  | |\\/| |  |"; // 7.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|  | |\\/| |  |"; // 7.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  | |\\/| |  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|  | |||| |  |"; // 8.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  | |||| |  |"; // 8.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|  | |||| |  |"; // 8.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  | |||| |  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 9.1
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ "; // 9.2
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ "; // 9.3
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ADD LECTURER ";
+			SetColor(color, i[1]);
+			cout << setw(width) << "UPDATE LECTURER";
+			SetColor(color, i[2]);
+			cout << setw(width) << "REMOVE LECTURER";
+			SetColor(color, i[3]);
+			cout << setw(width) << "VIEW LECTURERS" << endl;
+			SetColor(color, i[0]);
+		}
+		cout << endl;
+		{
+			SetColor(color, i[4]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|  <=======  |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			cout << setw(width) << "     BACK     " << endl;
+		}
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 72 || KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr >= 4) ptr -= 4;
+			else ptr = 4;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	switch (ptr) {
+	case 4:
+		Menu_Staff_Advance(a, idx);
+		break;
+	case 0:
+		CreateLecturer();
+		break;
+
+	}
+	if (ptr != 4) Menu_Staff_Course_Lecturer(a, idx);
+}
 
 
 void Menu_EditScore(Student_Course*& stu, int n) {
