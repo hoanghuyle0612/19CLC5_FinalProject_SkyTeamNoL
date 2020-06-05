@@ -117,6 +117,8 @@ void delete_LecturerList(LecturerList*& list);
 //===============================================
 void SetColor(int color[], int i);
 void CreateAcaYear();
+void UpdateAcaYear();
+void ViewAcaYear();
 
 
 //  COURSE STUDENT FUNCTION

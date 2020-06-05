@@ -131,6 +131,7 @@ AcY* GetAcaYear(ifstream &fin) {
 }
 
 void GetAcaYearList(ifstream &fin, AcY*& ayHead) {
+	fin.ignore(2);
 	AcY* ay = GetAcaYear(fin);
 	ayHead = ay;
 	AcY* aycur = ay;
@@ -151,6 +152,38 @@ void DelAcaYearList(AcY*& ayHead) {
 	ayHead = nullptr;
 }
 
+//
+
+void ShowAcaYearList(AcY* ayHead) {
+	std::system("cls");
+	cout << "-List of Academic Years & Semesters-" << endl << endl;
+	AcY* ayCur = ayHead;
+	int width = 1 + 11 + 1 + 7 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	} cout << endl;
+	while (ayCur != nullptr) {
+		cout << "| " << ayCur->Year << " | " << ayCur->Sem;
+		for (int i = 0; i < 6 - ayCur->Sem.length(); i++) cout << " ";
+		cout << "|" << endl;
+		if (ayCur->yNext != nullptr) {
+			for (int i = 0; i < width; i++) {
+				if (i == 0 || i == width - 1) cout << "|";
+				else cout << "-";
+			} cout << endl;
+		}
+		ayCur = ayCur->yNext;
+	}
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
+}
+
 void CreateAcaYear() {
 	std::system("cls");
 	cout << "-Create Academic Year-" << endl << endl;
@@ -158,7 +191,7 @@ void CreateAcaYear() {
 	cout << "[- Academic Year (XXXX-XXXX) -]";
 	cout << endl << "> ";
 	cin.getline(AcaYear, 20);
-	while (AcaYear[4] != '-') {
+	while (AcaYear[4] != '-' && strlen(AcaYear) != 9) {
 		cout << "Invalid input." << endl;
 		cout << "> "; cin.getline(AcaYear, 20);
 	}
@@ -166,6 +199,10 @@ void CreateAcaYear() {
 	cout << "[- Semester (HKX) ------------]";
 	cout << endl << "> ";
 	cin.getline(Semester, 10);
+	while (Semester[0] != 'H' && Semester[1] != 'K') {
+		cout << "Invalid input." << endl;
+		cout << "> "; cin.getline(Semester, 10);
+	}
 	ifstream fin("Semester.txt");
 	if (!fin.is_open()) {
 		cout << "Cannot create Academic Year." << endl;
@@ -248,6 +285,71 @@ void CreateAcaYear() {
 			cout << "Current Semester set succesfully." << endl;
 		}
 	}
+	std::system("pause");
+}
+
+void UpdateAcaYear() {
+	AcY* ayHead = nullptr;
+	ifstream fin;
+	fin.open("Semester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot update Academic Year." << endl;
+		std::system("pause");
+		return;
+	}
+	GetAcaYearList(fin, ayHead);
+	fin.close();
+	ShowAcaYearList(ayHead);
+	
+	cout << "-Set current Academic Year-" << endl << endl;
+	string Year, Sem;
+	cout << "[- Year -----]";
+	cout << endl << "> ";
+	getline(cin, Year);
+	cout << "[- Semester -]";
+	cout << endl << "> ";
+	getline(cin, Sem);
+
+	bool ac_flag = false;
+	AcY* ayCur = ayHead;
+	while (ayCur != nullptr) {
+		if (Year == ayCur->Year && Sem == ayCur->Sem) {
+			ac_flag = true;
+			break;
+		}
+		ayCur = ayCur->yNext;
+	}
+	if (!ac_flag) {
+		cout << "Academic Year does not exist." << endl;
+		std::system("pause");
+		return;
+	}
+	ofstream fout;
+	fout.open("CurrentSemester.txt");
+	if (!fout.is_open()) {
+		cout << "Cannot set current Semester." << endl;
+		std::system("pause");
+		return;
+	}
+	fout << Year << endl << Sem;
+	fout.close();
+	cout << "Current Semester updated successfully." << endl;
+	DelAcaYearList(ayHead);
+	std::system("pause");
+}
+
+void ViewAcaYear() {
+	AcY* ayHead = nullptr;
+	ifstream fin;
+	fin.open("Semester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot update Academic Year." << endl;
+		std::system("pause");
+		return;
+	}
+	GetAcaYearList(fin, ayHead);
+	fin.close();
+	ShowAcaYearList(ayHead);
 	std::system("pause");
 }
 

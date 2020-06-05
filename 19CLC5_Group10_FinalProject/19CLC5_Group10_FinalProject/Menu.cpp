@@ -1644,6 +1644,15 @@ void Menu_Staff_AcaYear(staff a[], int& idx) {
 	case 0:
 		CreateAcaYear();
 		break;
+	case 1:
+		UpdateAcaYear();
+		break;
+	case 2:
+
+		break;
+	case 3:
+		ViewAcaYear();
+		break;
 
 	}
 	if (ptr != 4) Menu_Staff_AcaYear(a, idx);
