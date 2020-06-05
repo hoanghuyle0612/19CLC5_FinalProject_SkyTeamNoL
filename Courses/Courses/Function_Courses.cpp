@@ -1075,7 +1075,7 @@ void UpdateLecturer()
 	cout << "Edit lecturer's gender (0 - Female / 1 - Male):\n  >"; cin >> cur_Lec->data.gender;
 	cout << "Edit lecturer's status (0 - Inactive / 1 - Active):\n  >"; cin >> cur_Lec->data.type;
 	ofstream fo;
-	fo.open("lecturer.txt");
+	fo.open("Files/lecturer.txt");
 	int cnt = 0;
 	cur_Lec = L_list;
 	while (cur_Lec != nullptr)
@@ -1134,7 +1134,7 @@ void DeleteLecturer()
 	}
 	cur = L_list;
 	ofstream fo;
-	fo.open("lecturer.txt");
+	fo.open("Files/lecturer.txt");
 	if (!fo.is_open())
 	{
 		cout << "Cannot open file." << endl;
@@ -1249,7 +1249,7 @@ LecturerList* LoadLecturerNode(ifstream& f)
 void LoadLecturerList(LecturerList*& list)
 {
 	ifstream fin;
-	fin.open("lecturer.txt");
+	fin.open("Files/lecturer.txt");
 	if (!fin.is_open())
 	{
 		cout << "Can not open file" << endl;
