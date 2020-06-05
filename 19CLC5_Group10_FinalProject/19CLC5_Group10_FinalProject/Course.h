@@ -119,6 +119,7 @@ void SetColor(int color[], int i);
 void CreateAcaYear();
 void UpdateAcaYear();
 void ViewAcaYear();
+void DeleteAcaYear();
 
 
 //  COURSE STUDENT FUNCTION

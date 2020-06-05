@@ -1648,7 +1648,7 @@ void Menu_Staff_AcaYear(staff a[], int& idx) {
 		UpdateAcaYear();
 		break;
 	case 2:
-
+		DeleteAcaYear();
 		break;
 	case 3:
 		ViewAcaYear();

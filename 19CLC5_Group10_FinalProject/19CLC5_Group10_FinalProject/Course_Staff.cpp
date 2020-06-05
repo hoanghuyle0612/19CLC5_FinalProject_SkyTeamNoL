@@ -210,6 +210,8 @@ void CreateAcaYear() {
 		return;
 	}
 	int n; fin >> n; fin.ignore();
+	fin.close();
+	fin.open("Semester.txt");
 	AcY* ayHead = nullptr;
 	GetAcaYearList(fin, ayHead);
 	fin.close();
@@ -350,6 +352,103 @@ void ViewAcaYear() {
 	GetAcaYearList(fin, ayHead);
 	fin.close();
 	ShowAcaYearList(ayHead);
+	fin.open("CurrentSemester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot load Current Semester." << endl;
+		std::system("pause");
+		return;
+	}
+	string CurYear, CurSem;
+	getline(fin, CurYear); getline(fin, CurSem);
+	cout << "[Current Semester] " << CurYear << " | " << CurSem
+		<< endl << endl;
+	
+	std::system("pause");
+}
+
+void DeleteAcaYear() {
+	int n;
+	AcY* ayHead = nullptr;
+	ifstream fin;
+	fin.open("Semester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot update Academic Year." << endl;
+		std::system("pause");
+		return;
+	}
+	GetAcaYearList(fin, ayHead);
+	fin.close();
+	fin.open("Semester.txt");
+	fin >> n;
+	fin.close();
+	ShowAcaYearList(ayHead);
+	
+	cout << "-Delete Academic Year-" << endl << endl;
+	string Year, Sem;
+	cout << "[- Year -----]";
+	cout << endl << "> ";
+	getline(cin, Year);
+	cout << "[- Semester -]";
+	cout << endl << "> ";
+	getline(cin, Sem);
+
+	bool ac_flag = false;
+	AcY* ayCur = ayHead;
+	while (ayCur != nullptr) {
+		if (Year == ayCur->Year && Sem == ayCur->Sem) {
+			ac_flag = true;
+			break;
+		}
+		ayCur = ayCur->yNext;
+	}
+	if (!ac_flag) {
+		cout << "Academic Year does not exist." << endl;
+		std::system("pause");
+		return;
+	}
+	AcY* ayPrev = ayHead;
+	while (ayPrev->yNext != ayCur) {
+		ayPrev = ayPrev->yNext;
+	}
+	bool fCurSemDel = false;
+	fin.open("CurrentSemester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot open Current Semester file." << endl;
+	} else {
+		string CurSemYear, CurSemSem;
+		fin >> CurSemYear >> CurSemSem;
+		if (ayCur->Year == CurSemYear && ayCur->Sem == CurSemSem) {
+			fCurSemDel = true;
+		}
+		fin.close();
+	}
+	if (fCurSemDel) {
+		ofstream fout;
+		fout.open("CurrentSemester.txt");
+		if (!fout.is_open()) {
+			cout << "Cannot open Current Semester file." << endl;
+		} else {
+			fout << ayHead->Year << endl << ayHead->Sem;
+			fout.close();
+		}
+	}
+	ayPrev->yNext = ayCur->yNext;
+	delete ayCur; ayCur = nullptr;
+	ofstream fout;
+	fout.open("Semester.txt");
+	if (!fout.is_open()) {
+		cout << "Cannot open file." << endl;
+	} else {
+		fout << n - 1 << endl;
+		ayCur = ayHead;
+		while (ayCur != nullptr) {
+			fout << ayCur->Year << endl << ayCur->Sem;
+			if (ayCur->yNext != nullptr) fout << endl;
+			ayCur = ayCur->yNext;
+		}
+	}
+	cout << endl;
+	cout << "Academic Year deleted." << endl;
 	std::system("pause");
 }
 
