@@ -103,7 +103,8 @@ void AddAStudentToCourse(char* AcaYear, char* Semester);
 
 void CreateLecturer();
 void CreateUserName_Lect(char* Lec_Name, char* Lec_Username);
-void UpdateLecture();
+void UpdateLecturer();
+void DeleteLecturer();
 //=====================================================================================
 
 

@@ -1046,7 +1046,7 @@ void CreateUserName_Lect(char* Lec_Name, char* Lec_Username)
 	}
 }
 
-void UpdateLecture()
+void UpdateLecturer()
 {
 	LecturerList* L_list = nullptr;
 	char tmp[256], * Lec_Name;
@@ -1099,52 +1099,70 @@ void UpdateLecture()
 		cur_Lec = cur_Lec->pNext;
 	}
 	fo.close();
-
-
-	//LecturerList* cur_Lec = new LecturerList;
-	//char tmp[256];
-	//cout << "Enter Lecter name: \n  >"; cin.getline(cur_Lec->data.fullname, 100);
-	//CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
-	//cout << cur_Lec->data.username << endl;
-	//fstream f;
-	//f.open("lecturer.txt", ios::in | ios::out);
-	//bool flag = false;
-	//while (!f.eof())
-	//{
-	//	f.getline(tmp, 256);
-	//	if (strcmp(cur_Lec->data.username, tmp) == 0)
-	//	{
-	//		flag = true;
-	//		break;
-	//	}
-	//}
-	//int pos = f.tellg();
-	//pos -= strlen(cur_Lec->data.username) + 1;
-	//if (flag == false)
-	//{
-	//	cout << "Cannot find lecturer. " << endl;
-	//	return;
-	//}
-	//cout << "Edit lecturer's name:\n  >"; cin.getline(cur_Lec->data.fullname, 100);
-	//cur_Lec->data.username[0] = '\0';
-	//CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
-	//cout << "Edit password (max 20 characters): \n  >"; cin.getline(cur_Lec->data.password, 100);
-	//cout << "Edit lecturer's date of birth (dd/mm/yyyy): \n  >"; cin.getline(cur_Lec->data.dob, 256);
-	//cout << "Edit lecturer's degree: \n  >"; cin.getline(cur_Lec->data.degree, 256);
-	//cout << "Edit lecturer's gender (0 - Female / 1 - Male):\n  >"; cin >> cur_Lec->data.gender;
-	//cur_Lec->data.type = 1;
-	//f.seekg(0, ios::end);
-	//f.seekp(pos, ios::beg);
-	//f << cur_Lec->data.username << endl;
-	//f << cur_Lec->data.password << endl;
-	//f << cur_Lec->data.fullname << endl;
-	//f << cur_Lec->data.dob << endl;
-	//f << cur_Lec->data.degree << endl;
-	//f << cur_Lec->data.gender << endl;
-	//f << cur_Lec->data.type;
-	//f.close();
+	delete_LecturerList(L_list);
 }
 
+
+void DeleteLecturer()
+{
+	char tmp[256], * Lec_Name;
+	cout << "Enter Lecturer's name you want to delete.\n  >"; cin.getline(tmp, 256);
+	Lec_Name = new char[strlen(tmp)];
+	strcpy(Lec_Name, tmp);
+	LecturerList* L_list = nullptr;
+	LoadLecturerList(L_list);
+	LecturerList* cur = L_list, * prev = nullptr;
+	while (cur != nullptr)
+	{
+		if (strcmp(cur->data.fullname, Lec_Name) == 0)
+		{
+			if (prev == nullptr)
+			{
+				L_list = cur->pNext;
+				delete cur;
+				break;
+			}
+			else
+			{
+				prev->pNext = cur->pNext;
+				delete cur;
+				break;
+			}
+		}
+		prev = cur;
+		cur= cur->pNext;
+	}
+	cur = L_list;
+	ofstream fo;
+	fo.open("lecturer.txt");
+	if (!fo.is_open())
+	{
+		cout << "Cannot open file." << endl;
+		return;
+	}
+	int cnt = 0;
+	while (cur != nullptr)
+	{
+		cnt++;
+		cur = cur->pNext;
+	}
+	fo << cnt;
+	cur = L_list;
+	while (cur != nullptr)
+	{
+		fo << endl;
+		fo << cur->data.username << endl;
+		fo << cur->data.password << endl;
+		fo << cur->data.fullname << endl;
+		fo << cur->data.dob << endl;
+		fo << cur->data.degree << endl;
+		fo << cur->data.gender << endl;
+		fo << cur->data.type;
+		cur = cur->pNext;
+	}
+	fo.close();
+	delete_LecturerList(L_list);
+}
 
 //=========================================================================================
 

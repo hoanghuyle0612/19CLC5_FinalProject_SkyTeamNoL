@@ -1,9 +1,9 @@
-4
+3
 dbtien
-helloworld
-dinh ba tien
-01 02 1982
-PGS TS
+NASA
+Dinh Ba Tien
+01 02 1980
+TS
 1
 1
 nmhuy
@@ -17,13 +17,6 @@ nhminh
 03021982
 Nguyen Hai Minh
 03 02 1982
-TS
-1
-1
-vdhcuong
-anhbantre
-Vu Do Huy Cuong
-01 01 1980
 TS
 1
 1

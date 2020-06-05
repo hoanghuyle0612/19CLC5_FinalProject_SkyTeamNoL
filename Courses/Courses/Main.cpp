@@ -3,7 +3,7 @@
 #include <vector>
 int main()
 {
-	UpdateLecture();
+	DeleteLecturer();
 	//CreateLecturer();
 
 
