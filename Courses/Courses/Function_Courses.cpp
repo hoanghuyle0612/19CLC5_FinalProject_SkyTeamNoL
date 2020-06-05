@@ -977,41 +977,10 @@ void CreateLecturer()
 			}
 		}
 	}
-	int spacecnt = 0, lastspace_idx = 0;
-	strcpy(tmp, Lec_Name);
-	for (int i = 0; i < strlen(tmp); i++)
-	{
-		if (tmp[i] == ' ')
-		{
-			lastspace_idx = i;
-			spacecnt++;
-		}
-	}
-	char* w = strtok(tmp, " ");
-	Lec_Username[0] = w[0] + 32;
-	int cur_char = 0;
-	int idx = 0;
-	idx += strlen(w);
-	while (idx <= lastspace_idx)
-	{
-		w = strtok(NULL, " \n");
-		if (idx < lastspace_idx)
-		{
-			cur_char++;
-			Lec_Username[cur_char] = w[0] + 32;
-			idx += strlen(w) + 1;
-		}
-		else {
-			cur_char++;
-			Lec_Username[cur_char] = '\0';
-			strcat(Lec_Username, w);
-			Lec_Username[cur_char] = w[0] + 32;
-			idx += strlen(w);
-		}
-	}
+	CreateUserName_Lect(Lec_Name, Lec_Username);
 	strcpy(Lec_Pwd, Lec_Username);
 	cout << "Enter lecturer's date of birth (dd/mm/yyyy): \n  >"; cin.getline(tmp, 256);
-	w = strtok(tmp, " /");
+	char *w = strtok(tmp, " /");
 	Lec_DoB.Day = char_to_int(w);
 	w = strtok(NULL, " /");
 	Lec_DoB.Month = char_to_int(w);
@@ -1039,6 +1008,143 @@ void CreateLecturer()
 	f << Lec_Gender;
 	f.close();
 }
+
+void CreateUserName_Lect(char* Lec_Name, char* Lec_Username)
+{
+	char tmp[256];
+	int spacecnt = 0, lastspace_idx = 0;
+	strcpy(tmp, Lec_Name);
+	for (int i = 0; i < strlen(tmp); i++)
+	{
+		if (tmp[i] == ' ')
+		{
+			lastspace_idx = i;
+			spacecnt++;
+		}
+	}
+	char* w = strtok(tmp, " ");
+	Lec_Username[0] = w[0] > 'A' && w[0] < 'Z' ? w[0] + 32 : w[0];
+	int cur_char = 0;
+	int idx = 0;
+	idx += strlen(w);
+	while (idx <= lastspace_idx)
+	{
+		w = strtok(NULL, " \n");
+		if (idx < lastspace_idx)
+		{
+			cur_char++;
+			Lec_Username[cur_char] = w[0]>'A'&&w[0]<'Z'? w[0] + 32 : w[0];
+			idx += strlen(w) + 1;
+		}
+		else {
+			cur_char++;
+			Lec_Username[cur_char] = '\0';
+			strcat(Lec_Username, w);
+			Lec_Username[cur_char] = w[0] > 'A' && w[0] < 'Z' ? w[0] + 32 : w[0];
+			idx += strlen(w);
+		}
+	}
+}
+
+void UpdateLecture()
+{
+	LecturerList* L_list = nullptr;
+	char tmp[256], * Lec_Name;
+	cout << "Enter Lecter name: \n  >"; cin.getline(tmp, 256);
+	Lec_Name = new char[strlen(tmp)];
+	strcpy(Lec_Name, tmp);
+	LoadLecturerList(L_list);
+	LecturerList* cur_Lec = L_list;
+	while (cur_Lec != nullptr)
+	{
+		if (strcmp(Lec_Name, cur_Lec->data.fullname) == 0) break;
+		cur_Lec = cur_Lec->pNext;
+	}
+	if (cur_Lec == nullptr)
+	{
+		cout << "Cannot find lecturer. " << endl;
+		return;
+	}
+
+	cout << "Edit lecturer's name:\n  >"; cin.getline(cur_Lec->data.fullname, 100);
+	cur_Lec->data.username[0] = '\0';
+	CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
+	cout << "Edit password (max 20 characters): \n  >"; cin.getline(cur_Lec->data.password, 100);
+	cout << "Edit lecturer's date of birth (dd/mm/yyyy): \n  >"; cin.getline(cur_Lec->data.dob, 256);
+	cout << "Edit lecturer's degree: \n  >"; cin.getline(cur_Lec->data.degree, 256);
+	cout << "Edit lecturer's gender (0 - Female / 1 - Male):\n  >"; cin >> cur_Lec->data.gender;
+	cout << "Edit lecturer's status (0 - Inactive / 1 - Active):\n  >"; cin >> cur_Lec->data.type;
+	ofstream fo;
+	fo.open("lecturer.txt");
+	int cnt = 0;
+	cur_Lec = L_list;
+	while (cur_Lec != nullptr)
+	{
+		cnt++;
+		cur_Lec = cur_Lec->pNext;
+	}
+	cur_Lec = L_list;
+	fo << cnt;
+	while (cur_Lec != nullptr)
+	{
+		fo << endl;
+		fo << cur_Lec->data.username << endl;
+		fo << cur_Lec->data.password << endl;
+		fo << cur_Lec->data.fullname << endl;
+		fo << cur_Lec->data.dob << endl;
+		fo << cur_Lec->data.degree << endl;
+		fo << cur_Lec->data.gender << endl;
+		fo << cur_Lec->data.type;
+
+		cur_Lec = cur_Lec->pNext;
+	}
+	fo.close();
+
+
+	//LecturerList* cur_Lec = new LecturerList;
+	//char tmp[256];
+	//cout << "Enter Lecter name: \n  >"; cin.getline(cur_Lec->data.fullname, 100);
+	//CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
+	//cout << cur_Lec->data.username << endl;
+	//fstream f;
+	//f.open("lecturer.txt", ios::in | ios::out);
+	//bool flag = false;
+	//while (!f.eof())
+	//{
+	//	f.getline(tmp, 256);
+	//	if (strcmp(cur_Lec->data.username, tmp) == 0)
+	//	{
+	//		flag = true;
+	//		break;
+	//	}
+	//}
+	//int pos = f.tellg();
+	//pos -= strlen(cur_Lec->data.username) + 1;
+	//if (flag == false)
+	//{
+	//	cout << "Cannot find lecturer. " << endl;
+	//	return;
+	//}
+	//cout << "Edit lecturer's name:\n  >"; cin.getline(cur_Lec->data.fullname, 100);
+	//cur_Lec->data.username[0] = '\0';
+	//CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
+	//cout << "Edit password (max 20 characters): \n  >"; cin.getline(cur_Lec->data.password, 100);
+	//cout << "Edit lecturer's date of birth (dd/mm/yyyy): \n  >"; cin.getline(cur_Lec->data.dob, 256);
+	//cout << "Edit lecturer's degree: \n  >"; cin.getline(cur_Lec->data.degree, 256);
+	//cout << "Edit lecturer's gender (0 - Female / 1 - Male):\n  >"; cin >> cur_Lec->data.gender;
+	//cur_Lec->data.type = 1;
+	//f.seekg(0, ios::end);
+	//f.seekp(pos, ios::beg);
+	//f << cur_Lec->data.username << endl;
+	//f << cur_Lec->data.password << endl;
+	//f << cur_Lec->data.fullname << endl;
+	//f << cur_Lec->data.dob << endl;
+	//f << cur_Lec->data.degree << endl;
+	//f << cur_Lec->data.gender << endl;
+	//f << cur_Lec->data.type;
+	//f.close();
+}
+
 
 //=========================================================================================
 
@@ -1111,12 +1217,13 @@ LecturerList* LoadLecturerNode(ifstream& f)
 	b = new LecturerList;
 	f.ignore(256, '\n');
 	f.getline(b->data.username, 101);
-	if (b->data.username == NULL) return NULL;
+	if (b->data.username[0] == '\0') return nullptr;
 	f.getline(b->data.password, 101);
 	f.getline(b->data.fullname, 101);
 	f.getline(b->data.dob, 101);
 	f.getline(b->data.degree, 20);
 	f >> b->data.gender;
+	f >> b->data.type;
 
 	b->pNext = nullptr;
 	return b;
@@ -1146,6 +1253,7 @@ void LoadLecturerList(LecturerList*& list)
 				p = LoadLecturerNode(fin);
 				cur->pNext = p;
 				cur = cur->pNext;
+				if (cur == nullptr) break;
 			}
 		}
 		fin.close();

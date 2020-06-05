@@ -26,6 +26,7 @@ struct lecturer {
 	char dob[20];
 	char degree[20];
 	int gender;
+	int type;
 
 };
 struct LecturerList {
@@ -101,7 +102,8 @@ void AddAStudentToCourse(char* AcaYear, char* Semester);
 
 
 void CreateLecturer();
-
+void CreateUserName_Lect(char* Lec_Name, char* Lec_Username);
+void UpdateLecture();
 //=====================================================================================
 
 
