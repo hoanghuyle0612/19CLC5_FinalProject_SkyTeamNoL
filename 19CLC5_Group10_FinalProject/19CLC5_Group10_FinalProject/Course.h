@@ -86,8 +86,8 @@ struct LecturerList {
 
 // COURSE FUNCTIONS
 //====================================================================================
-void CoursesManagement();
-void CreateAcaYear(char* AcaYear, char* Semester);
+//void CoursesManagement();
+//void CreateAcaYear(char* AcaYear, char* Semester);
 CourseList* LoadCourseNode(ifstream& f);
 CourseList* CreateCourseNode();
 void LoadCourses_csvfile(char* Link, CourseList*& list);
@@ -106,6 +106,13 @@ void LoadLecturerList(LecturerList*& list);
 void delete_CourseList(CourseList*& list);
 void delete_LecturerList(LecturerList*& list);
 //=====================================================================================
+
+
+//  ACADEMIC YEAR FUNCTION
+//===============================================
+void SetColor(int color[], int i);
+void CreateAcaYear();
+
 
 //  COURSE STUDENT FUNCTION
 //===============================================

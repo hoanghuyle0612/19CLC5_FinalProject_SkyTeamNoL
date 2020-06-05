@@ -1489,6 +1489,161 @@ void Menu_Staff_AttList(staff a[], int& idx, string YearSem) {
 
 }
 
+void Menu_Staff_AcaYear(staff a[], int& idx) {
+	std::system("cls");
+	int color[] = { OFFCOL, ONCOL };
+	int i[] = { 1, 0, 0, 0, 0 };
+	int ptr = 0;
+	int width = 21;
+	int last = 4;
+	int KeyPressed = 0;
+
+	while (KeyPressed != 13) {
+		cls();
+
+		cout << setw(59) << "-ACADEMIC STAFF - ACADEMIC YEAR-" << endl;
+		cout << endl;
+
+		// Don't open, unless it's for editing buttons
+
+		{
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 1.1
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ "; // 1.2
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ "; // 1.3
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|  ______(+) |"; // 2.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  ______(^) |"; // 2.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|  ______(-) |"; // 2.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  ______(=) |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |        | |"; // 3.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |        | |"; // 3.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "| |        | |"; // 3.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "| |        | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| | [====] | |"; // 4.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "| | [====] | |"; // 4.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "| | [====] | |"; // 4.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "| | [====] | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |  2019  | |"; // 5.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |  2019  | |"; // 5.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "| |  2019  | |"; // 5.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "| |  2019  | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |  2020  | |"; // 6.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |  2020  | |"; // 6.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "| |  2020  | |"; // 6.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "| |  2020  | |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "| |________| |"; // 7.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "| |________| |"; // 7.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "| |________| |"; // 7.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "| |________| |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << "|  ========  |"; // 8.1
+			SetColor(color, i[1]);
+			cout << setw(width) << "|  ========  |"; // 8.2
+			SetColor(color, i[2]);
+			cout << setw(width) << "|  ========  |"; // 8.3
+			SetColor(color, i[3]);
+			cout << setw(width) << "|  ========  |" << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ------------ "; // 9.1
+			SetColor(color, i[1]);
+			cout << setw(width) << " ------------ "; // 9.2
+			SetColor(color, i[2]);
+			cout << setw(width) << " ------------ "; // 9.3
+			SetColor(color, i[3]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			SetColor(color, i[0]);
+			cout << setw(width) << " ADD ACAYEAR  ";
+			SetColor(color, i[1]);
+			cout << setw(width) << "UPDATE ACAYEAR";
+			SetColor(color, i[2]);
+			cout << setw(width) << "DELETE ACAYEAR";
+			SetColor(color, i[3]);
+			cout << setw(width) << " VIEW ACAYEAR " << endl;
+			SetColor(color, i[0]);
+		}
+		cout << endl;
+		{
+			SetColor(color, i[4]);
+			cout << setw(width) << " ------------ " << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|  <=======  |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << "|            |" << endl;
+			cout << setw(width) << " ------------ " << endl;
+			cout << endl;
+			cout << setw(width) << "     BACK     " << endl;
+		}
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 3;
+			else if (ptr == 4) ptr = last;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 3) ptr = 0;
+			else if (ptr == last) ptr = 4;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 72 || KeyPressed == 80) {
+			i[ptr] = 0;
+			if (ptr >= 4) ptr -= 4;
+			else ptr = 4;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[0]);
+	}
+
+	switch (ptr) {
+	case 4:
+		Menu_Staff_Course(a, idx);
+		break;
+	case 0:
+		CreateAcaYear();
+		break;
+
+	}
+}
+
 
 
 void Menu_EditScore(Student_Course*& stu, int n) {

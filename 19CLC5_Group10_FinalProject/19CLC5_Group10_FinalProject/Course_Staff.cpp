@@ -107,19 +107,103 @@ void LoadStudentList(StudentList*& list, char* Class)
 
 // COURSE FUNCTIONS
 //===============================================================================
-void CreateAcaYear(char* AcaYear, char* Semester)
-{
-	ofstream fout;
-	fout.open("Semester.txt");
-	if (!fout.is_open())
-	{
-		cout << "Cannot create file.\n";
+//void CreateAcaYear(char* AcaYear, char* Semester)
+//{
+//	ofstream fout;
+//	fout.open("Semester.txt");
+//	if (!fout.is_open())
+//	{
+//		cout << "Cannot create file.\n";
+//		return;
+//	}
+//	fout << 1 << endl;
+//	fout << AcaYear << endl;
+//	fout << Semester << endl;
+//	fout.close();
+//}
+
+void CreateAcaYear() {
+	std::system("cls");
+	cout << "-Create Academic Year-" << endl << endl;
+	char AcaYear[20];
+	cout << "[- Academic Year (XXXX-XXXX) -]";
+	cout << endl << "> ";
+	cin.getline(AcaYear, 20);
+	while (AcaYear[4] != ' ') {
+		cout << "Invalid input." << endl;
+		cout << "> "; cin.getline(AcaYear, 20);
+	}
+	ifstream fin("Semester.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot create Academic Year." << endl;
+		std::system("pause");
 		return;
 	}
-	fout << 1 << endl;
-	fout << AcaYear << endl;
-	fout << Semester << endl;
+	int n; fin >> n;
+	fin.close();
+	char Semester[10];
+	cout << "[- Semester (HKX) ------------]";
+	cout << endl << "> ";
+	cin.getline(Semester, 10);
+	ofstream fout;
+	fout.open("Semester.txt", ios::app);
+	if (!fout.is_open()) {
+		cout << "Cannot create Academic Year." << endl;
+		std::system("pause");
+		return;
+	}
+	fout << endl;
+	fout << AcaYear << endl << Semester;
+	fout.seekp(0, ios::beg);
+	fout << n + 1;
 	fout.close();
+	cout << endl << "Academic Year created successfully." << endl << endl;
+	cout << "[- Set as current Semester? --]";
+	int color[] = { 15, 11 };
+	int i[] = { 1, 0 };
+	int ptr = 0;
+	int KeyPressed = 0;
+	while (KeyPressed != 13) {
+		cls();
+
+		SetColor(color, i[0]);
+		if (ptr == 0) cout << "> "; else cout << "  ";
+		cout << "Yes";
+		SetColor(color, i[1]);
+		if (ptr == 1) cout << "> "; else cout << "  ";
+		cout << "No";
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 1;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 1) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+
+		SetColor(color, 0);
+	}
+
+	if (ptr == 0) {
+		fout.open("CurrentSemester.txt");
+		if (!fout.is_open()) {
+			cout << "Cannot set as current Semester." << endl;
+		} else {
+			fout << AcaYear << endl << Semester;
+			fout.close();
+			cout << "Current Semester set succesfully." << endl;
+		}
+	}
+	std::system("pause");
 }
 
 int char_to_int(char* s)
@@ -768,22 +852,22 @@ void ImportCourses(char* AcaYear, char* Semester)    // 3.2 import courses and s
 	std::system("pause");
 }
 
-void CoursesManagement()
-{
-	system("cls");
-	char* AcaYear, * Semester;			//  INPUT ACADEMIC YEAR AND SEMESTER
-	char temp[256];
-	cout << "Enter Academic year: "; cin.getline(temp, 256, '\n');
-	AcaYear = new char[strlen(temp) + 1];
-	strcpy_s(AcaYear, strlen(temp) + 1, temp);
-	temp[0] = 0;
-	cout << "Enter Semester: "; cin.getline(temp, 256, '\n');
-	Semester = new char[strlen(temp) + 1];
-	strcpy_s(Semester, strlen(temp) + 1, temp);
-	CreateAcaYear(AcaYear, Semester);		// SAVE ACADEMIC YEAR AND SEMESTER INTO FILE 
-	ImportCourses(AcaYear, Semester);
-
-}
+//void CoursesManagement()
+//{
+//	system("cls");
+//	char* AcaYear, * Semester;			//  INPUT ACADEMIC YEAR AND SEMESTER
+//	char temp[256];
+//	cout << "Enter Academic year: "; cin.getline(temp, 256, '\n');
+//	AcaYear = new char[strlen(temp) + 1];
+//	strcpy_s(AcaYear, strlen(temp) + 1, temp);
+//	temp[0] = 0;
+//	cout << "Enter Semester: "; cin.getline(temp, 256, '\n');
+//	Semester = new char[strlen(temp) + 1];
+//	strcpy_s(Semester, strlen(temp) + 1, temp);
+//	CreateAcaYear(AcaYear, Semester);		// SAVE ACADEMIC YEAR AND SEMESTER INTO FILE 
+//	ImportCourses(AcaYear, Semester);
+//
+//}
 
 CourseList* CreateCourseNode()  // Create Course Node by typing in 
 {

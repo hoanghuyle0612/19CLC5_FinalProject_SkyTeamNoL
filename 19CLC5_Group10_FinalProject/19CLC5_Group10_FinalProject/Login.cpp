@@ -91,7 +91,7 @@ void login()
 	cout << "[- Password ----------]" << endl;
 	cout << "> "; cin >> passlogin;
 	fstream f;
-	f.open("staff.txt");
+	f.open("Files/staff.txt");
 	if (!f.is_open())
 	{
 		cout << "Cannot login." << endl;
@@ -116,7 +116,7 @@ void login()
 		f.close();
 	}
 	fstream f1;
-	f1.open("lecturer.txt");
+	f1.open("Files/lecturer.txt");
 	if (!f1.is_open())
 	{
 		cout << "Cannot login." << endl;
@@ -141,7 +141,7 @@ void login()
 		f1.close();
 	}
 	fstream f3;
-	f3.open("student.txt");
+	f3.open("Files/student.txt");
 	if (!f3.is_open())
 	{
 		cout << "Cannot login." << endl;
@@ -267,7 +267,7 @@ void import(staff a[], int& idx)
 	cout << "[- Enter Class you want to import -] ";
 	cout << endl << "> "; cin >> currentclassname;
 	char line[100];
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	ofstream fa("temp.txt");
 	int n;
 	int check = 0;
@@ -291,7 +291,7 @@ void import(staff a[], int& idx)
 	}
 	if (check == 0)
 	{
-		ofstream fb("class.txt");
+		ofstream fb("Files/class.txt");
 		ifstream ft("temp.txt");
 		n = n + 1;
 		fb << n << endl;
@@ -304,10 +304,12 @@ void import(staff a[], int& idx)
 		fb.close();
 		ft.close();
 		remove("temp.txt");
-		char link[100];
+		char link[50];
 		cout << "[- Enter Class directory ----------] ";
-		cout << endl << "> ";  cin >> link;
-		fstream f1(link);
+		cout << endl << "> "; cin >> link;
+		char link_new[100]; strcpy(link_new, "Files/Class/");
+		strcat(link_new, link);
+		fstream f1(link_new);
 		ofstream f2("temp.txt");
 		student c[100];
 		int count = 0;
@@ -348,7 +350,7 @@ void import(staff a[], int& idx)
 		f3.close();
 		ofstream f4("temp1.txt");
 		ifstream f5("temp.txt");
-		ifstream f6("student.txt");
+		ifstream f6("Files/student.txt");
 		int q;
 		f6 >> q;
 		char line5[100];
@@ -360,7 +362,7 @@ void import(staff a[], int& idx)
 		}
 		f6.close();
 		f4.close();
-		fstream f7("student.txt");
+		fstream f7("Files/student.txt");
 		f7 << q + count << "\n";
 		char line7[100];
 		ifstream f8("temp1.txt");
@@ -400,6 +402,7 @@ void import(staff a[], int& idx)
 		f7.close();
 		char tempo[100];
 		ofstream fi("temp2.txt");
+		fi << "Files/Class/";
 		fi << "student-";
 		fi << currentclassname;
 		fi << ".txt";
@@ -453,7 +456,7 @@ void add_a_new_student(staff a[], int& idx)
 	int choice;
 	cout << "-List of available Classes-";
 	cout << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -504,7 +507,7 @@ void add_a_new_student(staff a[], int& idx)
 	cout << "[- Gender (0 - F | 1 - M) -----] ";
 	cout << endl << "> ";  cin >> gender;
 	int check = 0;
-	ifstream f1("student.txt");
+	ifstream f1("Files/student.txt");
 	char line2[100];
 	char line3[100];
 	int q;
@@ -530,7 +533,7 @@ void add_a_new_student(staff a[], int& idx)
 	}
 	if (check == 0)
 	{
-		ofstream f3("student.txt");
+		ofstream f3("Files/student.txt");
 		ifstream f4("temp.txt");
 		f3 << q + 1 << "\n";
 		char line4[100];
@@ -579,6 +582,7 @@ void add_a_new_student(staff a[], int& idx)
 		remove("temp.txt");
 		char tempo[100];
 		ofstream fi("temp2.txt");
+		fi << "Files/Class/";
 		fi << "student-";
 		fi << currentclass;
 		fi << ".txt";
@@ -651,7 +655,7 @@ void edit_existing_student(staff a[], int& idx)
 	int choice;
 	cout << "-List of available Classes-";
 	cout << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -715,7 +719,7 @@ void edit_existing_student(staff a[], int& idx)
 	cout << endl << "> "; cin.getline(currentdob, 15);
 	cout << "[- Gender (0 - F | 1 - M) -----]";
 	cout << endl << "> "; cin >> currentgender;
-	ifstream f4("student.txt");
+	ifstream f4("Files/student.txt");
 	ofstream f5("temp_student.txt");
 	if (!f4.is_open() || !f5.is_open())
 	{
@@ -778,7 +782,7 @@ void edit_existing_student(staff a[], int& idx)
 	}
 	f4.close();
 	f5.close();
-	fstream newFile("student.txt");
+	fstream newFile("Files/student.txt");
 	if (!newFile)
 	{
 		cout << "Cannot edit Student." << endl;
@@ -789,12 +793,13 @@ void edit_existing_student(staff a[], int& idx)
 	{
 		/*cout << "Editing..." << endl;*/
 	}
-	if (rename("temp_student.txt", "student.txt") == 0)
+	if (rename("temp_student.txt", "Files/student.txt") == 0)
 	{
 		/*cout << "Student edited successfully!" << endl;*/
 	}
 	char temp1[100];
 	ofstream fi("temp.txt");
+	fi << "Files/Class/";
 	fi << "student-";
 	fi << currentclass;
 	fi << ".txt";
@@ -897,7 +902,7 @@ void remove_a_student(staff a[], int& idx)
 	int choice;
 	cout << "-List of available Classes-";
 	cout << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -951,7 +956,7 @@ void remove_a_student(staff a[], int& idx)
 	cout << "Enter your choice: "; cin >> choice;*/
 	/*if (choice == 1)
 	{*/
-	ifstream f4("student.txt");
+	ifstream f4("Files/student.txt");
 	ofstream f5("temp_student.txt");
 	if (!f4.is_open() || !f5.is_open())
 	{
@@ -1020,7 +1025,7 @@ void remove_a_student(staff a[], int& idx)
 	}
 	f4.close();
 	f5.close();
-	fstream newFile("student.txt");
+	fstream newFile("Files/student.txt");
 	if (!newFile)
 	{
 		cout << "File cannot open" << endl;
@@ -1031,12 +1036,13 @@ void remove_a_student(staff a[], int& idx)
 	{
 		/*cout << "Processing changing" << endl;*/
 	}
-	if (rename("temp_student.txt", "student.txt") == 0)
+	if (rename("temp_student.txt", "Files/student.txt") == 0)
 	{
 		/*cout << "Successfully" << endl;*/
 	}
 	char temp1[100];
 	ofstream fi("temp.txt");
+	fi << "Files/Class/";
 	fi << "student-";
 	fi << currentclass;
 	fi << ".txt";
@@ -1141,7 +1147,7 @@ void change_student_classA_to_B(staff a[], int& idx)
 	int choice;
 	cout << "-List of available Classes-";
 	cout << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -1193,7 +1199,7 @@ void change_student_classA_to_B(staff a[], int& idx)
 	cin.ignore();
 	cout << "[- New Class ------------------]";
 	cout << endl << "> "; cin.getline(futureclass, 15);
-	ifstream f4("student.txt");
+	ifstream f4("Files/student.txt");
 	ofstream f5("temp_student.txt");
 	if (!f4.is_open() || !f5.is_open())
 	{
@@ -1249,23 +1255,24 @@ void change_student_classA_to_B(staff a[], int& idx)
 	}
 	f4.close();
 	f5.close();
-	fstream newFile("student.txt");
+	fstream newFile("Files/student.txt");
 	if (!newFile)
 	{
 		cout << "Cannot change Class." << endl;
 		return;
 	}
 	newFile.close();
-	if (remove("student.txt") == 0)
+	if (remove("Files/student.txt") == 0)
 	{
 		/*cout << "Changing Class..." << endl;*/
 	}
-	if (rename("temp_student.txt", "student.txt") == 0)
+	if (rename("temp_student.txt", "Files/student.txt") == 0)
 	{
 		/*cout << "Successfully" << endl;*/
 	}
 	char temp1[100];
 	ofstream fi("temp.txt");
+	fi << "Files/Class/";
 	fi << "student-";
 	fi << currentclass;
 	fi << ".txt";
@@ -1346,10 +1353,10 @@ void change_student_classA_to_B(staff a[], int& idx)
 	{
 		/*cout << "Successfully" << endl;*/
 	}
-	char future[100]; ofstream fi1("temp.txt");	fi1 << "student-";	fi1 << futureclass;	fi1 << ".txt";	fi1.close();
+	char future[100]; ofstream fi1("temp.txt");	fi1 << "Files/Class/" << "student-";	fi1 << futureclass;	fi1 << ".txt";	fi1.close();
 	ifstream fo1("temp.txt");	fo1 >> future;	fo1.close();	remove("temp.txt");
 	char cur[100];
-	ofstream fi2("temp.txt");	fi2 << "student-";	fi2 << currentclass;	fi2 << ".txt";	fi2.close();
+	ofstream fi2("temp.txt");	fi2 << "Files/Class/" << "student-";	fi2 << currentclass;	fi2 << ".txt";	fi2.close();
 	ifstream fo2("temp.txt");	fo2 >> cur;	fo2.close();	remove("temp.txt");
 	student c[100];
 	int nol = 0;
@@ -1435,7 +1442,7 @@ void list_of_classes(staff a[], int& idx)
 {
 	std::system("cls");
 	cout << "-List of Classes-" << endl << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -1475,7 +1482,7 @@ void list_of_student_in_class(staff a[], int& idx)
 	char currentclass[100];
 	cout << "-List of available Classes-";
 	cout << endl << endl;
-	ifstream f("class.txt");
+	ifstream f("Files/class.txt");
 	char line1[100];
 	int n;
 	f >> n;
@@ -1509,6 +1516,7 @@ void list_of_student_in_class(staff a[], int& idx)
 	cout << "> "; cin >> currentclass;
 	char temp[100];
 	ofstream fi("temp.txt");
+	fi << "Files/Class/";
 	fi << "student-";
 	fi << currentclass;
 	fi << ".txt";
@@ -1905,7 +1913,7 @@ void changepassword_staff(staff a[], int& idx)
 	}
 	/*cout << "Enter username to make sure: ";
 	cin >> currentusername;*/
-	ifstream f1("staff.txt");
+	ifstream f1("Files/staff.txt");
 	if (!f1.is_open())
 	{
 		cout << "Cannot change password..." << endl;
@@ -1939,12 +1947,12 @@ void changepassword_staff(staff a[], int& idx)
 			}*/
 		}
 		f1.close();
-		if (remove("staff.txt") == 0)
+		if (remove("Files/staff.txt") == 0)
 		{
 			cout << "Changing password..." << endl;
 		}
 		else cout << "Cannot change password." << endl;
-		if (rename("temp_staff.txt", "staff.txt") == 0)
+		if (rename("temp_staff.txt", "Files/staff.txt") == 0)
 		{
 			cout << "Password changed successfully!" << endl;
 		}
@@ -1993,7 +2001,7 @@ void changepassword_lecturer(lecturer b[], int idx)
 	}
 	/*cout << "Enter username to make sure: ";
 	cin >> currentusername;*/
-	ifstream f1("lecturer.txt");
+	ifstream f1("Files/lecturer.txt");
 	if (!f1.is_open())
 	{
 		cout << "Cannot change password." << endl;
@@ -2020,12 +2028,12 @@ void changepassword_lecturer(lecturer b[], int idx)
 			f2.close();
 		}
 		f1.close();
-		if (remove("lecturer.txt") == 0)
+		if (remove("Files/lecturer.txt") == 0)
 		{
 			cout << "Changing password..." << endl;
 		}
 		else cout << "Cannot change password." << endl;
-		if (rename("temp_lecturer.txt", "lecturer.txt") == 0)
+		if (rename("temp_lecturer.txt", "Files/lecturer.txt") == 0)
 		{
 			cout << "Password changed successfully!" << endl;
 		}
@@ -2076,7 +2084,7 @@ void changepassword_student(student c[], int idx)
 		cout << "> "; cin >> newpass2;
 	}
 	/*cout << "Enter username to make sure: "; cin >> currentusername;*/
-	ifstream f1("student.txt");
+	ifstream f1("Files/student.txt");
 	if (!f1.is_open()) {
 		cout << "Cannot change password." << endl;
 	} else {
@@ -2105,23 +2113,24 @@ void changepassword_student(student c[], int idx)
 		}
 		f1.close();
 	}
-	fstream newFile("student.txt");
+	fstream newFile("Files/student.txt");
 	if (!newFile)
 	{
 		cout << "File cannot open" << endl;
 		return;
 	}
 	newFile.close();
-	if (remove("student.txt") == 0)
+	if (remove("Files/student.txt") == 0)
 	{
 		/*cout << "Processing changing" << endl;*/
 	}
-	if (rename("temp_student.txt", "student.txt") == 0)
+	if (rename("temp_student.txt", "Files/student.txt") == 0)
 	{
 		/*cout << "Successfully" << endl;*/
 	}
 	char tempq[100];
 	ofstream fi("temp.txt");
+	fi << "Files/Class/";
 	fi << "student-";
 	fi << c[idx].classname;
 	fi << ".txt";
