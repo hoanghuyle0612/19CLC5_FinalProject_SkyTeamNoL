@@ -125,6 +125,7 @@ void DeleteAcaYear();
 //  COURSE LECTURER FUNCTION
 //===============================================
 void CreateLecturer();
+void UpdateLecturer();
 void ViewLecturerList();
 
 

@@ -1813,8 +1813,13 @@ void Menu_Staff_Course_Lecturer(staff a[], int& idx) {
 	case 0:
 		CreateLecturer();
 		break;
+	case 1:
+		UpdateLecturer();
+		break;
 	case 3:
+		std::system("cls");
 		ViewLecturerList();
+		std::system("pause");
 		break;
 
 	}

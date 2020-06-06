@@ -1773,7 +1773,6 @@ void ViewLecturer(LecturerList *Lec, int width) {
 }
 
 void ViewLecturerList() {
-	std::system("cls");
 	cout << "-List of Lecturers-" << endl << endl;
 	LecturerList* LecHead = nullptr;
 	LoadLecturerList(LecHead);
@@ -1801,6 +1800,239 @@ void ViewLecturerList() {
 	}
 	cout << endl << endl;
 	delete_LecturerList(LecHead);
+}
+
+void CreateUserName_Lect(char* Lec_Name, char* Lec_Username)
+{
+	char tmp[256];
+	int spacecnt = 0, lastspace_idx = 0;
+	strcpy(tmp, Lec_Name);
+	for (int i = 0; i < strlen(tmp); i++)
+	{
+		if (tmp[i] == ' ')
+		{
+			lastspace_idx = i;
+			spacecnt++;
+		}
+	}
+	char* w = strtok(tmp, " ");
+	Lec_Username[0] = w[0] > 'A' && w[0] < 'Z' ? w[0] + 32 : w[0];
+	int cur_char = 0;
+	int idx = 0;
+	idx += strlen(w);
+	while (idx <= lastspace_idx)
+	{
+		w = strtok(NULL, " \n");
+		if (idx < lastspace_idx)
+		{
+			cur_char++;
+			Lec_Username[cur_char] = w[0] > 'A' && w[0] < 'Z' ? w[0] + 32 : w[0];
+			idx += strlen(w) + 1;
+		}
+		else {
+			cur_char++;
+			Lec_Username[cur_char] = '\0';
+			strcat(Lec_Username, w);
+			Lec_Username[cur_char] = w[0] > 'A' && w[0] < 'Z' ? w[0] + 32 : w[0];
+			idx += strlen(w);
+		}
+	}
+}
+
+void UpdateLecturer()
+{
+	std::system("cls");
+	cout << "-Update Lecturer-" << endl << endl;
+	ViewLecturerList();
+	LecturerList* L_list = nullptr;
+	char tmp[256], * Lec_Name;
+	cout << "[- Name ----------]";
+	cout << endl << "> "; 
+	cin.getline(tmp, 256);
+	Lec_Name = new char[strlen(tmp)];
+	strcpy(Lec_Name, tmp);
+	LoadLecturerList(L_list);
+	LecturerList* cur_Lec = L_list;
+	while (cur_Lec != nullptr)
+	{
+		if (strcmp(Lec_Name, cur_Lec->data.fullname) == 0) break;
+		cur_Lec = cur_Lec->pNext;
+	}
+	if (cur_Lec == nullptr)
+	{
+		cout << "Cannot find lecturer. " << endl;
+		std::system("pause");
+		return;
+	}
+
+	std::system("cls");
+	cout << "-Update Lecturer-" << endl << endl;
+	cout << "-Edit-" << endl << endl;
+
+	cout << "[- Name -------------]";
+	cout << endl << "> ";
+	cin.getline(cur_Lec->data.fullname, 100);
+	cur_Lec->data.username[0] = '\0';
+	CreateUserName_Lect(cur_Lec->data.fullname, cur_Lec->data.username);
+	cout << "[- Password ---------]";
+	cout << endl << "> ";
+	cin.getline(cur_Lec->data.password, 100);
+	cout << "[- DoB (dd/mm/yyyy) -]";
+	cout << endl << "> ";
+	cin.getline(cur_Lec->data.dob, 256);
+	cout << "[- Degree -----------]";
+	cout << endl << "> ";
+	cin.getline(cur_Lec->data.degree, 256);
+	cout << "[- Gender -----------]" << endl;
+	int color[] = { 15, 11 };
+	int i[] = { 1, 0 };
+	int ptr = 0;
+	int KeyPressed = 0;
+	while (KeyPressed != 13) {
+		cls();
+
+		cout << "-Update Lecturer-" << endl << endl;
+		cout << "-Edit-" << endl << endl;
+
+		cout << "[- Name -------------]";
+		cout << endl << "> " << cur_Lec->data.fullname << endl;
+		cout << "[- Password ---------]";
+		cout << endl << "> " << cur_Lec->data.password << endl;
+		cout << "[- DoB (dd/mm/yyyy) -]";
+		cout << endl << "> " << cur_Lec->data.dob << endl;
+		cout << "[- Degree -----------]";
+		cout << endl << "> " << cur_Lec->data.degree << endl;
+		cout << "[- Gender -----------]" << endl;
+
+		SetColor(color, i[0]);
+		if (ptr == 0) cout << "> "; else cout << "  ";
+		cout << "Female";
+		cout << "  ";
+		SetColor(color, i[1]);
+		if (ptr == 1) cout << "> "; else cout << "  ";
+		cout << "Male";
+		cout << endl;
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 1;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 1) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+
+		SetColor(color, 0);
+	}
+	cur_Lec->data.gender = ptr;
+	i[0] = 1; i[1] = 0;
+	ptr = 0;
+	KeyPressed = 0;
+	while (KeyPressed != 13) {
+		cls();
+
+		cout << "-Update Lecturer-" << endl << endl;
+		cout << "-Edit-" << endl << endl;
+
+		cout << "[- Name -------------]";
+		cout << endl << "> " << cur_Lec->data.fullname << endl;
+		cout << "[- Password ---------]";
+		cout << endl << "> " << cur_Lec->data.password << endl;
+		cout << "[- DoB (dd/mm/yyyy) -]";
+		cout << endl << "> " << cur_Lec->data.dob << endl;
+		cout << "[- Degree -----------]";
+		cout << endl << "> " << cur_Lec->data.degree << endl;
+		cout << "[- Gender -----------]" << endl;
+
+		if (cur_Lec->data.gender == 0) {
+			SetColor(color, 1);
+			cout << "> ";
+		} else {
+			SetColor(color, 0);
+			cout << "  ";
+		}
+		cout << "Female";
+		cout << "  ";
+		if (cur_Lec->data.gender == 0) {
+			SetColor(color, 1);
+			cout << "> ";
+		}
+		else {
+			SetColor(color, 0);
+			cout << "  ";
+		}
+		cout << "Male";
+		cout << endl;
+
+		cout << "[- Active -----------]" << endl;
+		SetColor(color, i[0]);
+		if (ptr == 0) cout << "> "; else cout << "  ";
+		cout << "Yes   ";
+		cout << "  ";
+		SetColor(color, i[1]);
+		if (ptr == 1) cout << "> "; else cout << "  ";
+		cout << "No";
+		cout << endl;
+
+		KeyPressed = _getch();
+		fflush(stdin);
+
+		if (KeyPressed == 75) {
+			i[ptr] = 0;
+			if (ptr == 0) ptr = 1;
+			else ptr--;
+			i[ptr] = 1;
+		}
+		else if (KeyPressed == 77) {
+			i[ptr] = 0;
+			if (ptr == 1) ptr = 0;
+			else ptr++;
+			i[ptr] = 1;
+		}
+		else KeyPressed = KeyPressed;
+
+		SetColor(color, 0);
+	}
+	cur_Lec->data.active = ptr + 1;
+	if (cur_Lec->data.active > 1) cur_Lec->data.active = 0;
+	ofstream fo;
+	fo.open("Files/lecturer.txt");
+	int cnt = 0;
+	cur_Lec = L_list;
+	while (cur_Lec != nullptr)
+	{
+		cnt++;
+		cur_Lec = cur_Lec->pNext;
+	}
+	cur_Lec = L_list;
+	fo << cnt;
+	while (cur_Lec != nullptr)
+	{
+		fo << endl;
+		fo << cur_Lec->data.username << endl;
+		fo << cur_Lec->data.password << endl;
+		fo << cur_Lec->data.fullname << endl;
+		for (int i = 0; i < strlen(cur_Lec->data.dob); i++) {
+			if (cur_Lec->data.dob[i] == '/') fo << " ";
+			else fo << cur_Lec->data.dob[i];
+		} fo << endl;
+		fo << cur_Lec->data.degree << endl;
+		fo << cur_Lec->data.gender << endl;
+		fo << cur_Lec->data.active;
+
+		cur_Lec = cur_Lec->pNext;
+	}
+	fo.close();
+	delete_LecturerList(L_list);
+	cout << "Lecturer edited successfully." << endl;
 	std::system("pause");
 }
 
