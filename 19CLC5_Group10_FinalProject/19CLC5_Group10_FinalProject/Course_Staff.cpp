@@ -1748,6 +1748,61 @@ void CreateLecturer()
 	std::system("pause");
 }
 
+void ViewLecturer(LecturerList *Lec, int width) {
+	for (int i = 0; i < width; i++) {
+		if (i == 0 || i == width - 1) cout << "|";
+		else cout << "-";
+	} cout << endl;
+	cout << "| " << Lec->data.fullname;
+	for (int i = 0; i < 29 - strlen(Lec->data.fullname); i++) cout << " ";
+	cout << "| ";
+	for (int i = 0; i < strlen(Lec->data.dob); i++) {
+		if (i == 2 || i == 5) cout << "/";
+		else cout << Lec->data.dob[i];
+	} cout << " | ";
+	cout << Lec->data.degree;
+	for (int i = 0; i < 7 - strlen(Lec->data.degree); i++) cout << " ";
+	cout << "| ";
+	char LecGender[2][7] = { "Female", "Male" };
+	cout << LecGender[Lec->data.gender];
+	for (int i = 0; i < 7 - strlen(LecGender[Lec->data.gender]); i++)
+		cout << " ";
+	cout << "|   ";
+	if (Lec->data.active == 1) cout << "v"; else cout << " ";
+	cout << "    |" << endl;
+}
+
+void ViewLecturerList() {
+	std::system("cls");
+	cout << "-List of Lecturers-" << endl << endl;
+	LecturerList* LecHead = nullptr;
+	LoadLecturerList(LecHead);
+	ifstream fin; 
+	fin.open("Files/lecturer.txt");
+	if (!fin.is_open()) return;
+	int width = 1 + 30 + 1 + 12 + 1 + 8 + 1 + 8 + 1 + 8 + 1;
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl;
+	cout << "|             Name             |    DoB     | Degree | Gender | Active |" << endl;
+
+	LecturerList* LecCur = LecHead;
+	while (LecCur != nullptr) {
+		ViewLecturer(LecCur, width);
+		LecCur = LecCur->pNext;
+	}
+	for (int i = 0; i < width; i++) {
+		if (i == 0) cout << "[";
+		else if (i == width - 1) cout << "]";
+		else cout << "-";
+	}
+	cout << endl << endl;
+	delete_LecturerList(LecHead);
+	std::system("pause");
+}
 
 //   STUDENT
 //=========================================================================================
@@ -2068,12 +2123,12 @@ LecturerList* LoadLecturerNode(ifstream& f)
 	LecturerList* b = nullptr;
 	b = new LecturerList;
 	f.getline(b->data.username, 101);
-	if (b->data.username == NULL) return NULL;
+	/*if (b->data.username == NULL) return NULL;*/
 	f.getline(b->data.password, 101);
 	f.getline(b->data.fullname, 101);
 	f.getline(b->data.dob, 101);
 	f.getline(b->data.degree, 20);
-	f >> b->data.gender; f.ignore();
+	f >> b->data.gender >> b->data.active;
 	f.ignore(256, '\n');
 
 	b->pNext = nullptr;
@@ -2083,7 +2138,7 @@ LecturerList* LoadLecturerNode(ifstream& f)
 void LoadLecturerList(LecturerList*& list)
 {
 	ifstream fin;
-	fin.open("lecturer.txt");
+	fin.open("Files/lecturer.txt");
 	if (!fin.is_open())
 	{
 		cout << "Cannot open file." << endl;
@@ -2092,9 +2147,11 @@ void LoadLecturerList(LecturerList*& list)
 	}
 	else
 	{
-		fin.ignore(256, '\n');
+		int n = 0;
+		fin >> n; fin.ignore();
 		LecturerList* cur = list;
-		while (!fin.eof())
+		/*while (!fin.eof())*/
+		for (int i = 0; i < n; i++)
 		{
 			if (cur == nullptr)
 			{
@@ -2123,6 +2180,7 @@ void delete_LecturerList(LecturerList*& list)
 		delete cur;
 		cur = list;
 	}
+	list = nullptr;
 }
 
 void delete_CourseList(CourseList*& list)

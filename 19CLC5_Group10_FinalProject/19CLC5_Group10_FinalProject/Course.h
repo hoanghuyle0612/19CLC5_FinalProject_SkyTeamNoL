@@ -76,7 +76,7 @@ struct Lecturer {
 	char fullname[100];
 	char dob[20];
 	char degree[20];
-	int gender;
+	int gender, active;
 };
 
 struct LecturerList {
@@ -125,6 +125,7 @@ void DeleteAcaYear();
 //  COURSE LECTURER FUNCTION
 //===============================================
 void CreateLecturer();
+void ViewLecturerList();
 
 
 //  COURSE STUDENT FUNCTION

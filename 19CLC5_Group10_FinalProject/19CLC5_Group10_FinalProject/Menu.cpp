@@ -1813,6 +1813,9 @@ void Menu_Staff_Course_Lecturer(staff a[], int& idx) {
 	case 0:
 		CreateLecturer();
 		break;
+	case 3:
+		ViewLecturerList();
+		break;
 
 	}
 	if (ptr != 4) Menu_Staff_Course_Lecturer(a, idx);
