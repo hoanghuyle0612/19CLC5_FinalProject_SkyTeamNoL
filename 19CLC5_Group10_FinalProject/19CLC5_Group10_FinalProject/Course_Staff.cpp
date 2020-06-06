@@ -1961,7 +1961,7 @@ void UpdateLecturer()
 		}
 		cout << "Female";
 		cout << "  ";
-		if (cur_Lec->data.gender == 0) {
+		if (cur_Lec->data.gender == 1) {
 			SetColor(color, 1);
 			cout << "> ";
 		}
@@ -2033,6 +2033,76 @@ void UpdateLecturer()
 	fo.close();
 	delete_LecturerList(L_list);
 	cout << "Lecturer edited successfully." << endl;
+	std::system("pause");
+}
+
+void RemoveLecturer()
+{
+	std::system("cls");
+	cout << "-Remove Lecturer-" << endl << endl;
+	ViewLecturerList();
+	char tmp[256], * Lec_Name;
+	cout << "[- Name ----------]";
+	cout << endl << "> "; 
+	cin.getline(tmp, 256);
+	Lec_Name = new char[strlen(tmp)];
+	strcpy(Lec_Name, tmp);
+	LecturerList* L_list = nullptr;
+	LoadLecturerList(L_list);
+	LecturerList* cur = L_list, * prev = nullptr;
+	while (cur != nullptr)
+	{
+		if (strcmp(cur->data.fullname, Lec_Name) == 0)
+		{
+			/*if (prev == nullptr)
+			{
+				L_list = cur->pNext;
+				delete cur;
+				break;
+			}
+			else
+			{
+				prev->pNext = cur->pNext;
+				delete cur;
+				break;
+			}*/
+			cur->data.active = 0;
+			break;
+		}
+		prev = cur;
+		cur = cur->pNext;
+	}
+	cur = L_list;
+	ofstream fo;
+	fo.open("Files/lecturer.txt");
+	if (!fo.is_open())
+	{
+		cout << "Cannot open file." << endl;
+		return;
+	}
+	int cnt = 0;
+	while (cur != nullptr)
+	{
+		cnt++;
+		cur = cur->pNext;
+	}
+	fo << cnt;
+	cur = L_list;
+	while (cur != nullptr)
+	{
+		fo << endl;
+		fo << cur->data.username << endl;
+		fo << cur->data.password << endl;
+		fo << cur->data.fullname << endl;
+		fo << cur->data.dob << endl;
+		fo << cur->data.degree << endl;
+		fo << cur->data.gender << endl;
+		fo << cur->data.active;
+		cur = cur->pNext;
+	}
+	fo.close();
+	delete_LecturerList(L_list);
+	cout << "Lecturer removed successfully." << endl;
 	std::system("pause");
 }
 

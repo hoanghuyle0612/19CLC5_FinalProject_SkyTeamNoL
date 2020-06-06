@@ -126,6 +126,7 @@ void DeleteAcaYear();
 //===============================================
 void CreateLecturer();
 void UpdateLecturer();
+void RemoveLecturer();
 void ViewLecturerList();
 
 

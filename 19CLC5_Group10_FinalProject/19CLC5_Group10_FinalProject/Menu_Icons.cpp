@@ -890,22 +890,12 @@ void Draw_WelCome_Lec(char name[], int degree) {
 		draw[i]();
 		Sleep(60);
 	}
-	if (degree == 1)
-		cout << endl << setw(42 - strlen(name) / 2);
-	else if (degree == 0)
-		cout << endl << setw(40 - strlen(name) / 2);
-	char preDoc[] = { "Doctor " };
-	char preProf[] = { "Professor " };
-	if (degree == 0)
-		for (int i = 0; i < strlen(preDoc); i++) {
-			cout << preDoc[i];
-			Sleep(30);
-		}
-	else
-		for (int i = 0; i < strlen(preProf); i++) {
-			cout << preProf[i];
-			Sleep(30);
-		}
+	char pre[3][12] = { "Dr. ", "Prof. ", "Vice Prof. " };
+	cout << endl << setw(43 - (strlen(name) + strlen(pre[degree])) / 2);
+	for (int i = 0; i < strlen(pre[degree]); i++) {
+		cout << pre[degree][i];
+		Sleep(30);
+	}
 	for (int i = 0; i < strlen(name); i++) {
 		cout << name[i];
 		Sleep(30);

@@ -132,6 +132,7 @@ void login()
 				int dgr = 0;
 				if (strcmp(b[i].degree, "TS") == 0) dgr = 0;
 				else if (strcmp(b[i].degree, "GS") == 0) dgr = 1;
+				else dgr = 2;
 				Draw_WelCome_Lec(b[i].fullname, dgr);
 				cin.ignore();
 				Menu_Lecturer(b, idx);
