@@ -423,21 +423,33 @@ void ShowScore(Student_Course* stu) {
 	for (int i = 0; i < 29 - stu->name.length(); i++) {
 		cout << " ";
 	} cout << "| ";
-	cout << stu->sc_mid;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
-		cout << " ";
+	if (stu->sc_mid == -1) cout << "        ";
+	else {
+		cout << stu->sc_mid;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
+			cout << " ";
+		}
 	} cout << "| ";
-	cout << stu->sc_fin;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
-		cout << " ";
+	if (stu->sc_fin == -1) cout << "        ";
+	else {
+		cout << stu->sc_fin;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
+			cout << " ";
+		}
 	} cout << "| ";
-	cout << stu->sc_lab;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
-		cout << " ";
+	if (stu->sc_lab == -1) cout << "        ";
+	else {
+		cout << stu->sc_lab;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
+			cout << " ";
+		}
 	} cout << "| ";
-	cout << stu->sc_ave;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
-		cout << " ";
+	if (stu->sc_ave == -1) cout << "        ";
+	else {
+		cout << stu->sc_ave;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
+			cout << " ";
+		}
 	} cout << "|" << endl;
 
 	/*cout << "[" << stu->id << "]" << endl;
@@ -461,21 +473,33 @@ void ShowScoreSolo(Student_Course* stu) {
 	for (int i = 0; i < 29 - stu->name.length(); i++) {
 		cout << " ";
 	} cout << "| ";
-	cout << stu->sc_mid;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
-		cout << " ";
+	if (stu->sc_mid == -1) cout << "        ";
+	else {
+		cout << stu->sc_mid;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_mid); i++) {
+			cout << " ";
+		} 
 	} cout << "| ";
-	cout << stu->sc_fin;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
-		cout << " ";
+	if (stu->sc_fin == -1) cout << "        ";
+	else {
+		cout << stu->sc_fin;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_fin); i++) {
+			cout << " ";
+		}
 	} cout << "| ";
-	cout << stu->sc_lab;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
-		cout << " ";
+	if (stu->sc_lab == -1) cout << "        ";
+	else {
+		cout << stu->sc_lab;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_lab); i++) {
+			cout << " ";
+		}
 	} cout << "| ";
-	cout << stu->sc_ave;
-	for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
-		cout << " ";
+	if (stu->sc_ave == -1) cout << "        ";
+	else {
+		cout << stu->sc_ave;
+		for (int i = 0; i < 8 - ScoreLength(stu->sc_ave); i++) {
+			cout << " ";
+		}
 	} cout << "|" << endl;
 
 	for (int i = 0; i < width; i++) {

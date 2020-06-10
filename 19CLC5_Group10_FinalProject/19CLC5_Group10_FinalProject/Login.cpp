@@ -37,7 +37,7 @@ string PasswordInput(unsigned maxLength)
 	}
 	return pw;
 }
-
+// belongs to this gentleman: tntxtnt
 
 void loadstaff(fstream& f, staff& a)
 {
