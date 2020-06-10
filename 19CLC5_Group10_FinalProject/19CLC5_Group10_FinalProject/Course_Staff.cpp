@@ -61,7 +61,7 @@ void LoadStudentList(StudentList*& list, char* Class)
 {
 	StudentList* cur = list;
 	ifstream f;
-	char Link[256] = "Student-";
+	char Link[256] = "Files/Class/student-";
 	strcat(Link, Class);
 	strcat(Link, ".txt");
 	f.open(Link);
@@ -2133,7 +2133,7 @@ StudentList* FindStudent(char* StudentID)
 {
 	StudentList* list = nullptr;
 	ifstream fi;
-	fi.open("student.txt");
+	fi.open("Files/student.txt");
 	if (!fi.is_open())
 	{
 		cout << "Cannot open file 2." << endl;

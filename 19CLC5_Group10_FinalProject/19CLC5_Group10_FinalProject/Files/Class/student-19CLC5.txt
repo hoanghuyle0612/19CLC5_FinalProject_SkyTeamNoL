@@ -1,4 +1,4 @@
-6
+3
 19127201
 02012001
 Le Quang Tan Long
@@ -19,10 +19,10 @@ Le Nguyen Huy Hoang
 13092001
 Huynh Thu Thao
 19127551
-19CLC5
+19CLC3
 13 09 2001
 0
-1
+0
 19127311
 wibuneverdie
 Tran Thanh Tung
@@ -31,19 +31,11 @@ Tran Thanh Tung
 05 08 2001
 1
 1
-19127696
-09062001
-Dio Brando
-19127696
+19127111
+01012001
+Nguyen Vu Minh
+19127111
 19CLC5
-09 06 2001
+01 01 2001
 1
-1
-19127004
-04012001
-Nguyen Van D
-19127004
-19CLC5
-04 01 2001
-1
-1
+0

@@ -14,6 +14,30 @@ void cls()
 	SetConsoleCursorPosition(hOut, Position);
 }
 // void cls() belongs to this handsome man: olredixsis
+string PasswordInput(unsigned maxLength)
+{
+	string pw;
+	for (char c; (c = _getch()); )
+	{
+		if (c == '\n' || c == '\r') {
+			cout << "\n";
+			break;
+		}
+		else if (c == '\b') {
+			if (pw.length() > 0) cout << "\b \b";
+			if (!pw.empty()) pw.erase(pw.size() - 1);
+		}
+		else if (c == -32) {
+			_getch();
+		}
+		else if (isprint(c) && pw.size() < maxLength) {
+			std::cout << '*';
+			pw += c;
+		}
+	}
+	return pw;
+}
+
 
 void loadstaff(fstream& f, staff& a)
 {
@@ -84,12 +108,14 @@ void login()
 	lecturer b[100];
 	student c[100];
 	char userlogin[100];
-	char passlogin[100];
 	/*cin.ignore();*/
 	cout << "[- Username ----------]" << endl;
 	cout << "> "; cin >> userlogin;
 	cout << "[- Password ----------]" << endl;
-	cout << "> "; cin >> passlogin;
+	cout << "> "; /*cin >> passlogin;*/
+	string passlogin_str = PasswordInput(100);
+	char passlogin[101];
+	strcpy(passlogin, passlogin_str.c_str());
 	fstream f;
 	f.open("Files/staff.txt");
 	if (!f.is_open())
@@ -790,7 +816,7 @@ void edit_existing_student(staff a[], int& idx)
 		return;
 	}
 	newFile.close();
-	if (remove("student.txt") == 0)
+	if (remove("Files/student.txt") == 0)
 	{
 		/*cout << "Editing..." << endl;*/
 	}
@@ -1033,7 +1059,7 @@ void remove_a_student(staff a[], int& idx)
 		return;
 	}
 	newFile.close();
-	if (remove("student.txt") == 0)
+	if (remove("Files/student.txt") == 0)
 	{
 		/*cout << "Processing changing" << endl;*/
 	}
@@ -1136,7 +1162,9 @@ void remove_a_student(staff a[], int& idx)
 	{
 		cout << "Student removed." << endl;
 	}
-	std::system("pause");
+	/*std::system("pause");*/
+
+	cin.ignore();
 	/*}*/
 	Menu_Staff_Class(a, idx);
 }
@@ -1431,7 +1459,8 @@ void change_student_classA_to_B(staff a[], int& idx)
 	rename("temp_student.txt", future);
 	cout << endl;
 	cout << "Changed Student's Class successfully!" << endl;
-	std::system("pause");
+	/*std::system("pause");*/
+	cin.ignore();
 	/*if (press == 1)
 	{
 		staffclass_func(a, idx);
@@ -1885,7 +1914,8 @@ void changepassword_staff(staff a[], int& idx)
 	char newpass2[100];
 	char currentpass[100];
 	cout << "[- Current Password -----]" << endl;
-	cout << "> "; cin >> currentpass;
+	cout << "> "; /*cin >> currentpass;*/
+	strcpy(currentpass, PasswordInput(99).c_str());
 	while (strcmp(currentpass, a[idx].password))
 	{
 		cout << "Incorrect password." << endl;
@@ -1893,12 +1923,15 @@ void changepassword_staff(staff a[], int& idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> "; cin >> currentpass;
+		cout << "> ";/* cin >> currentpass;*/
+		strcpy(currentpass, PasswordInput(99).c_str());
 	}
 	cout << "[- New Password ---------]" << endl;
-	cout << "> "; cin >> newpass1;
+	cout << "> "; /*cin >> newpass1;*/
+	strcpy(newpass1, PasswordInput(99).c_str());
 	cout << "[- Confirm New Password -]" << endl;
-	cout << "> "; cin >> newpass2;
+	cout << "> "; /*cin >> newpass2;*/
+	strcpy(newpass2, PasswordInput(99).c_str());
 	while (strcmp(newpass1, newpass2))
 	{
 		cout << "Passwords don't match." << endl;
@@ -1906,11 +1939,13 @@ void changepassword_staff(staff a[], int& idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> " << currentpass << endl;
+		cout << "> ";
+		for (int i = 0; i < strlen(currentpass); i++) cout << "*";
+		cout << endl;
 		cout << "[- New Password ---------]" << endl;
-		cout << "> "; cin >> newpass1;
+		cout << "> "; strcpy(newpass1, PasswordInput(99).c_str());
 		cout << "[- Confirm New Password -]" << endl;
-		cout << "> "; cin >> newpass2;
+		cout << "> "; strcpy(newpass2, PasswordInput(99).c_str());
 	}
 	/*cout << "Enter username to make sure: ";
 	cin >> currentusername;*/
@@ -1959,7 +1994,7 @@ void changepassword_staff(staff a[], int& idx)
 		}
 		else cout << "Cannot change password." << endl;
 	}
-	std::system("pause");
+	/*std::system("pause");*/
 	cin.ignore();
 	Menu_Staff(a, idx);
 }
@@ -1973,7 +2008,8 @@ void changepassword_lecturer(lecturer b[], int idx)
 	char newpass2[100];
 	char currentpass[100];
 	cout << "[- Current Password -----]" << endl;
-	cout << "> "; cin >> currentpass;
+	cout << "> "; /*cin >> currentpass;*/
+	strcpy(currentpass, PasswordInput(99).c_str());
 	while (strcmp(currentpass, b[idx].password))
 	{
 		cout << "Incorrect password." << endl;
@@ -1981,12 +2017,15 @@ void changepassword_lecturer(lecturer b[], int idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> "; cin >> currentpass;
+		cout << "> ";/* cin >> currentpass;*/
+		strcpy(currentpass, PasswordInput(99).c_str());
 	}
 	cout << "[- New Password ---------]" << endl;
-	cout << "> "; cin >> newpass1;
+	cout << "> "; /*cin >> newpass1;*/
+	strcpy(newpass1, PasswordInput(99).c_str());
 	cout << "[- Confirm New Password -]" << endl;
-	cout << "> "; cin >> newpass2;
+	cout << "> "; /*cin >> newpass2;*/
+	strcpy(newpass2, PasswordInput(99).c_str());
 	while (strcmp(newpass1, newpass2))
 	{
 		cout << "Passwords don't match." << endl;
@@ -1994,11 +2033,13 @@ void changepassword_lecturer(lecturer b[], int idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> " << currentpass << endl;
+		cout << "> ";
+		for (int i = 0; i < strlen(currentpass); i++) cout << "*";
+		cout << endl;
 		cout << "[- New Password ---------]" << endl;
-		cout << "> "; cin >> newpass1;
+		cout << "> "; strcpy(newpass1, PasswordInput(99).c_str());
 		cout << "[- Confirm New Password -]" << endl;
-		cout << "> "; cin >> newpass2;
+		cout << "> "; strcpy(newpass2, PasswordInput(99).c_str());
 	}
 	/*cout << "Enter username to make sure: ";
 	cin >> currentusername;*/
@@ -2040,7 +2081,7 @@ void changepassword_lecturer(lecturer b[], int idx)
 		}
 		else cout << "Cannot change password." << endl;
 	}
-	std::system("pause");
+	/*std::system("pause");*/
 	cin.ignore();
 	Menu_Lecturer(b, idx);
 }
@@ -2053,9 +2094,9 @@ void changepassword_student(student c[], int idx)
 	char newpass1[100];
 	char newpass2[100];
 	char currentpass[100];
-	cout << "[- Current Password -----]";
-	cout << endl << "> ";
-	cin >> currentpass;
+	cout << "[- Current Password -----]" << endl;
+	cout << "> "; /*cin >> currentpass;*/
+	strcpy(currentpass, PasswordInput(99).c_str());
 	while (strcmp(currentpass, c[idx].password))
 	{
 		cout << "Incorrect password." << endl;
@@ -2063,14 +2104,15 @@ void changepassword_student(student c[], int idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> "; cin >> currentpass;
+		cout << "> ";/* cin >> currentpass;*/
+		strcpy(currentpass, PasswordInput(99).c_str());
 	}
-	cout << "[- New Password ---------]";
-	cout << endl << "> ";
-	cin >> newpass1;
-	cout << "[- Confirm New Password -]";
-	cout << endl << "> ";
-	cin >> newpass2;
+	cout << "[- New Password ---------]" << endl;
+	cout << "> "; /*cin >> newpass1;*/
+	strcpy(newpass1, PasswordInput(99).c_str());
+	cout << "[- Confirm New Password -]" << endl;
+	cout << "> "; /*cin >> newpass2;*/
+	strcpy(newpass2, PasswordInput(99).c_str());
 	while (strcmp(newpass1, newpass2))
 	{
 		cout << "Passwords don't match." << endl;
@@ -2078,11 +2120,13 @@ void changepassword_student(student c[], int idx)
 		std::system("cls");
 		cout << "-Change password-" << endl << endl;
 		cout << "[- Current Password -----]" << endl;
-		cout << "> " << currentpass << endl;
+		cout << "> ";
+		for (int i = 0; i < strlen(currentpass); i++) cout << "*";
+		cout << endl;
 		cout << "[- New Password ---------]" << endl;
-		cout << "> "; cin >> newpass1;
+		cout << "> "; strcpy(newpass1, PasswordInput(99).c_str());
 		cout << "[- Confirm New Password -]" << endl;
-		cout << "> "; cin >> newpass2;
+		cout << "> "; strcpy(newpass2, PasswordInput(99).c_str());
 	}
 	/*cout << "Enter username to make sure: "; cin >> currentusername;*/
 	ifstream f1("Files/student.txt");
@@ -2187,7 +2231,7 @@ void changepassword_student(student c[], int idx)
 		cout << "Password changed successfully." << endl;
 	}
 	else cout << "Cannot change password." << endl;
-	std::system("pause");
+	/*std::system("pause");*/
 	cin.ignore();
 	Menu_Student(c, idx);
 }

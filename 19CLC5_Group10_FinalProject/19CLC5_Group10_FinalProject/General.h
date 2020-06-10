@@ -15,6 +15,7 @@
 #include <Windows.h>
 #include <iomanip>
 #include <conio.h>
+#include <cctype>
 using namespace std;
 
 void login();

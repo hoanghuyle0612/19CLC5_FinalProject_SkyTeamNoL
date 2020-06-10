@@ -1808,7 +1808,7 @@ void Menu_Staff_Course_Lecturer(staff a[], int& idx) {
 
 	switch (ptr) {
 	case 4:
-		Menu_Staff_Advance(a, idx);
+		Menu_Staff_Course(a, idx);
 		break;
 	case 0:
 		CreateLecturer();
