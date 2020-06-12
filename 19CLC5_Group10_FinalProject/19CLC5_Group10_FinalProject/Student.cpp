@@ -19,12 +19,17 @@ bool CheckIn(Student_Course*& stu) {
 				if ((ti->tm_hour == dcur->sHr &&
 					ti->tm_min <= dcur->sMin) ||
 					(ti->tm_hour == dcur->eHr &&
-						ti->tm_min >= dcur->eMin)) {
+						ti->tm_min >= dcur->eMin) ||
+					(ti->tm_hour > dcur->sHr) || (ti->tm_hour < dcur->eHr)) {
 					dcur->pre = 1;
 					return true;
 				}
 			}
 		}
+		cout << ti->tm_year << ti->tm_mon + 1 << ti->tm_mday << endl;
+		cout << dcur->ay -1900 << dcur->am << dcur->ad << endl;
+		cout << ti->tm_hour << ti->tm_min << endl;
+		cout << dcur->sHr << dcur->sMin << dcur->eHr << dcur->eMin << endl;
 		if (dcur->dNext != nullptr)
 			dcur = dcur->dNext;
 		else break;

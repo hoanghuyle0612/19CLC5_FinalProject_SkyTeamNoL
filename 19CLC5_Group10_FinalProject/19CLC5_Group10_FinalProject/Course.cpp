@@ -1413,7 +1413,7 @@ void Advance_CheckIn(string YearSem, int id) {
 	string fNameAL = fName + "AttList";
 	Student_Course* stuHead; int n = 0;
 	if (!GetCourse(stuHead, n, fNameStu)) {
-		cout << "Cannot Check-in." << endl;
+		cout << "Cannot Check-in (Cannot load)." << endl;
 		std::system("pause");
 		return;
 	}

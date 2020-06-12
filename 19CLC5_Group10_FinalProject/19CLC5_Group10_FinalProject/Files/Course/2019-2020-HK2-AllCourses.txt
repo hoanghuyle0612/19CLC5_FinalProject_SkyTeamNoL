@@ -1,4 +1,4 @@
-4
+5
 
 CS162
 Introduction to Programming
@@ -55,3 +55,17 @@ FRI
 13 30
 15 30
 I52
+
+CS696
+General Economics
+19CLC5
+dbtien
+Dinh Ba Tien
+TS
+1
+2020 6 5
+2020 7 3
+FRI
+19 30
+23 30
+I44
